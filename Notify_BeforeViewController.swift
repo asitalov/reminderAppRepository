@@ -11,6 +11,7 @@ import UIKit
 class Notify_BeforeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    let menuVC = New_Note()
     var notifyBeforeValues = NSArray()
     var checkedIndexPath: NSIndexPath?
     var tappedIndexPath2 = NSIndexPath()
@@ -81,7 +82,11 @@ class Notify_BeforeViewController: UIViewController {
             self.checkedIndexPath = indexPath
             
         }
-            print(checkedIndexPath)
+        
+        //taking back tapped cell index (int) :
+      //  menuVC.remindValueInteger = indexPath.row
+        selectedIndex = indexPath.row
+        print ("remindValueInteger is: \(menuVC.remindValueInteger)")
     }
     
     
