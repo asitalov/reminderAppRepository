@@ -12,11 +12,20 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var myNewDictArray = NSMutableArray ()
+    //var settingsArray = NSMutableArray()
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
+        
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        myNewDictArray = userDefaults.mutableArrayValueForKey("alarmArr")
+       // settingsArray = userDefaults.mutableArrayValueForKey("settings")
+        
+        application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: UIUserNotificationType.Alert, categories: nil))
+    
+            return true
     }
 
     func applicationWillResignActive(application: UIApplication) {
