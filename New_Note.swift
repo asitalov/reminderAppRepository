@@ -23,8 +23,10 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     var theAlarmDate = NSDate()
     var notificationText = NSString()
     var settingsArray = NSArray()
+    var valuesArray = NSArray ()
     var labelText:NSString?
     var labelContent:NSString?
+    var remindValueInteger:Int?
     
     let alertVC = HHAlertView() //objective c class
 
@@ -39,6 +41,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.picker.backgroundColor = UIColor.whiteColor()
         settingsArray = ["Title", "Content", "Remind before", "Sound", "Alarm"]
+        valuesArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
         
         HHAlertView.shared().delegate = self
         
@@ -69,7 +72,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     
     @IBAction func Save(sender: UIBarButtonItem) {
         
-      if labelText == "Place title here"/*alarmText.text == "Set notification text here..."*/{
+      if labelText == "Place title here"{
         HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Please add a message for notification", cancelButton: nil, okbutton: "OK")
         
       } else {
@@ -188,7 +191,14 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             } else {
                 cell.settingsLabel.text = labelContent as? String
             }
-        }
+        }  else if indexPath!.row == 2{
+            //if ([[[appDelegate.repeat objectAtIndex:i]objectForKey:@"value"] boolValue] == YES){
+            if remindValueInteger != nil{
+                cell.settingsLabel.text = valuesArray.objectAtIndex(remindValueInteger!) as? String//[self.days objectAtIndex:i]];
+            //    [self.currentTitle0 setText:btnName];
+            }
+            }
+        
             else if indexPath!.row == 4 {
 
                 cell.settingsLabel.text = dateValue as? String
@@ -232,7 +242,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-     
+        print ("remindValue now : \(remindValueInteger)")
     }
     
     func updateLabelText(newLabel: String) {
