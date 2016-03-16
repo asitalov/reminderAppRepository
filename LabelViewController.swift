@@ -30,7 +30,6 @@ class LabelViewController: UIViewController, UITextFieldDelegate {
         
         nameTextField.backgroundColor = UIColor .whiteColor()
         nameTextField.layer.borderColor = UIColor .whiteColor().CGColor
-        //nameTextField.clearButtonMode = UITextFieldViewMode
         nameTextField.becomeFirstResponder()
         
     }

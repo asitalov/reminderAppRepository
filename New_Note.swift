@@ -11,6 +11,8 @@ import UIKit
 protocol newNote {
      func updateLabelText(newLabel: String)
      func updateLabelContent(newLabel: String)
+    func updateLabelIndex(newIndex: Int)
+
 }
 
 class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITableViewDelegate, newNote  {
@@ -23,11 +25,14 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     var theAlarmDate = NSDate()
     var notificationText = NSString()
     var settingsArray = NSArray()
-    var valuesArray = NSArray ()
+    var remindArray = NSArray()
     var labelText:NSString?
     var labelContent:NSString?
-    var remindValueInteger:Int?
-    
+    var labelInteger:Int?
+    var green   = UIButton()
+     var orange   = UIButton()
+     var red   = UIButton()
+ 
     let alertVC = HHAlertView() //objective c class
 
      let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -40,10 +45,11 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         self.title = "Add notification"
         self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.picker.backgroundColor = UIColor.whiteColor()
-        settingsArray = ["Title", "Content", "Remind before", "Sound", "Alarm"]
-        valuesArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
+        settingsArray = ["Title", "Content", "Remind before", "Priority", "Alarm"]
+        remindArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
         
         HHAlertView.shared().delegate = self
+        
         
         dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateformatter.dateFormat="MM.dd hh:mm"
@@ -54,6 +60,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         
         labelText = "Place title here"
         labelContent = "Content text"
+       labelInteger = 0
 
     }
     
@@ -192,12 +199,38 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
                 cell.settingsLabel.text = labelContent as? String
             }
         }  else if indexPath!.row == 2{
-            //if ([[[appDelegate.repeat objectAtIndex:i]objectForKey:@"value"] boolValue] == YES){
-            if remindValueInteger != nil{
-                cell.settingsLabel.text = valuesArray.objectAtIndex(remindValueInteger!) as? String//[self.days objectAtIndex:i]];
-            //    [self.currentTitle0 setText:btnName];
+            if labelInteger != nil{
+                cell.settingsLabel.text = remindArray.objectAtIndex(labelInteger!) as! String
             }
-            }
+            
+        } else if indexPath!.row == 3 {
+            
+            cell.accessoryType = .None
+            cell.settingsLabel.hidden = true
+            
+            red = UIButton(frame: CGRectMake(240, 0, 40, 40))
+            orange = UIButton(frame: CGRectMake(195, 0, 40, 40))
+            green = UIButton(frame: CGRectMake(150, 0, 40, 40))
+            
+            red.setBackgroundImage(UIImage(named: "red.png"), forState: .Normal)
+            orange.setBackgroundImage(UIImage(named: "orange.png"), forState: .Normal)
+            green.setBackgroundImage(UIImage(named: "green.png"), forState: .Normal)
+            
+            red.showsTouchWhenHighlighted = true
+            orange.showsTouchWhenHighlighted = true
+            green.showsTouchWhenHighlighted = true
+
+            cell.contentView.addSubview(red)
+            cell.contentView.addSubview(orange)
+            cell.contentView.addSubview(green)
+            
+            red.addTarget(self, action: "redTouched:", forControlEvents: .TouchUpInside)
+            orange.addTarget(self, action: "orangeTouched:", forControlEvents: .TouchUpInside)
+            green.addTarget(self, action: "greenTouched:", forControlEvents: .TouchUpInside)
+
+
+
+        }
         
             else if indexPath!.row == 4 {
 
@@ -206,8 +239,21 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         
         return cell
     }
-
-
+    
+    func greenTouched(sender: UIButton) {
+        
+    }
+    
+    
+    func orangeTouched(sender: UIButton){
+        
+    }
+    
+    
+    func redTouched(sender: UIButton){
+        
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             let sb : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -232,7 +278,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             let sb : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = sb.instantiateViewControllerWithIdentifier("Before1") as! Notify_BeforeViewController
             
-            //vc.delegate = self
+            vc.delegate = self
+            vc.selectedIndex = labelInteger
             
             self.presentViewController(vc, animated: true, completion: nil)
             
@@ -242,7 +289,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-        print ("remindValue now : \(remindValueInteger)")
+    
     }
     
     func updateLabelText(newLabel: String) {
@@ -256,6 +303,11 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         settingsTable.reloadData()
     }
     
+    func updateLabelIndex(newIndex: Int){
+        labelInteger = newIndex
+        settingsTable.reloadData()
+        print("updateLabelIndex CALLEd")
+    }
     /*
     // MARK: - Navigation
 

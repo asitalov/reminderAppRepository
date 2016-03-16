@@ -10,14 +10,15 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate {
     
+    @IBOutlet weak var leftBarButton: UIBarButtonItem!
+    @IBOutlet weak var todoSearchBar: UISearchBar!
     @IBOutlet weak var alarmTable: UITableView!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let selectNote = Selected_Note()
     var messageLabel = UILabel()
-    
-    @IBOutlet weak var shareButton: UIButton!
-    
-  
+    var searchArray = NSMutableArray()
+    var isFiltered: Bool?
+    let revealView = SWRevealViewController ()
     
     @IBOutlet weak var calendarImage: UIImageView!
     override func viewDidLoad() {
@@ -31,9 +32,13 @@ class ViewController: UIViewController, UITableViewDelegate {
         messageLabel.textAlignment = NSTextAlignment.Center
         messageLabel.text = "You don't have any notes. To add a new note click '+' button"
 
-        //alarmTable.hidden = true
         view.backgroundColor = UIColor .groupTableViewBackgroundColor()
         view.addSubview(messageLabel)
+        alarmTable.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
+        leftBarButton.target = revealView.revealViewController()
+        leftBarButton.action = "revealToggle:"
+        self.view!.addGestureRecognizer(revealView.panGestureRecognizer())
+
 
     }
 
@@ -57,7 +62,10 @@ class ViewController: UIViewController, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
-        return appDelegate.myNewDictArray.count
+        if isFiltered == true {
+            return searchArray.count;
+        }
+        return appDelegate.myNewDictArray.count;
     }
     
     
@@ -67,12 +75,27 @@ class ViewController: UIViewController, UITableViewDelegate {
         let cell = alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! Cell
         
         if appDelegate.myNewDictArray.count > 0 {
-        let noteText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("text")
-        let alarmText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("date")
-       
-         cell.titleLabel.text = noteText as? String
-         cell.alarmLabel.text = alarmText as? String
             
+        let noteText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("text")
+            
+        let alarmText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("date")
+            
+           if (isFiltered == nil) {
+            
+                // Configure the cell...
+                cell.titleLabel.text = noteText as? String
+                cell.alarmLabel.text = alarmText as? String
+            }
+            
+            else {
+            
+                //  Configue the cell with filtered results.
+                cell.titleLabel.text = searchArray.objectAtIndex((indexPath?.row)!).objectForKey("text") as? String
+                cell.alarmLabel.text = searchArray.objectAtIndex((indexPath?.row)!).objectForKey("date") as? String
+            }
+
+            cell.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
+
         }
         
         return cell
@@ -84,6 +107,13 @@ class ViewController: UIViewController, UITableViewDelegate {
         
     }
     
+    func tableView(tableView: UITableView, willBeginEditingRowAtIndexPath indexPath: NSIndexPath) {
+        self.navigationItem.title = "Delete Remindings"
+    }
+    
+    func tableView(tableView: UITableView, didEndEditingRowAtIndexPath indexPath: NSIndexPath) {
+        self.navigationItem.title = "Reminder"
+    }
     
     // добавляем в том случае, если таблица была перетянута как утилита
     override func setEditing(editing: Bool, animated: Bool) {
@@ -108,6 +138,43 @@ class ViewController: UIViewController, UITableViewDelegate {
             default:
                 return
             }
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange text: String) {
+        
+        if text == "" {
+        
+            isFiltered = nil
+        
+        }
+            
+        else {
+
+            self.isFiltered = true
+            
+            searchArray.removeAllObjects()
+            searchArray.addObjectsFromArray(appDelegate.myNewDictArray.filteredArrayUsingPredicate(NSPredicate(format: "(text CONTAINS[cd] %@) OR (date CONTAINS[cd] %@)", text, text)))
+    }
+        alarmTable.reloadData()
+}
+    
+    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+//        var resultRange: NSRange = text.rangeOfCharacterFromSet(NSCharacterSet.newlineCharacterSet(), options: NSBackwardsSearch)
+//        if text.characters.count == 1 && resultRange.location != NSNotFound {
+//            searchBar.resignFirstResponder()
+//            return false
+//        }
+        
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        todoSearchBar.resignFirstResponder()
+    }
+    
+    
+    func dismissKeyBoard () {
+    todoSearchBar.resignFirstResponder()
     }
     
     func removeAnEmptyView(){
