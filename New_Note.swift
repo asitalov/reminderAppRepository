@@ -11,7 +11,7 @@ import UIKit
 protocol newNote {
      func updateLabelText(newLabel: String)
      func updateLabelContent(newLabel: String)
-    func updateLabelIndex(newIndex: Int)
+     func updateLabelIndex(newIndex: Int)
 
 }
 

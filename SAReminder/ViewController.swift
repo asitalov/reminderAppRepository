@@ -19,6 +19,9 @@ class ViewController: UIViewController, UITableViewDelegate {
     var searchArray = NSMutableArray()
     var isFiltered: Bool?
     let revealView = SWRevealViewController ()
+    let formatter1 = NSDateFormatter ()
+    let formatter2 = NSDateFormatter ()
+   
     
     @IBOutlet weak var calendarImage: UIImageView!
     override func viewDidLoad() {
@@ -38,13 +41,12 @@ class ViewController: UIViewController, UITableViewDelegate {
         leftBarButton.target = revealView.revealViewController()
         leftBarButton.action = "revealToggle:"
         self.view!.addGestureRecognizer(revealView.panGestureRecognizer())
-
-
-    }
-
-
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-       
+        
+        formatter1.timeStyle =  NSDateFormatterStyle.ShortStyle
+        formatter1.dateFormat = "MM.dd hh:mm"
+        
+        formatter2.timeStyle = NSDateFormatterStyle.MediumStyle
+        formatter2.dateFormat = "MMM dd,  hh:mm"
     }
     
     override func viewDidLayoutSubviews() {
@@ -68,23 +70,28 @@ class ViewController: UIViewController, UITableViewDelegate {
         return appDelegate.myNewDictArray.count;
     }
     
+ 
     
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
 //        let cell:UITableViewCell = self.alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
         
         let cell = alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! Cell
-        
+        cell.accessoryType = .DisclosureIndicator
         if appDelegate.myNewDictArray.count > 0 {
-            
-        let noteText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("text")
-            
-        let alarmText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("date")
-            
+           
+        let noteText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("text") as! String
+        var alarmText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("date") as! String
+           
+            let dateInDateFormat = formatter1.dateFromString(alarmText)
+            let dateInStringFormat = formatter2.stringFromDate(dateInDateFormat!)
+
+            alarmText = dateInStringFormat
+          
            if (isFiltered == nil) {
             
                 // Configure the cell...
-                cell.titleLabel.text = noteText as? String
-                cell.alarmLabel.text = alarmText as? String
+                cell.titleLabel.text = noteText as String
+                cell.alarmLabel.text = alarmText
             }
             
             else {
@@ -96,6 +103,8 @@ class ViewController: UIViewController, UITableViewDelegate {
 
             cell.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
 
+        } else {
+            
         }
         
         return cell
@@ -154,13 +163,22 @@ class ViewController: UIViewController, UITableViewDelegate {
             
             searchArray.removeAllObjects()
             searchArray.addObjectsFromArray(appDelegate.myNewDictArray.filteredArrayUsingPredicate(NSPredicate(format: "(text CONTAINS[cd] %@) OR (date CONTAINS[cd] %@)", text, text)))
-    }
-        alarmTable.reloadData()
-}
+
+        }
+        
+        if text.characters.count == 1 && searchArray.count == 0 {
+            searchBar.resignFirstResponder()
+        searchArray.addObjectsFromArray(appDelegate.myNewDictArray as [AnyObject])
+        }
+        
+        print ("count == \(searchArray.count)")
+          alarmTable.reloadData()
+        
+        }
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
 //        var resultRange: NSRange = text.rangeOfCharacterFromSet(NSCharacterSet.newlineCharacterSet(), options: NSBackwardsSearch)
-//        if text.characters.count == 1 && resultRange.location != NSNotFound {
+//        if text.characters.count == 1 && searchArray.count == 0 {
 //            searchBar.resignFirstResponder()
 //            return false
 //        }
@@ -168,10 +186,9 @@ class ViewController: UIViewController, UITableViewDelegate {
         return true
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
         todoSearchBar.resignFirstResponder()
     }
-    
     
     func dismissKeyBoard () {
     todoSearchBar.resignFirstResponder()
@@ -197,9 +214,11 @@ class ViewController: UIViewController, UITableViewDelegate {
         if appDelegate.myNewDictArray.count == 0 {
         alarmTable.reloadData()
             addAnEmptyView()
+             todoSearchBar.userInteractionEnabled = false
         } else {
             removeAnEmptyView()
             alarmTable.reloadData()
+             todoSearchBar.userInteractionEnabled = true
         }
     }
 }

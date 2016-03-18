@@ -17,6 +17,10 @@
 		84EE4D041C909D1600F7C6E3 /* SAReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4D031C909D1600F7C6E3 /* SAReminderTests.swift */; };
 		84EE4D0F1C909D1600F7C6E3 /* SAReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4D0E1C909D1600F7C6E3 /* SAReminderUITests.swift */; };
 		84EE4D1F1C90A4F100F7C6E3 /* New_Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4D1E1C90A4F100F7C6E3 /* New_Note.swift */; };
+		D643ECAE1C9AB0A100512A2F /* YLSwipeLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECA71C9AB0A100512A2F /* YLSwipeLockView.m */; };
+		D643ECAF1C9AB0A100512A2F /* YLSwipeLockNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECA91C9AB0A100512A2F /* YLSwipeLockNodeView.m */; };
+		D643ECB01C9AB0A100512A2F /* YLCheckToUnlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECAB1C9AB0A100512A2F /* YLCheckToUnlockViewController.m */; };
+		D643ECB11C9AB0A100512A2F /* YLInitSwipePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECAD1C9AB0A100512A2F /* YLInitSwipePasswordController.m */; };
 		D668D91E1C99909B008011D2 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D668D91D1C99909B008011D2 /* SWRevealViewController.m */; };
 		D668D9221C999138008011D2 /* SideBarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D668D9211C999138008011D2 /* SideBarTableViewController.m */; };
 		D668D9241C99925B008011D2 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D668D9231C99925B008011D2 /* menu.png */; };
@@ -87,6 +91,14 @@
 		84EE4D101C909D1600F7C6E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84EE4D1E1C90A4F100F7C6E3 /* New_Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = New_Note.swift; path = ../New_Note.swift; sourceTree = "<group>"; };
 		BB921FDD22B71FAB7657CBDC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D643ECA61C9AB0A100512A2F /* YLSwipeLockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSwipeLockView.h; sourceTree = "<group>"; };
+		D643ECA71C9AB0A100512A2F /* YLSwipeLockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLSwipeLockView.m; sourceTree = "<group>"; };
+		D643ECA81C9AB0A100512A2F /* YLSwipeLockNodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSwipeLockNodeView.h; sourceTree = "<group>"; };
+		D643ECA91C9AB0A100512A2F /* YLSwipeLockNodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLSwipeLockNodeView.m; sourceTree = "<group>"; };
+		D643ECAA1C9AB0A100512A2F /* YLCheckToUnlockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLCheckToUnlockViewController.h; sourceTree = "<group>"; };
+		D643ECAB1C9AB0A100512A2F /* YLCheckToUnlockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLCheckToUnlockViewController.m; sourceTree = "<group>"; };
+		D643ECAC1C9AB0A100512A2F /* YLInitSwipePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLInitSwipePasswordController.h; sourceTree = "<group>"; };
+		D643ECAD1C9AB0A100512A2F /* YLInitSwipePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLInitSwipePasswordController.m; sourceTree = "<group>"; };
 		D668D91C1C99909B008011D2 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		D668D91D1C99909B008011D2 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		D668D9201C999138008011D2 /* SideBarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideBarTableViewController.h; sourceTree = "<group>"; };
@@ -213,6 +225,7 @@
 				D6C4D7DA1C96DDD800AD454F /* LabelViewController.swift */,
 				D6B2161E1C96F9D3005D258B /* TextViewViewController.swift */,
 				D6B216201C972001005D258B /* Notify_BeforeViewController.swift */,
+				D643ECB21C9AB0A600512A2F /* SwipeLock */,
 				D668D91F1C9990AB008011D2 /* RevealController */,
 				D6C4D77B1C96B01800AD454F /* StackMenu */,
 				841029A21C9203B600FDBF59 /* AlertView */,
@@ -241,6 +254,21 @@
 				84EE4D101C909D1600F7C6E3 /* Info.plist */,
 			);
 			path = SAReminderUITests;
+			sourceTree = "<group>";
+		};
+		D643ECB21C9AB0A600512A2F /* SwipeLock */ = {
+			isa = PBXGroup;
+			children = (
+				D643ECA61C9AB0A100512A2F /* YLSwipeLockView.h */,
+				D643ECA71C9AB0A100512A2F /* YLSwipeLockView.m */,
+				D643ECA81C9AB0A100512A2F /* YLSwipeLockNodeView.h */,
+				D643ECA91C9AB0A100512A2F /* YLSwipeLockNodeView.m */,
+				D643ECAA1C9AB0A100512A2F /* YLCheckToUnlockViewController.h */,
+				D643ECAB1C9AB0A100512A2F /* YLCheckToUnlockViewController.m */,
+				D643ECAC1C9AB0A100512A2F /* YLInitSwipePasswordController.h */,
+				D643ECAD1C9AB0A100512A2F /* YLInitSwipePasswordController.m */,
+			);
+			name = SwipeLock;
 			sourceTree = "<group>";
 		};
 		D668D91F1C9990AB008011D2 /* RevealController */ = {
@@ -484,14 +512,18 @@
 				D6C4D7DB1C96DDD800AD454F /* LabelViewController.swift in Sources */,
 				D6B216211C972001005D258B /* Notify_BeforeViewController.swift in Sources */,
 				D668D9221C999138008011D2 /* SideBarTableViewController.m in Sources */,
+				D643ECB11C9AB0A100512A2F /* YLInitSwipePasswordController.m in Sources */,
 				84EE4CF11C909D1600F7C6E3 /* ViewController.swift in Sources */,
 				D69FABDC1C930B820052E487 /* settingsCell.swift in Sources */,
+				D643ECB01C9AB0A100512A2F /* YLCheckToUnlockViewController.m in Sources */,
 				D6BA98531C9189B500AF26E7 /* Cell.swift in Sources */,
+				D643ECAF1C9AB0A100512A2F /* YLSwipeLockNodeView.m in Sources */,
 				841029A11C9203AA00FDBF59 /* HHAlertView.m in Sources */,
 				D668D92A1C99AB36008011D2 /* Settings.swift in Sources */,
 				D6B2161F1C96F9D3005D258B /* TextViewViewController.swift in Sources */,
 				84EE4CEF1C909D1600F7C6E3 /* AppDelegate.swift in Sources */,
 				D6C4D7791C96B00000AD454F /* PCStackMenu.m in Sources */,
+				D643ECAE1C9AB0A100512A2F /* YLSwipeLockView.m in Sources */,
 				D6C4D77A1C96B00000AD454F /* PCStackMenuItem.m in Sources */,
 				84EE4D1F1C90A4F100F7C6E3 /* New_Note.swift in Sources */,
 			);
