@@ -7,16 +7,23 @@
 //
 
 import UIKit
+import CoreData
 
 protocol newNote {
+    
      func updateLabelText(newLabel: String)
      func updateLabelContent(newLabel: String)
      func updateLabelIndex(newIndex: Int)
+    
 
 }
 
-class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITableViewDelegate, newNote  {
+protocol buttonsChange {
+    func selectChildButton ()
+}
 
+class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITableViewDelegate, newNote {
+    
     @IBOutlet weak var picker: UIDatePicker!
     @IBOutlet weak var settingsTable: UITableView!
     let dateformatter = NSDateFormatter ()
@@ -29,10 +36,15 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     var labelText:NSString?
     var labelContent:NSString?
     var labelInteger:Int?
-    var green   = UIButton()
-     var orange   = UIButton()
-     var red   = UIButton()
- 
+    var delegate: newNote?
+
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
+    @IBOutlet weak var childButton: UIButton!
+    @IBOutlet weak var phoneButton: UIButton!
+    @IBOutlet weak var shoppingCartButton: UIButton!
+    @IBOutlet weak var travelButton: UIButton!
+
     let alertVC = HHAlertView() //objective c class
 
      let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -41,16 +53,15 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(managedObjectContext)
         self.title = "Add notification"
         self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.picker.backgroundColor = UIColor.whiteColor()
-        settingsArray = ["Title", "Content", "Remind before", "Priority", "Alarm"]
+        settingsArray = ["Title", "Content", "Remind before", "Alarm"]
         remindArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
         
         HHAlertView.shared().delegate = self
-        
-        
+
         dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateformatter.dateFormat="MM.dd hh:mm"
         
@@ -60,10 +71,43 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         
         labelText = "Place title here"
         labelContent = "Content text"
-       labelInteger = 0
+        labelInteger = 0
 
     }
     
+    func resetButtons() {
+        childButton.selected = false
+        phoneButton.selected = false
+        shoppingCartButton.selected = false
+        travelButton.selected = false
+    }
+    
+    @IBAction func childTapped(sender: AnyObject) {
+        resetButtons()
+       
+        childButton.selected = true
+        childButton.setImage(UIImage(named: "child-selected.png"), forState: .Selected)
+    }
+    
+    @IBAction func phoneTapped(sender: AnyObject) {
+        resetButtons()
+        phoneButton.selected = true
+        phoneButton.setImage(UIImage(named: "phone-selected.png"), forState: .Selected)
+
+    }
+    
+    @IBAction func shoppingCartTapped(sender: AnyObject) {
+        resetButtons()
+        shoppingCartButton.selected = true
+        shoppingCartButton.setImage(UIImage(named: "shopping-cart-selected.png"), forState: .Selected)
+    }
+    
+    @IBAction func travelTapped(sender: AnyObject) {
+        resetButtons()
+        travelButton.selected = true
+        travelButton.setImage(UIImage(named: "travel-selected.png"), forState: .Selected)
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -88,9 +132,48 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
           dict.setObject(labelContent!, forKey: "content")
         }
         
+        var image = ""
+        
+        if childButton.selected {
+            image = "child-selected.png"
+        }
+        else if phoneButton.selected {
+            image = "phone-selected.png"
+        }
+        else if shoppingCartButton.selected {
+            image = "shopping-cart-selected.png"
+        }
+        else if travelButton.selected {
+            image = "travel-selected.png"
+        }
+
         dict .setObject(labelText!, forKey: "text")
         dict .setObject(dateValue, forKey: "date")
+        dict .setObject(image, forKey: "image")
         print(dict.objectForKey("text"))
+        
+        // CoreData
+        
+        let notes =  NSEntityDescription.entityForName("Notes",
+            inManagedObjectContext:managedObjectContext)
+        let nextNote = NSManagedObject(entity: notes!, insertIntoManagedObjectContext: self.managedObjectContext)
+    
+        nextNote.setValue(labelText, forKey: "titleText")
+        nextNote.setValue(dateValue, forKey: "date")
+        nextNote.setValue(image, forKey: "buttonName")
+        nextNote.setValue(labelContent, forKey: "contentText")
+//        nextNote.setValue(labelContent, forKey: "contentName")
+        
+        print("nextNote == \(nextNote)")
+      
+        do {
+            try nextNote.managedObjectContext!.save()
+        } catch {
+            print(error)
+        }
+        //notes?.setValue(labelText, forKey: "titleText")
+       
+        //@@@
         
         appDelegate.myNewDictArray .addObject(dict)
         
@@ -166,7 +249,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     // Table view methods @@@
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-     
+        
         return 1
     }
     
@@ -200,41 +283,13 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             }
         }  else if indexPath!.row == 2{
             if labelInteger != nil{
-                cell.settingsLabel.text = remindArray.objectAtIndex(labelInteger!) as! String
+                cell.settingsLabel.text = remindArray.objectAtIndex(labelInteger!) as? String
             }
             
-        } else if indexPath!.row == 3 {
-            
-            cell.accessoryType = .None
-            cell.settingsLabel.hidden = true
-            
-            red = UIButton(frame: CGRectMake(240, 0, 40, 40))
-            orange = UIButton(frame: CGRectMake(195, 0, 40, 40))
-            green = UIButton(frame: CGRectMake(150, 0, 40, 40))
-            
-            red.setBackgroundImage(UIImage(named: "red.png"), forState: .Normal)
-            orange.setBackgroundImage(UIImage(named: "orange.png"), forState: .Normal)
-            green.setBackgroundImage(UIImage(named: "green.png"), forState: .Normal)
-            
-            red.showsTouchWhenHighlighted = true
-            orange.showsTouchWhenHighlighted = true
-            green.showsTouchWhenHighlighted = true
-
-            cell.contentView.addSubview(red)
-            cell.contentView.addSubview(orange)
-            cell.contentView.addSubview(green)
-            
-            red.addTarget(self, action: "redTouched:", forControlEvents: .TouchUpInside)
-            orange.addTarget(self, action: "orangeTouched:", forControlEvents: .TouchUpInside)
-            green.addTarget(self, action: "greenTouched:", forControlEvents: .TouchUpInside)
-
-
-
         }
-        
-            else if indexPath!.row == 4 {
+            else if indexPath!.row == 3 {
 
-                cell.settingsLabel.text = dateValue as? String
+                cell.settingsLabel.text = dateValue as String
             }
         
         return cell
@@ -307,6 +362,12 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         labelInteger = newIndex
         settingsTable.reloadData()
         print("updateLabelIndex CALLEd")
+    }
+    
+    func selectChildButton (){
+        
+//         childButton.selected = true
+        print ("child button selected")
     }
     /*
     // MARK: - Navigation

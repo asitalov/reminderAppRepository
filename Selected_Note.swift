@@ -7,19 +7,50 @@
 //
 
 import UIKit
+import CoreData
 
-var selectedIndex : Int = 0
+var selectedIndex : Int?
+var selectedIndexPath : NSIndexPath?
 
+class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAlertViewDelegate {
 
-class Selected_Note: UIViewController {
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let request = NSFetchRequest(entityName: "Notes")
+    let alertVC = HHAlertView()
 
-    @IBOutlet weak var textLabel: UILabel!    
+    @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var myImage: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var settingsButton: UIButton!
   
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let notesFetchRequest = NSFetchRequest(entityName: "Notes")
+        
+        let primarySortDescriptor = NSSortDescriptor(key: "titleText", ascending: true)
+        let secondarySortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        let thirdSortDescriptor = NSSortDescriptor(key: "buttonName", ascending: true)
+        
+        
+        notesFetchRequest.sortDescriptors = [primarySortDescriptor, secondarySortDescriptor, thirdSortDescriptor]
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: notesFetchRequest,
+            managedObjectContext: self.managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        frc.delegate = self
+        print("animalFetch = \( notesFetchRequest)")
+        return frc
+    }()
+
     @IBAction func settingsButtonPressed(sender: AnyObject) {
         
         view.backgroundColor = UIColor.grayColor()
@@ -32,12 +63,12 @@ class Selected_Note: UIViewController {
                
             }
         })
-//view.backgroundColor = UIColor.whiteColor()
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "notePad2@2x.jpg")!)
       //  settingsButton.image = UIImage(named: "settings.png")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         // Do any additional setup after loading the view.
@@ -51,31 +82,81 @@ class Selected_Note: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         
-        let textForContentLabel = appDelegate.myNewDictArray.objectAtIndex((selectedIndex)) .objectForKey("text")
-        let textForDateLabel = appDelegate.myNewDictArray.objectAtIndex((selectedIndex)) .objectForKey("date")
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+        }
+       
         
-        textLabel.text = textForContentLabel as? String
-        dateLabel.text = textForDateLabel as? String
+        let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
+        
+        let title = notes.titleText
+        let imageSelected = notes.buttonName
+        let alarmText = notes.date
+        let contentText = notes.contentText
+       
+        titleLabel.text = title
+        dateLabel.text = alarmText
+        myImage.image = UIImage(named: imageSelected!)
+        textLabel.text = contentText
         
     }
-
-    @IBAction func removeNote(sender: UIButton) {
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        appDelegate.myNewDictArray .removeObjectAtIndex(selectedIndex)
-        navigationController?.popViewControllerAnimated(true)
+        return 1
+    }
+    
+    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+
+        return 2
+    }
+    
+    
+    func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
+     // let cell:UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
+       let cell = tableView!.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! CellSelected
+        
+        if indexPath!.row == 0 {
+            
+        cell.titleLabel.text = "Mark as completed"
+        } else if indexPath!.row == 1 {
+          cell.titleLabel.text = "Delete"
+            cell.titleLabel.textColor = UIColor.redColor()
+
+        }
+        
+        return cell
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.row == 0{
+    
+    } else if indexPath.row == 1 {
+            
+             HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Warning", detail: "Current action will delete current data. Continue?", cancelButton: "NO", okbutton: "YES")
+        }
+        
+    }
+    
+//    func HHAlertView(alertview: HHAlertView, didClickButtonAnIndex buttonIndex: Int) {
+//        
+//    }
+    
+    func didClickButtonAnIndex(button: HHAlertButton) {
+        
+        if button == HHAlertButton.Ok {
+           print ("clicked OK button")
+        }
+    }
+    
+    @IBAction func removeNote(sender: UIButton) {
+//        
+//        appDelegate.myNewDictArray .removeObjectAtIndex(selectedIndex)
+//        navigationController?.popViewControllerAnimated(true)
     }
     
 
-
- 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

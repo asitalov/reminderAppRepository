@@ -139,7 +139,7 @@ int secondsLeft;
     
     messageLabel.text = @"Failed to access 5 times, try again in: 05:00";
     messageLabel.textColor = [UIColor whiteColor];
-    messageLabel.textAlignment = UITextAlignmentCenter;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
     blockView.backgroundColor = [UIColor colorWithRed:35/255.0 green:39/255.0 blue:54/255.0 alpha:0.5];
     self.unmatchCounter = 5;
 

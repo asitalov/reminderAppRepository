@@ -28,7 +28,7 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         contentTextView.becomeFirstResponder()
         
         let numberToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 50)); numberToolbar.barStyle = UIBarStyle.Default
-        
+        numberToolbar.backgroundColor = UIColor.darkGrayColor()
         numberToolbar.items = [
             
             UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
@@ -42,7 +42,7 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         
-        contentTextView.text = labelContent as? String
+        contentTextView.text = labelContent as String
         
     }
     

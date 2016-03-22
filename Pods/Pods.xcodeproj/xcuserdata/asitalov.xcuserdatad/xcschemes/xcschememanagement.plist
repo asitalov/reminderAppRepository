@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-MVYSideMenu.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>Pods-PopMenu.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -38,6 +43,16 @@
 			<true/>
 		</dict>
 		<key>69B1DD3862FB4DA0812E506A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B987CDE2BB4FCE13B4A89696</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CF11C01839F76E812BEA94CC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
