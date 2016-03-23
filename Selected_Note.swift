@@ -88,6 +88,7 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
             print("An error occurred")
         }
        
+        HHAlertView.shared().delegate = self
         
         let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
         
@@ -117,10 +118,16 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
      // let cell:UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
        let cell = tableView!.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! CellSelected
+        let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
         
         if indexPath!.row == 0 {
-            
+            if notes.status == "completed_stamp.gif" {
+            cell.titleLabel.text = "Note is completed"
+                cell.backgroundColor = UIColor.lightGrayColor()
+                cell.userInteractionEnabled = false
+            } else {
         cell.titleLabel.text = "Mark as completed"
+            }
         } else if indexPath!.row == 1 {
           cell.titleLabel.text = "Delete"
             cell.titleLabel.textColor = UIColor.redColor()
@@ -132,31 +139,46 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.row == 0{
-    
+            
+    let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
+          notes.status = "completed_stamp.gif"
+            
+            do {
+                try notes.managedObjectContext!.save()
+            } catch {
+                print(error)
+            }
+            
+            self.navigationController?.popViewControllerAnimated(true)
+         
     } else if indexPath.row == 1 {
             
              HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Warning", detail: "Current action will delete current data. Continue?", cancelButton: "NO", okbutton: "YES")
         }
         
     }
-    
-//    func HHAlertView(alertview: HHAlertView, didClickButtonAnIndex buttonIndex: Int) {
-//        
-//    }
-    
+
     func didClickButtonAnIndex(button: HHAlertButton) {
         
         if button == HHAlertButton.Ok {
-           print ("clicked OK button")
+            
+            let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
+            managedObjectContext.deleteObject(notes)
+            
+            do {
+                try notes.managedObjectContext!.save()
+            } catch {
+                print(error)
+            }
+            self.navigationController?.popViewControllerAnimated(true)
+
         }
     }
-    
-    @IBAction func removeNote(sender: UIButton) {
-//        
-//        appDelegate.myNewDictArray .removeObjectAtIndex(selectedIndex)
-//        navigationController?.popViewControllerAnimated(true)
-    }
-    
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "editNote") {
+        selectedIndexPath2 = selectedIndexPath
+        }
+    }
 
 }

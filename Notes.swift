@@ -2,7 +2,7 @@
 //  Notes.swift
 //  
 //
-//  Created by Alexei Sitalov on 3/21/16.
+//  Created by Alexei Sitalov on 3/23/16.
 //
 //
 
@@ -12,9 +12,11 @@ import CoreData
 
 class Notes: NSManagedObject {
 
-// Insert code here to add functionality to your managed object subclass
-    @NSManaged var titleText: String?
-    @NSManaged var contentText: String?
     @NSManaged var buttonName: String?
+    @NSManaged var contentText: String?
     @NSManaged var date: String?
+    @NSManaged var status: String?
+    @NSManaged var titleText: String?
+    @NSManaged var index: NSNumber?
+
 }

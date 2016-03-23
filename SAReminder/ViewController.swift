@@ -33,7 +33,7 @@ class ViewController: UIViewController, UITableViewDelegate, buttonsChange, NSFe
     let formatter2 = NSDateFormatter ()
    // var fetchedResultsController: NSFetchedResultsController!
     var delegate:buttonsChange?
-
+    var token: dispatch_once_t = 0
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let request = NSFetchRequest(entityName: "Notes")
     @IBOutlet weak var myImage: UIImageView!
@@ -152,14 +152,19 @@ class ViewController: UIViewController, UITableViewDelegate, buttonsChange, NSFe
         let notes = fetchedResultsController.objectAtIndexPath(indexPath!) as! Notes
         let imageSelected = notes.buttonName
         let alarmText = notes.date
-       
+        let statusImage = notes.status
+
         let dateInDateFormat = formatter1.dateFromString(alarmText!)
         let dateInStringFormat = formatter2.stringFromDate(dateInDateFormat!)
-        
+       
         cell.titleLabel?.text = notes.titleText
+        if imageSelected != "" {
         cell.myImage.image = UIImage(named: imageSelected!)
+        }
         cell.alarmLabel?.text = dateInStringFormat//notes.date
-
+        if statusImage != nil{
+        cell.statusImage.image = UIImage(named:statusImage!)
+        }
         
 //        if appDelegate.myNewDictArray.count > 0 {
 //           
@@ -321,16 +326,16 @@ class ViewController: UIViewController, UITableViewDelegate, buttonsChange, NSFe
             todoSearchBar.userInteractionEnabled = false
         } else {
             removeAnEmptyView()
-            alarmTable.reloadData()
+            
         }
-
+        alarmTable.reloadData()
     }
     
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
         if type != .Delete {
-            alarmTable.reloadData()
+         alarmTable.reloadData()
         }
     }
 }

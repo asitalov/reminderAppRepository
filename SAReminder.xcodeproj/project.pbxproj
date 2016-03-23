@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6FCD2ECE19D60980FCA823A3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27EE9259F12A2FEBE8C90C25 /* libPods.a */; };
 		841029A11C9203AA00FDBF59 /* HHAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 841029A01C9203AA00FDBF59 /* HHAlertView.m */; };
+		84DE3A631CA1D90600E69CA4 /* completed_stamp.gif in Resources */ = {isa = PBXBuildFile; fileRef = 84DE3A621CA1D90600E69CA4 /* completed_stamp.gif */; };
 		84EE4CEF1C909D1600F7C6E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4CEE1C909D1600F7C6E3 /* AppDelegate.swift */; };
 		84EE4CF11C909D1600F7C6E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4CF01C909D1600F7C6E3 /* ViewController.swift */; };
 		84EE4CF41C909D1600F7C6E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84EE4CF21C909D1600F7C6E3 /* Main.storyboard */; };
@@ -28,18 +29,12 @@
 		D668D9281C999828008011D2 /* todos.png in Resources */ = {isa = PBXBuildFile; fileRef = D668D9271C999828008011D2 /* todos.png */; };
 		D668D92A1C99AB36008011D2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D9291C99AB36008011D2 /* Settings.swift */; };
 		D68CF7B31CA163D800424026 /* CellSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68CF7B21CA163D800424026 /* CellSelected.swift */; };
-		D69FABCC1C92E3210052E487 /* icon-empty-events.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D69FABCB1C92E3210052E487 /* icon-empty-events.pdf */; };
-		D69FABCE1C92E4650052E487 /* blueCalendar.png in Resources */ = {isa = PBXBuildFile; fileRef = D69FABCD1C92E4650052E487 /* blueCalendar.png */; };
 		D69FABDC1C930B820052E487 /* settingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FABDB1C930B820052E487 /* settingsCell.swift */; };
 		D6B2161F1C96F9D3005D258B /* TextViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B2161E1C96F9D3005D258B /* TextViewViewController.swift */; };
 		D6B216211C972001005D258B /* Notify_BeforeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B216201C972001005D258B /* Notify_BeforeViewController.swift */; };
 		D6BA98531C9189B500AF26E7 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BA98521C9189B500AF26E7 /* Cell.swift */; };
 		D6BA98931C91C3D400AF26E7 /* Selected_Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BA98921C91C3D400AF26E7 /* Selected_Note.swift */; };
 		D6BA98951C91D57100AF26E7 /* alarm.png in Resources */ = {isa = PBXBuildFile; fileRef = D6BA98941C91D57100AF26E7 /* alarm.png */; };
-		D6BA98981C91DB9200AF26E7 /* editButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D6BA98961C91DB9200AF26E7 /* editButton.png */; };
-		D6BA98991C91DB9200AF26E7 /* deleteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = D6BA98971C91DB9200AF26E7 /* deleteButton.png */; };
-		D6BA98A31C91E1A700AF26E7 /* notePad2@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D6BA98A11C91E1A700AF26E7 /* notePad2@2x.jpg */; };
-		D6BA98A41C91E1A700AF26E7 /* notePad.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D6BA98A21C91E1A700AF26E7 /* notePad.jpg */; };
 		D6BA98A61C91E3F300AF26E7 /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = D6BA98A51C91E3F300AF26E7 /* exclamation.png */; };
 		D6C4D7791C96B00000AD454F /* PCStackMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C4D7761C96B00000AD454F /* PCStackMenu.m */; };
 		D6C4D77A1C96B00000AD454F /* PCStackMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C4D7781C96B00000AD454F /* PCStackMenuItem.m */; };
@@ -50,9 +45,9 @@
 		D6C4D7851C96B31700AD454F /* twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6C4D7801C96B31700AD454F /* twitter@2x.png */; };
 		D6C4D7D91C96C24400AD454F /* settings2.png in Resources */ = {isa = PBXBuildFile; fileRef = D6C4D7D81C96C24400AD454F /* settings2.png */; };
 		D6C4D7DB1C96DDD800AD454F /* LabelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6C4D7DA1C96DDD800AD454F /* LabelViewController.swift */; };
+		D6D0F0C81CA2B10F004C3E20 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D0F0C71CA2B10F004C3E20 /* Notes.swift */; };
 		D6D1D2F41C9FFCC700306891 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D6D1D2F21C9FFCC700306891 /* CoreDataModel.xcdatamodeld */; };
 		D6D1D2F61CA002A200306891 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D1D2F51CA002A200306891 /* CoreData.framework */; };
-		D6D1D45C1CA0498B00306891 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D1D45B1CA0498A00306891 /* Notes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +72,7 @@
 		8410299E1C9203AA00FDBF59 /* SAReminder-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SAReminder-Bridging-Header.h"; sourceTree = "<group>"; };
 		8410299F1C9203AA00FDBF59 /* HHAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HHAlertView.h; sourceTree = "<group>"; };
 		841029A01C9203AA00FDBF59 /* HHAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HHAlertView.m; sourceTree = "<group>"; };
+		84DE3A621CA1D90600E69CA4 /* completed_stamp.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = completed_stamp.gif; sourceTree = "<group>"; };
 		84EE4CEB1C909D1600F7C6E3 /* SAReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EE4CEE1C909D1600F7C6E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84EE4CF01C909D1600F7C6E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,18 +105,12 @@
 		D668D9271C999828008011D2 /* todos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = todos.png; sourceTree = "<group>"; };
 		D668D9291C99AB36008011D2 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = ../Settings.swift; sourceTree = "<group>"; };
 		D68CF7B21CA163D800424026 /* CellSelected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CellSelected.swift; path = ../CellSelected.swift; sourceTree = "<group>"; };
-		D69FABCB1C92E3210052E487 /* icon-empty-events.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "icon-empty-events.pdf"; sourceTree = "<group>"; };
-		D69FABCD1C92E4650052E487 /* blueCalendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueCalendar.png; sourceTree = "<group>"; };
 		D69FABDB1C930B820052E487 /* settingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = settingsCell.swift; path = ../settingsCell.swift; sourceTree = "<group>"; };
 		D6B2161E1C96F9D3005D258B /* TextViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextViewViewController.swift; path = ../TextViewViewController.swift; sourceTree = "<group>"; };
 		D6B216201C972001005D258B /* Notify_BeforeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Notify_BeforeViewController.swift; path = ../Notify_BeforeViewController.swift; sourceTree = "<group>"; };
 		D6BA98521C9189B500AF26E7 /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cell.swift; path = ../Cell.swift; sourceTree = "<group>"; };
 		D6BA98921C91C3D400AF26E7 /* Selected_Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Selected_Note.swift; path = ../Selected_Note.swift; sourceTree = "<group>"; };
 		D6BA98941C91D57100AF26E7 /* alarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alarm.png; sourceTree = "<group>"; };
-		D6BA98961C91DB9200AF26E7 /* editButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editButton.png; sourceTree = "<group>"; };
-		D6BA98971C91DB9200AF26E7 /* deleteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteButton.png; sourceTree = "<group>"; };
-		D6BA98A11C91E1A700AF26E7 /* notePad2@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "notePad2@2x.jpg"; sourceTree = "<group>"; };
-		D6BA98A21C91E1A700AF26E7 /* notePad.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = notePad.jpg; sourceTree = "<group>"; };
 		D6BA98A51C91E3F300AF26E7 /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
 		D6C4D7751C96B00000AD454F /* PCStackMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCStackMenu.h; sourceTree = "<group>"; };
 		D6C4D7761C96B00000AD454F /* PCStackMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCStackMenu.m; sourceTree = "<group>"; };
@@ -133,9 +123,9 @@
 		D6C4D7801C96B31700AD454F /* twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "twitter@2x.png"; sourceTree = "<group>"; };
 		D6C4D7D81C96C24400AD454F /* settings2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings2.png; sourceTree = "<group>"; };
 		D6C4D7DA1C96DDD800AD454F /* LabelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabelViewController.swift; path = ../LabelViewController.swift; sourceTree = "<group>"; };
+		D6D0F0C71CA2B10F004C3E20 /* Notes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		D6D1D2F31C9FFCC700306891 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		D6D1D2F51CA002A200306891 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		D6D1D45B1CA0498A00306891 /* Notes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		DCE4ED16B6273F808C2A854B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,7 +208,7 @@
 		84EE4CED1C909D1600F7C6E3 /* SAReminder */ = {
 			isa = PBXGroup;
 			children = (
-				D6D1D45B1CA0498A00306891 /* Notes.swift */,
+				D6D0F0C71CA2B10F004C3E20 /* Notes.swift */,
 				84EE4CEE1C909D1600F7C6E3 /* AppDelegate.swift */,
 				D668D9291C99AB36008011D2 /* Settings.swift */,
 				84EE4CF01C909D1600F7C6E3 /* ViewController.swift */,
@@ -292,6 +282,7 @@
 		D6BA989A1C91DB9800AF26E7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				84DE3A621CA1D90600E69CA4 /* completed_stamp.gif */,
 				D668D9251C9997D7008011D2 /* settings.png */,
 				D668D9271C999828008011D2 /* todos.png */,
 				D668D9231C99925B008011D2 /* menu.png */,
@@ -302,13 +293,7 @@
 				D6C4D77F1C96B31700AD454F /* speech@2x.png */,
 				D6C4D7801C96B31700AD454F /* twitter@2x.png */,
 				D6BA98941C91D57100AF26E7 /* alarm.png */,
-				D6BA98961C91DB9200AF26E7 /* editButton.png */,
-				D6BA98971C91DB9200AF26E7 /* deleteButton.png */,
-				D6BA98A11C91E1A700AF26E7 /* notePad2@2x.jpg */,
-				D6BA98A21C91E1A700AF26E7 /* notePad.jpg */,
 				D6BA98A51C91E3F300AF26E7 /* exclamation.png */,
-				D69FABCB1C92E3210052E487 /* icon-empty-events.pdf */,
-				D69FABCD1C92E4650052E487 /* blueCalendar.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -432,21 +417,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				84EE4CF91C909D1600F7C6E3 /* LaunchScreen.storyboard in Resources */,
-				D6BA98981C91DB9200AF26E7 /* editButton.png in Resources */,
 				D668D9261C9997D7008011D2 /* settings.png in Resources */,
-				D69FABCE1C92E4650052E487 /* blueCalendar.png in Resources */,
 				D668D9281C999828008011D2 /* todos.png in Resources */,
 				D6C4D7841C96B31700AD454F /* speech@2x.png in Resources */,
 				D668D9241C99925B008011D2 /* menu.png in Resources */,
-				D6BA98991C91DB9200AF26E7 /* deleteButton.png in Resources */,
 				D6BA98A61C91E3F300AF26E7 /* exclamation.png in Resources */,
 				D6C4D7821C96B31700AD454F /* gear@2x.png in Resources */,
 				D6BA98951C91D57100AF26E7 /* alarm.png in Resources */,
-				D6BA98A31C91E1A700AF26E7 /* notePad2@2x.jpg in Resources */,
 				D6C4D7831C96B31700AD454F /* magnifier@2x.png in Resources */,
-				D6BA98A41C91E1A700AF26E7 /* notePad.jpg in Resources */,
 				84EE4CF61C909D1600F7C6E3 /* Assets.xcassets in Resources */,
-				D69FABCC1C92E3210052E487 /* icon-empty-events.pdf in Resources */,
+				84DE3A631CA1D90600E69CA4 /* completed_stamp.gif in Resources */,
 				D6C4D7D91C96C24400AD454F /* settings2.png in Resources */,
 				D6C4D7851C96B31700AD454F /* twitter@2x.png in Resources */,
 				D6C4D7811C96B31700AD454F /* actions@2x.png in Resources */,
@@ -516,7 +496,6 @@
 				D6D1D2F41C9FFCC700306891 /* CoreDataModel.xcdatamodeld in Sources */,
 				D643ECB11C9AB0A100512A2F /* YLInitSwipePasswordController.m in Sources */,
 				84EE4CF11C909D1600F7C6E3 /* ViewController.swift in Sources */,
-				D6D1D45C1CA0498B00306891 /* Notes.swift in Sources */,
 				D69FABDC1C930B820052E487 /* settingsCell.swift in Sources */,
 				D643ECB01C9AB0A100512A2F /* YLCheckToUnlockViewController.m in Sources */,
 				D6BA98531C9189B500AF26E7 /* Cell.swift in Sources */,
@@ -524,6 +503,7 @@
 				D643ECAF1C9AB0A100512A2F /* YLSwipeLockNodeView.m in Sources */,
 				841029A11C9203AA00FDBF59 /* HHAlertView.m in Sources */,
 				D668D92A1C99AB36008011D2 /* Settings.swift in Sources */,
+				D6D0F0C81CA2B10F004C3E20 /* Notes.swift in Sources */,
 				D6B2161F1C96F9D3005D258B /* TextViewViewController.swift in Sources */,
 				84EE4CEF1C909D1600F7C6E3 /* AppDelegate.swift in Sources */,
 				D6C4D7791C96B00000AD454F /* PCStackMenu.m in Sources */,
