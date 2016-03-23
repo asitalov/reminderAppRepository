@@ -13,7 +13,7 @@ protocol myProtocol {
      func changeMyProtocol()
 }
 
-class ViewController: UIViewController, UITableViewDelegate, buttonsChange, NSFetchedResultsControllerDelegate {
+class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
     func selectChildButton() {
         
@@ -31,21 +31,11 @@ class ViewController: UIViewController, UITableViewDelegate, buttonsChange, NSFe
     let revealView = SWRevealViewController ()
     let formatter1 = NSDateFormatter ()
     let formatter2 = NSDateFormatter ()
-   // var fetchedResultsController: NSFetchedResultsController!
-    var delegate:buttonsChange?
     var token: dispatch_once_t = 0
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let request = NSFetchRequest(entityName: "Notes")
     @IBOutlet weak var myImage: UIImageView!
-    
 
-    @IBAction func addObject(sender: UIButton) {
-
-        delegate?.selectChildButton()
-        
-    }
-    
-  
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
@@ -69,13 +59,13 @@ class ViewController: UIViewController, UITableViewDelegate, buttonsChange, NSFe
         return frc
     }()
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        
-//        let controller = segue.destinationViewController as! New_Note
-//        
-//        controller.selectChildButton()
-//        
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "createNote") {
+            let newNoteVC: New_Note = segue.destinationViewController as! New_Note
+            newNoteVC.titleText = "Add a note"
+            selectedIndexPath2 = nil
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

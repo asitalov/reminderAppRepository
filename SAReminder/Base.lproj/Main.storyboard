@@ -90,7 +90,6 @@
                                 <rect key="frame" x="282" y="11" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
-                                    <action selector="addObject:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IvQ-eW-BaT"/>
                                     <segue destination="uR7-mx-HWN" kind="show" identifier="createNote" id="j1T-li-MU8"/>
                                 </connections>
                             </button>
@@ -245,7 +244,7 @@
                     <navigationItem key="navigationItem" title="Title" id="Ext-AW-GmZ">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="XpK-qD-xR2">
                             <connections>
-                                <action selector="Save:" destination="uR7-mx-HWN" id="6xH-rX-D9x"/>
+                                <action selector="saveChanges:" destination="uR7-mx-HWN" id="QON-9i-MxZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -262,9 +261,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyT-jw-ISd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="710" y="417"/>
+            <point key="canvasLocation" x="720" y="417"/>
         </scene>
-        <!--Title-->
+        <!--Item-->
         <scene sceneID="M5v-mJ-CCc">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="cJq-cC-vQv" customClass="Selected_Note" customModule="SAReminder" customModuleProvider="target" sceneMemberID="viewController">
@@ -354,7 +353,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="2qI-XH-bSD"/>
-                    <navigationItem key="navigationItem" title="Title" id="iwl-av-itt">
+                    <navigationItem key="navigationItem" id="iwl-av-itt">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="T5y-Dz-gLI">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9MJ-L5-4nb">
                                 <rect key="frame" x="233" y="7" width="71" height="30"/>
@@ -824,6 +823,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="YPV-sZ-3aB"/>
-        <segue reference="cWk-ao-Brt"/>
+        <segue reference="j1T-li-MU8"/>
     </inferredMetricsTieBreakers>
 </document>

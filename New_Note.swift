@@ -17,11 +17,6 @@ protocol newNote {
      func updateLabelContent(newLabel: String)
      func updateLabelIndex(newIndex: Int)
     
-
-}
-
-protocol buttonsChange {
-    func selectChildButton ()
 }
 
 class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITableViewDelegate, newNote, NSFetchedResultsControllerDelegate {
@@ -40,6 +35,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     var labelInteger:Int?
     var imageNameText:NSString?
     var delegate: newNote?
+    var titleText:String?
 
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -49,12 +45,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     @IBOutlet weak var travelButton: UIButton!
 
     let alertVC = HHAlertView()
-
-     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
+   
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
-    
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
@@ -117,7 +109,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             labelInteger = 0
         }
      
-        self.title = "Add notification"
+        self.title = titleText
         self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
         self.picker.backgroundColor = UIColor.whiteColor()
         settingsArray = ["Title", "Content", "Remind before", "Alarm"]
@@ -134,10 +126,6 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         
      
 
-    }
-    
-    deinit {
-      selectedIndexPath2 = nil
     }
 
     func resetButtons() {
@@ -177,16 +165,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func didClickButtonAnIndex(button: HHAlertButton) {
-        if button == HHAlertButton.Ok{
-            print("OK TOUCHED")
-        }
-    }
-    
-
-    
-    @IBAction func Save(sender: UIBarButtonItem) {
+  
+    @IBAction func saveChanges(sender: UIBarButtonItem) {
         
       if labelText == "Place title here"{
         HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Please add a message for notification", cancelButton: nil, okbutton: "OK")
@@ -211,7 +191,23 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         scheduleNotification()
         
         // CoreData
-        
+        if selectedIndexPath2 != nil {
+            
+            let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath2!) as! Notes
+            
+            notes.setValue(labelText, forKey: "titleText")
+            notes.setValue(dateValue, forKey: "date")
+            notes.setValue(image, forKey: "buttonName")
+            notes.setValue(labelContent, forKey: "contentText")
+            
+            do {
+                try notes.managedObjectContext!.save()
+            } catch {
+                print(error)
+            }
+
+        } else {
+            
         let notes =  NSEntityDescription.entityForName("Notes",
             inManagedObjectContext:managedObjectContext)
         let nextNote = NSManagedObject(entity: notes!, insertIntoManagedObjectContext: self.managedObjectContext)
@@ -230,7 +226,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         } catch {
             print(error)
         }
-        
+        }
         }
 
     }
@@ -347,20 +343,6 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         return cell
     }
     
-    func greenTouched(sender: UIButton) {
-        
-    }
-    
-    
-    func orangeTouched(sender: UIButton){
-        
-    }
-    
-    
-    func redTouched(sender: UIButton){
-        
-    }
-    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             let sb : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -415,12 +397,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         settingsTable.reloadData()
         print("updateLabelIndex CALLEd")
     }
-    
-    func selectChildButton (){
-        
-//         childButton.selected = true
-        print ("child button selected")
-    }
+
     /*
     // MARK: - Navigation
 

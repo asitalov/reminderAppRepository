@@ -174,10 +174,12 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
 
         }
     }
-
+   
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "editNote") {
         selectedIndexPath2 = selectedIndexPath
+            let correctNoteVC: New_Note = segue.destinationViewController as! New_Note
+            correctNoteVC.titleText = "Edit"
         }
     }
 
