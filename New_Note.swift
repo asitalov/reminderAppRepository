@@ -72,6 +72,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
         
         do {
             try fetchedResultsController.performFetch()
@@ -110,12 +111,14 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         }
      
         self.title = titleText
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        self.picker.backgroundColor = UIColor.whiteColor()
+        //self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+        //self.picker.backgroundColor = UIColor.whiteColor()
+        self.picker.locale = NSLocale.currentLocale()
+        self.picker.timeZone = NSTimeZone.systemTimeZone()
         settingsArray = ["Title", "Content", "Remind before", "Alarm"]
         remindArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
         
-        HHAlertView.shared().delegate = self
+      //  HHAlertView.shared().delegate = self
 
         dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateformatter.dateFormat="MM.dd hh:mm"
@@ -187,7 +190,12 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         else if travelButton.selected {
             image = "travel-selected.png"
         }
+        let dateNow = NSDate ()
         
+        if dateNow .timeIntervalSinceDate(picker.date) > 0 {
+            HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Scheduled time already passed, please schedule actual time", cancelButton: nil, okbutton: "OK")
+        } else {
+
         scheduleNotification()
         
         // CoreData
@@ -228,61 +236,24 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         }
         }
         }
-
+        }
     }
     
     func scheduleNotification () {
-        
-        let currentDate = NSDate ()
-        
-        let dateFormatter = NSDateFormatter()
-        let dateFormatter2 = NSDateFormatter()
-        
-        dateFormatter.dateFormat = "YYYY.MM.dd hh:mm"
-       // dateFormatter.timeZone = NSTimeZone(abbreviation: "GMT +2:00")
-        
-        dateFormatter2.dateFormat = "YYYY"
-        //Got the current year = 2016 in string
-        let currentDateString = dateFormatter2.stringFromDate(currentDate)
-        
-        //Got current date in string: 2016-03-11 07:48:53 +0000
-        let connectedDate = "\(currentDateString), \(dateValue)"
-        
-        //connectedDate (YYYY + MM.dd hh:mm) = 2016, 03.11 09:48
-        print ("connectedDate = \(connectedDate)")
-        
-        //Optional(2016-03-11 07:48:00 +0000) - shows 2 hours earlier, but works fine ^)
-        let dateInDateFormat = dateFormatter.dateFromString(connectedDate)
-        print("dateInDateFormat \(dateInDateFormat)")
-
-        let dateNow = NSDate ()
-        
-//        if dateNow .timeIntervalSinceDate(dateInDateFormat!) > 0 {
-//         HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Scheduled time already passed, please schedule actual time", cancelButton: nil, okbutton: "OK")
-//        } else {
-        
+    
         let notification = UILocalNotification()
-        notification.fireDate = dateInDateFormat
+        notification.timeZone = NSTimeZone.systemTimeZone()
+
+        notification.fireDate = picker.date
         notification.alertBody = notificationText as String
         notification.alertAction = "open"
         notification.soundName = UILocalNotificationDefaultSoundName
         notification.category = "TODO_CATEGORY"
         
          UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
              self.navigationController?.popViewControllerAnimated(true)
-    //    }
-    }
- 
-    
-    func delay(delay: Double, closure: ()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(),
-            closure
-        )
+        
     }
     
     func dataPickerChanged (picker: UIDatePicker) {
@@ -292,9 +263,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         settingsTable.reloadData()
         print("dateValue is: \(dateValue)")
     }
-    
 
-    // Table view methods @@@
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -308,9 +277,14 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         
     let cell = settingsTable.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath!) as! settingsCell
-      
+      cell.selectionStyle = .None//UITableViewCellSelectionStyleGray
       cell.mainLabel.text = settingsArray.objectAtIndex((indexPath?.row)!) as? String
+        cell.backgroundColor = UIColor.clearColor()
         cell.settingsLabel.alpha = 0.5
+   
+       
+        cell.accessoryView = UIImageView(image: UIImage(named: "discIndicator.png"))
+
         if indexPath!.row == 0 {
             
             if labelText == "" {
@@ -338,6 +312,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             else if indexPath!.row == 3 {
 
                 cell.settingsLabel.text = dateValue as String
+            cell.accessoryView = .None
             }
         
         return cell

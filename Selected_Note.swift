@@ -68,7 +68,8 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+      //  self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
+         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
         //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "notePad2@2x.jpg")!)
       //  settingsButton.image = UIImage(named: "settings.png")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         // Do any additional setup after loading the view.
@@ -119,11 +120,11 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
      // let cell:UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
        let cell = tableView!.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! CellSelected
         let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
-        
+         cell.backgroundColor = UIColor.clearColor()
         if indexPath!.row == 0 {
             if notes.status == "completed_stamp.gif" {
             cell.titleLabel.text = "Note is completed"
-                cell.backgroundColor = UIColor.lightGrayColor()
+                //cell.backgroundColor = UIColor.lightGrayColor()
                 cell.userInteractionEnabled = false
             } else {
         cell.titleLabel.text = "Mark as completed"

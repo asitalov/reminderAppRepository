@@ -78,9 +78,9 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         messageLabel.textAlignment = NSTextAlignment.Center
         messageLabel.text = "You don't have any notes. To add a new note click '+' button"
 
-        view.backgroundColor = UIColor .groupTableViewBackgroundColor()
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
         view.addSubview(messageLabel)
-        alarmTable.backgroundColor = UIColor.groupTableViewBackgroundColor()// UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
+
         leftBarButton.target = revealView.revealViewController()
         leftBarButton.action = "revealToggle:"
         self.view!.addGestureRecognizer(revealView.panGestureRecognizer())
@@ -120,10 +120,6 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
     }
     
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
-//        if isFiltered == true {
-//            return searchArray.count;
-//        }
-//        return appDelegate.myNewDictArray.count;
         if let sections = fetchedResultsController.sections {
             let currentSection = sections[section]
             return currentSection.numberOfObjects
@@ -134,11 +130,11 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
     
     
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-//        let cell:UITableViewCell = self.alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
-        
+
         let cell = alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! Cell
-        cell.accessoryType = .DisclosureIndicator
-        
+        cell.accessoryView = UIImageView(image: UIImage(named: "discIndicator.png"))
+        cell.backgroundColor = UIColor.clearColor()
+        cell.selectionStyle = .None
         let notes = fetchedResultsController.objectAtIndexPath(indexPath!) as! Notes
         let imageSelected = notes.buttonName
         let alarmText = notes.date
@@ -146,7 +142,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
 
         let dateInDateFormat = formatter1.dateFromString(alarmText!)
         let dateInStringFormat = formatter2.stringFromDate(dateInDateFormat!)
-       
+      
         cell.titleLabel?.text = notes.titleText
         if imageSelected != "" {
         cell.myImage.image = UIImage(named: imageSelected!)
@@ -154,38 +150,8 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         cell.alarmLabel?.text = dateInStringFormat//notes.date
         if statusImage != nil{
         cell.statusImage.image = UIImage(named:statusImage!)
-        }
-        
-//        if appDelegate.myNewDictArray.count > 0 {
-//           
-//        let noteText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("text") as! String
-//        var alarmText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("date") as! String
-//           
-//            let dateInDateFormat = formatter1.dateFromString(alarmText)
-//            let dateInStringFormat = formatter2.stringFromDate(dateInDateFormat!)
-//            
-//            let imageSelected = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!).objectForKey("image") as! String
-//            
-//            alarmText = dateInStringFormat
-//          
-//           if (isFiltered == nil) {
-//            
-//                // Configure the cell...
-//                cell.titleLabel.text = noteText as String
-//                cell.alarmLabel.text = alarmText
-//                cell.myImage.image = UIImage(named: imageSelected)
-//            }
-//            
-//            else {
-//            
-//                //  Configue the cell with filtered results.
-//                cell.titleLabel.text = searchArray.objectAtIndex((indexPath?.row)!).objectForKey("text") as? String
-//                cell.alarmLabel.text = searchArray.objectAtIndex((indexPath?.row)!).objectForKey("date") as? String
-//            }
-//
-//        } else {
-//            
-//        }
+            cell.backgroundColor = UIColor(red: (188.0 / 255.0), green: (127.0 / 255.0), blue: (72.0 / 255.0), alpha: 0.5)        }
+
         
         return cell
     }
@@ -242,50 +208,51 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
                 return
             }
     }
- 
+    
+    func filter(text: String) {
+        if text != "" {
+            let predicate: NSPredicate = NSPredicate(format: "(titleText CONTAINS[c] %@) OR (date CONTAINS[c] %@)", text, text)
+            fetchedResultsController.fetchRequest.predicate = predicate
+        } else {
+            fetchedResultsController.fetchRequest.predicate = nil
+        }
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+            
+        }
+    }
+    
     func searchBar(searchBar: UISearchBar, textDidChange text: String) {
         
-        if text == "" {
-        
-            isFiltered = nil
-        
-        }
-            
-        else {
-
-            self.isFiltered = true
-            
-            searchArray.removeAllObjects()
-            searchArray.addObjectsFromArray(appDelegate.myNewDictArray.filteredArrayUsingPredicate(NSPredicate(format: "(text CONTAINS[cd] %@) OR (date CONTAINS[cd] %@)", text, text)))
-
-        }
-        
-        if text.characters.count == 1 && searchArray.count == 0 {
-            searchBar.resignFirstResponder()
-        searchArray.addObjectsFromArray(appDelegate.myNewDictArray as [AnyObject])
-        }
-        
-        print ("count == \(searchArray.count)")
+        self.filter(text)
           alarmTable.reloadData()
         
         }
-    
-    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-//        var resultRange: NSRange = text.rangeOfCharacterFromSet(NSCharacterSet.newlineCharacterSet(), options: NSBackwardsSearch)
-//        if text.characters.count == 1 && searchArray.count == 0 {
-//            searchBar.resignFirstResponder()
-//            return false
-//        }
-        
-        return true
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        todoSearchBar.setShowsCancelButton(true, animated: true)
     }
-    
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         todoSearchBar.resignFirstResponder()
+        todoSearchBar.text = nil
+        todoSearchBar.setShowsCancelButton(false, animated: true)
+        fetchedResultsController.fetchRequest.predicate = nil
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+            
+        }
+        
+        alarmTable.reloadData()
+        
     }
-    
-    func dismissKeyBoard () {
-    todoSearchBar.resignFirstResponder()
+    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+        todoSearchBar.resignFirstResponder()
+        todoSearchBar.setShowsCancelButton(false, animated: true)
     }
     
     func removeAnEmptyView(){

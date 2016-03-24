@@ -25,8 +25,8 @@ let revealView = SWRevealViewController ()
         
         self.title = "Settings"
         settingsArray = ["Set gesure password", "Gesture password active"]
-        self.view.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
-        self.tableView.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
+    
+        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
         leftBarButton.target = revealView.revealViewController()
         leftBarButton.action = "revealToggle:"
         self.view!.addGestureRecognizer(revealView.panGestureRecognizer())
@@ -70,7 +70,8 @@ let revealView = SWRevealViewController ()
         
         let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
         cell.textLabel?.text = settingsArray.objectAtIndex((indexPath?.row)!) as? String
-        cell.backgroundColor = UIColor.groupTableViewBackgroundColor()//UIColor(red: (152.0 / 255.0), green: (116.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
+        cell.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 0.25)
+        cell.selectionStyle = .None
 
         if indexPath!.row == 0 {
             cell.accessoryType = .DisclosureIndicator

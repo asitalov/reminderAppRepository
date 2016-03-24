@@ -540,21 +540,21 @@ static CGFloat scaledValue( CGFloat v1, CGFloat min2, CGFloat max2, CGFloat min1
 }
 
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesMoved:touches withEvent:event];
-    
-    if ( _dragging || self.state == UIGestureRecognizerStateFailed)
-        return;
-    
-    const int kDirectionPanThreshold = 5;
-    
-    UITouch *touch = [touches anyObject];
-    CGPoint nowPoint = [touch locationInView:self.view];
-    
-    if (abs(nowPoint.x - _beginPoint.x) > kDirectionPanThreshold) _dragging = YES;
-    else if (abs(nowPoint.y - _beginPoint.y) > kDirectionPanThreshold) self.state = UIGestureRecognizerStateFailed;
-}
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesMoved:touches withEvent:event];
+//    
+//    if ( _dragging || self.state == UIGestureRecognizerStateFailed)
+//        return;
+//    
+//    const int kDirectionPanThreshold = 5;
+//    
+//    UITouch *touch = [touches anyObject];
+//    CGPoint nowPoint = [touch locationInView:self.view];
+
+//    if (abs(nowPoint.x - _beginPoint.x) > kDirectionPanThreshold) _dragging = YES;
+//    else if (abs(nowPoint.y - _beginPoint.y) > kDirectionPanThreshold) self.state = UIGestureRecognizerStateFailed;
+//}
 
 @end
 
@@ -741,12 +741,12 @@ const int FrontViewPositionNone = 0xff;
 }
 
 
-- (NSUInteger)supportedInterfaceOrientations
-{
-    // we could have simply not implemented this, but we choose to call super to make explicit that we
-    // want the default behavior.
-    return [super supportedInterfaceOrientations];
-}
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//    // we could have simply not implemented this, but we choose to call super to make explicit that we
+//    // want the default behavior.
+//    return [super supportedInterfaceOrientations];
+//}
 
 
 #pragma mark - Public methods and property accessors
