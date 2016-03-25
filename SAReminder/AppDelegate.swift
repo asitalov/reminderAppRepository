@@ -28,7 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // creating initial userdefaults uiswitch value
 
         UINavigationBar.appearance().setBackgroundImage(UIImage.init(named: "navigationbar@2x"), forBarMetrics: UIBarMetrics.Default)
+        
         application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: UIUserNotificationType.Alert, categories: nil))
+        
         
         
             return true
@@ -72,6 +74,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if userDefaults.objectForKey("switch") == nil {
             userDefaults.setBool(false, forKey: "switch")
         }
+        
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
         self.callGesturePassword()
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.

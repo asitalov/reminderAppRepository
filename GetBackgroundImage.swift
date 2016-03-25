@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 struct ScreenSize
 {
@@ -24,9 +25,12 @@ struct DeviceType
     static let IS_IPHONE_6P = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
 }
 
-let backgroundImage = UIImage()
+//let backgroundImage = UIImage()
 
-class GetBackgroundImage: NSObject {
+
+class GetBackgroundImage: NSObject, NSFetchedResultsControllerDelegate {
+    
+    var vc = ViewController ()
     
     static func getImage() -> UIImage {
         var imageName = NSString ()
@@ -47,5 +51,4 @@ class GetBackgroundImage: NSObject {
         
     }
 
-    
 }

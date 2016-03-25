@@ -112,8 +112,6 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
      
         self.title = titleText
 
-        self.picker.locale = NSLocale.currentLocale()
-        self.picker.timeZone = NSTimeZone.systemTimeZone()
         settingsArray = ["Title", "Content", "Remind before", "Alarm"]
         remindArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
         
@@ -167,14 +165,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-  
-    @IBAction func saveChanges(sender: UIBarButtonItem) {
-        
-      if labelText == "Place title here"{
-        HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Please add a message for notification", cancelButton: nil, okbutton: "OK")
-        
-      } else {
-        
+    
+  func getImage() -> NSString {
         var image = ""
         
         if childButton.selected {
@@ -189,6 +181,19 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         else if travelButton.selected {
             image = "travel-selected.png"
         }
+        return image
+    }
+    
+    
+    @IBAction func saveChanges(sender: UIBarButtonItem) {
+        
+      if labelText == "Place title here"{
+        HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Please add a message for notification", cancelButton: nil, okbutton: "OK")
+        
+      } else {
+        
+        let myImage = getImage()
+        
         let dateNow = NSDate ()
         
         if dateNow .timeIntervalSinceDate(picker.date) > 0 {
@@ -204,7 +209,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             
             notes.setValue(labelText, forKey: "titleText")
             notes.setValue(dateValue, forKey: "date")
-            notes.setValue(image, forKey: "buttonName")
+            notes.setValue(myImage, forKey: "buttonName")
             notes.setValue(labelContent, forKey: "contentText")
             
             do {
@@ -221,7 +226,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
        
         nextNote.setValue(labelText, forKey: "titleText")
         nextNote.setValue(dateValue, forKey: "date")
-        nextNote.setValue(image, forKey: "buttonName")
+        nextNote.setValue(myImage, forKey: "buttonName")
         nextNote.setValue(labelContent, forKey: "contentText")
         
         let castAsNSNumber = NSNumber(integer: labelInteger!)
@@ -239,17 +244,22 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     }
     
     func scheduleNotification () {
-    
-        let notification = UILocalNotification()
-        notification.timeZone = NSTimeZone.systemTimeZone()
 
-        notification.fireDate = picker.date
-        notification.alertBody = notificationText as String
-        notification.alertAction = "open"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.category = "TODO_CATEGORY"
+    
+        let one_day_from_now = NSDate(timeIntervalSinceNow:6)
+        let currentDate = NSDate()
         
-         UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        let notification = UILocalNotification()
+        notification.timeZone = NSTimeZone.defaultTimeZone()
+        notification.alertBody = notificationText as String
+        notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
+        notification.fireDate = one_day_from_now//theFireDate
+        notification.soundName = UILocalNotificationDefaultSoundName // play default sound
+        notification.userInfo = ["UUID": 1, ] // assign a unique identifier to the notification so that we can retrieve it later
+        notification.category = "TODO_CATEGORY"
+        notification.applicationIconBadgeNumber = 1
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
         
              self.navigationController?.popViewControllerAnimated(true)
         
@@ -352,6 +362,9 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        
+//        self.picker.locale = NSLocale.currentLocale()
+        self.picker.timeZone = NSTimeZone.defaultTimeZone()
     
     }
     

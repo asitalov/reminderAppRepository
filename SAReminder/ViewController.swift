@@ -64,6 +64,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
             let newNoteVC: New_Note = segue.destinationViewController as! New_Note
             newNoteVC.titleText = "Add a note"
             selectedIndexPath2 = nil
+            
         }
     }
     
@@ -238,7 +239,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         todoSearchBar.resignFirstResponder()
         todoSearchBar.text = nil
         todoSearchBar.setShowsCancelButton(false, animated: true)
-        fetchedResultsController.fetchRequest.predicate = nil
+       fetchedResultsController.fetchRequest.predicate = nil
         
         do {
             try fetchedResultsController.performFetch()

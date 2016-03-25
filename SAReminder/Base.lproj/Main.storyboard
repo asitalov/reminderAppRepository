@@ -253,7 +253,7 @@
                     <connections>
                         <outlet property="childButton" destination="VML-Le-VSH" id="fg5-Za-HAc"/>
                         <outlet property="phoneButton" destination="OZa-5t-alP" id="cwu-V1-LDG"/>
-                        <outlet property="picker" destination="vDk-da-O1V" id="bvc-N0-bF0"/>
+                        <outlet property="picker" destination="vDk-da-O1V" id="87N-CV-2Hh"/>
                         <outlet property="saveButton" destination="XpK-qD-xR2" id="TPA-LX-4K0"/>
                         <outlet property="settingsTable" destination="yJ8-jM-lo6" id="4yM-ai-5OI"/>
                         <outlet property="shoppingCartButton" destination="8ex-no-AvM" id="dKb-Ln-4Av"/>
