@@ -55,7 +55,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
             cacheName: nil)
         
         frc.delegate = self
-        print("animalFetch = \( notesFetchRequest)")
+
         return frc
     }()
     
@@ -78,7 +78,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         messageLabel.textAlignment = NSTextAlignment.Center
         messageLabel.text = "You don't have any notes. To add a new note click '+' button"
 
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
         view.addSubview(messageLabel)
 
         leftBarButton.target = revealView.revealViewController()
@@ -128,7 +128,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         return 0
     }
     
-    
+   
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
 
         let cell = alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! Cell
@@ -150,7 +150,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         cell.alarmLabel?.text = dateInStringFormat//notes.date
         if statusImage != nil{
         cell.statusImage.image = UIImage(named:statusImage!)
-            cell.backgroundColor = UIColor(red: (188.0 / 255.0), green: (127.0 / 255.0), blue: (72.0 / 255.0), alpha: 0.5)        }
+            cell.backgroundColor = UIColor(red: (160.0 / 255.0), green: (160.0 / 255.0), blue: (160.0 / 255.0), alpha: 0.5)        }
 
         
         return cell

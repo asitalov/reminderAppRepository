@@ -21,8 +21,7 @@ class Notify_BeforeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())        
         notifyBeforeValues = ["dont remind", "5 minutes", "10 minutes", "15 minutes", "30 minutes", "1 hour", "2 hours", "1 day"]
         // Do any additional setup after loading the view.
     }
@@ -66,7 +65,7 @@ class Notify_BeforeViewController: UIViewController {
         let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
         
         cell.textLabel?.text = notifyBeforeValues.objectAtIndex((indexPath?.row)!) as? String
-        
+        cell.backgroundColor = UIColor.clearColor() 
         if indexPath!.row == selectedIndex
         {
             cell.accessoryType = .Checkmark;

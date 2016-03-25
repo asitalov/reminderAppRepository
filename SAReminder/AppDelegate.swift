@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // creating initial userdefaults uiswitch value
 
+        UINavigationBar.appearance().setBackgroundImage(UIImage.init(named: "navigationbar@2x"), forBarMetrics: UIBarMetrics.Default)
         application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: UIUserNotificationType.Alert, categories: nil))
         
         

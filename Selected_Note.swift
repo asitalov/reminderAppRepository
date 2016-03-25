@@ -68,11 +68,9 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      //  self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
-        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "notePad2@2x.jpg")!)
-      //  settingsButton.image = UIImage(named: "settings.png")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        // Do any additional setup after loading the view.
+
+         self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
+
     }
 
     override func didReceiveMemoryWarning() {

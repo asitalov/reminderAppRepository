@@ -22,6 +22,11 @@
 		D643ECAF1C9AB0A100512A2F /* YLSwipeLockNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECA91C9AB0A100512A2F /* YLSwipeLockNodeView.m */; };
 		D643ECB01C9AB0A100512A2F /* YLCheckToUnlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECAB1C9AB0A100512A2F /* YLCheckToUnlockViewController.m */; };
 		D643ECB11C9AB0A100512A2F /* YLInitSwipePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECAD1C9AB0A100512A2F /* YLInitSwipePasswordController.m */; };
+		D66383311CA5369C00A656E3 /* GetBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66383301CA5369C00A656E3 /* GetBackgroundImage.swift */; };
+		D663833E1CA542C300A656E3 /* iphone_4_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833A1CA542C300A656E3 /* iphone_4_image@2x.jpg */; };
+		D663833F1CA542C300A656E3 /* iphone_5_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */; };
+		D66383401CA542C300A656E3 /* iphone_6+_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */; };
+		D66383411CA542C300A656E3 /* iphone_6_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */; };
 		D668D91E1C99909B008011D2 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D668D91D1C99909B008011D2 /* SWRevealViewController.m */; };
 		D668D9221C999138008011D2 /* SideBarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D668D9211C999138008011D2 /* SideBarTableViewController.m */; };
 		D668D9241C99925B008011D2 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D668D9231C99925B008011D2 /* menu.png */; };
@@ -30,6 +35,7 @@
 		D668D92A1C99AB36008011D2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D668D9291C99AB36008011D2 /* Settings.swift */; };
 		D67F9E691CA423E30030A401 /* i5backgroundImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D67F9E681CA423E30030A401 /* i5backgroundImage.jpg */; };
 		D67F9E6B1CA429270030A401 /* discIndicator.png in Resources */ = {isa = PBXBuildFile; fileRef = D67F9E6A1CA429270030A401 /* discIndicator.png */; };
+		D67F9E731CA44C5F0030A401 /* navigationbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D67F9E721CA44C5F0030A401 /* navigationbar@2x.png */; };
 		D68CF7B31CA163D800424026 /* CellSelected.swift in Sources */ = {isa = PBXBuildFile; fileRef = D68CF7B21CA163D800424026 /* CellSelected.swift */; };
 		D69FABDC1C930B820052E487 /* settingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69FABDB1C930B820052E487 /* settingsCell.swift */; };
 		D6B2161F1C96F9D3005D258B /* TextViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B2161E1C96F9D3005D258B /* TextViewViewController.swift */; };
@@ -98,6 +104,11 @@
 		D643ECAB1C9AB0A100512A2F /* YLCheckToUnlockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLCheckToUnlockViewController.m; sourceTree = "<group>"; };
 		D643ECAC1C9AB0A100512A2F /* YLInitSwipePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLInitSwipePasswordController.h; sourceTree = "<group>"; };
 		D643ECAD1C9AB0A100512A2F /* YLInitSwipePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLInitSwipePasswordController.m; sourceTree = "<group>"; };
+		D66383301CA5369C00A656E3 /* GetBackgroundImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GetBackgroundImage.swift; path = ../GetBackgroundImage.swift; sourceTree = "<group>"; };
+		D663833A1CA542C300A656E3 /* iphone_4_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_4_image@2x.jpg"; sourceTree = "<group>"; };
+		D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_5_image@2x.jpg"; sourceTree = "<group>"; };
+		D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_6+_image@2x.jpg"; sourceTree = "<group>"; };
+		D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_6_image@2x.jpg"; sourceTree = "<group>"; };
 		D668D91C1C99909B008011D2 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		D668D91D1C99909B008011D2 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		D668D9201C999138008011D2 /* SideBarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideBarTableViewController.h; sourceTree = "<group>"; };
@@ -108,6 +119,7 @@
 		D668D9291C99AB36008011D2 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Settings.swift; path = ../Settings.swift; sourceTree = "<group>"; };
 		D67F9E681CA423E30030A401 /* i5backgroundImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = i5backgroundImage.jpg; sourceTree = "<group>"; };
 		D67F9E6A1CA429270030A401 /* discIndicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discIndicator.png; sourceTree = "<group>"; };
+		D67F9E721CA44C5F0030A401 /* navigationbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar@2x.png"; sourceTree = "<group>"; };
 		D68CF7B21CA163D800424026 /* CellSelected.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CellSelected.swift; path = ../CellSelected.swift; sourceTree = "<group>"; };
 		D69FABDB1C930B820052E487 /* settingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = settingsCell.swift; path = ../settingsCell.swift; sourceTree = "<group>"; };
 		D6B2161E1C96F9D3005D258B /* TextViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextViewViewController.swift; path = ../TextViewViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +224,7 @@
 		84EE4CED1C909D1600F7C6E3 /* SAReminder */ = {
 			isa = PBXGroup;
 			children = (
+				D66383301CA5369C00A656E3 /* GetBackgroundImage.swift */,
 				D6D0F0C71CA2B10F004C3E20 /* Notes.swift */,
 				84EE4CEE1C909D1600F7C6E3 /* AppDelegate.swift */,
 				D668D9291C99AB36008011D2 /* Settings.swift */,
@@ -286,7 +299,12 @@
 		D6BA989A1C91DB9800AF26E7 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D663833A1CA542C300A656E3 /* iphone_4_image@2x.jpg */,
+				D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */,
+				D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */,
+				D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */,
 				D67F9E6A1CA429270030A401 /* discIndicator.png */,
+				D67F9E721CA44C5F0030A401 /* navigationbar@2x.png */,
 				D67F9E681CA423E30030A401 /* i5backgroundImage.jpg */,
 				84DE3A621CA1D90600E69CA4 /* completed_stamp.gif */,
 				D668D9251C9997D7008011D2 /* settings.png */,
@@ -426,12 +444,17 @@
 				D668D9261C9997D7008011D2 /* settings.png in Resources */,
 				D668D9281C999828008011D2 /* todos.png in Resources */,
 				D6C4D7841C96B31700AD454F /* speech@2x.png in Resources */,
+				D67F9E731CA44C5F0030A401 /* navigationbar@2x.png in Resources */,
 				D668D9241C99925B008011D2 /* menu.png in Resources */,
 				D67F9E691CA423E30030A401 /* i5backgroundImage.jpg in Resources */,
 				D6BA98A61C91E3F300AF26E7 /* exclamation.png in Resources */,
 				D6C4D7821C96B31700AD454F /* gear@2x.png in Resources */,
 				D6BA98951C91D57100AF26E7 /* alarm.png in Resources */,
+				D663833E1CA542C300A656E3 /* iphone_4_image@2x.jpg in Resources */,
+				D663833F1CA542C300A656E3 /* iphone_5_image@2x.jpg in Resources */,
+				D66383401CA542C300A656E3 /* iphone_6+_image@2x.jpg in Resources */,
 				D6C4D7831C96B31700AD454F /* magnifier@2x.png in Resources */,
+				D66383411CA542C300A656E3 /* iphone_6_image@2x.jpg in Resources */,
 				84EE4CF61C909D1600F7C6E3 /* Assets.xcassets in Resources */,
 				84DE3A631CA1D90600E69CA4 /* completed_stamp.gif in Resources */,
 				D6C4D7D91C96C24400AD454F /* settings2.png in Resources */,
@@ -513,6 +536,7 @@
 				D668D92A1C99AB36008011D2 /* Settings.swift in Sources */,
 				D6D0F0C81CA2B10F004C3E20 /* Notes.swift in Sources */,
 				D6B2161F1C96F9D3005D258B /* TextViewViewController.swift in Sources */,
+				D66383311CA5369C00A656E3 /* GetBackgroundImage.swift in Sources */,
 				84EE4CEF1C909D1600F7C6E3 /* AppDelegate.swift in Sources */,
 				D6C4D7791C96B00000AD454F /* PCStackMenu.m in Sources */,
 				D643ECAE1C9AB0A100512A2F /* YLSwipeLockView.m in Sources */,

@@ -26,7 +26,7 @@ let revealView = SWRevealViewController ()
         self.title = "Settings"
         settingsArray = ["Set gesure password", "Gesture password active"]
     
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
         leftBarButton.target = revealView.revealViewController()
         leftBarButton.action = "revealToggle:"
         self.view!.addGestureRecognizer(revealView.panGestureRecognizer())

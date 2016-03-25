@@ -72,7 +72,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "i5backgroundImage.jpg")!)
+       self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
         
         do {
             try fetchedResultsController.performFetch()
@@ -111,8 +111,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         }
      
         self.title = titleText
-        //self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        //self.picker.backgroundColor = UIColor.whiteColor()
+
         self.picker.locale = NSLocale.currentLocale()
         self.picker.timeZone = NSTimeZone.systemTimeZone()
         settingsArray = ["Title", "Content", "Remind before", "Alarm"]

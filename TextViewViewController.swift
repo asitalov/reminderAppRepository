@@ -24,7 +24,7 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
          self.title = "Content"
-        view.backgroundColor = UIColor .groupTableViewBackgroundColor()
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
         contentTextView.becomeFirstResponder()
         
         let numberToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 50)); numberToolbar.barStyle = UIBarStyle.Default
@@ -36,6 +36,7 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         
         numberToolbar.sizeToFit();
         contentTextView.inputAccessoryView = numberToolbar
+        contentTextView.layer.cornerRadius = 5
         
     }
     
@@ -48,12 +49,10 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
     
     
     @IBAction func returnToPreviousView(sender: AnyObject) {
-        presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+        self.saveChangesAndQuit()
         
     }
-    
-    func doneButtonTouched (){
-        
+    func saveChangesAndQuit () {
         contentTextView.resignFirstResponder()
         
         if delegate != nil {
@@ -70,8 +69,14 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         }
         
         presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func doneButtonTouched (){
+        
+     self.saveChangesAndQuit()
         
     }
+    
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
 
         if contentTextView.text == "Content text" {
