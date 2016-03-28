@@ -18,5 +18,7 @@ class Notes: NSManagedObject {
     @NSManaged var status: String?
     @NSManaged var titleText: String?
     @NSManaged var index: NSNumber?
+    @NSManaged var dateInDateFormat: NSDate?
+    @NSManaged var someTimeBefore: NSDate?
 
 }

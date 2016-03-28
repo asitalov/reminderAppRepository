@@ -152,7 +152,7 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
          
     } else if indexPath.row == 1 {
             
-             HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Warning", detail: "Current action will delete current data. Continue?", cancelButton: "NO", okbutton: "YES")
+             HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Warning", detail: "This action will remove current data. Continue?", cancelButton: "NO", okbutton: "YES")
         }
         
     }

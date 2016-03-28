@@ -27,15 +27,16 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     var dateValue = NSString ()
     var dict = NSMutableDictionary ()
     var theAlarmDate = NSDate()
-    var notificationText = NSString()
+    var notificationText = String()
     var settingsArray = NSArray()
     var remindArray = NSArray()
-    var labelText:NSString?
+    var labelText:String?
     var labelContent:NSString?
     var labelInteger:Int?
     var imageNameText:NSString?
     var delegate: newNote?
     var titleText:String?
+    var dateInDateFormat:NSDate?
 
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -47,7 +48,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     let alertVC = HHAlertView()
    
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
+    @IBOutlet weak var imageView: UIImageView!
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let notesFetchRequest = NSFetchRequest(entityName: "Notes")
@@ -73,7 +74,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
-        
+
         do {
             try fetchedResultsController.performFetch()
         } catch {
@@ -89,21 +90,12 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             labelInteger = integerValue
             
             imageNameText = notes.buttonName
-            if imageNameText == "child-selected.png" {
-                childButton.selected = true
-                childButton.setImage(UIImage(named: "child-selected.png"), forState: .Selected)
-            } else if imageNameText == "phone-selected.png" {
-                phoneButton.selected = true
-                phoneButton.setImage(UIImage(named: "phone-selected.png"), forState: .Selected)
-            } else if imageNameText == "shopping-cart-selected.png" {
-                shoppingCartButton.selected = true
-                shoppingCartButton.setImage(UIImage(named: "shopping-cart-selected.png"), forState: .Selected)
-            } else if imageNameText == "travel-selected.png" {
-                travelButton.selected = true
-                travelButton.setImage(UIImage(named: "travel-selected.png"), forState: .Selected)
-            }
+            
+            self.checkButtonName()
             
         } else {
+            childButton.selected = true
+            childButton.setImage(UIImage(named: "child-selected.png"), forState: .Selected)
             
             labelText = "Place title here"
             labelContent = "Content text"
@@ -123,11 +115,28 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         dateValue = dateformatter.stringFromDate(picker.date)
 
         picker.addTarget(self, action: Selector("dataPickerChanged:"), forControlEvents: UIControlEvents.ValueChanged)
-        
-     
 
     }
 
+    
+    func checkButtonName() {
+        
+        if imageNameText == "child-selected.png" {
+            childButton.selected = true
+            childButton.setImage(UIImage(named: "child-selected.png"), forState: .Selected)
+        } else if imageNameText == "phone-selected.png" {
+            phoneButton.selected = true
+            phoneButton.setImage(UIImage(named: "phone-selected.png"), forState: .Selected)
+        } else if imageNameText == "shopping-cart-selected.png" {
+            shoppingCartButton.selected = true
+            shoppingCartButton.setImage(UIImage(named: "shopping-cart-selected.png"), forState: .Selected)
+        } else if imageNameText == "travel-selected.png" {
+            travelButton.selected = true
+            travelButton.setImage(UIImage(named: "travel-selected.png"), forState: .Selected)
+        }
+
+    }
+    
     func resetButtons() {
         childButton.selected = false
         phoneButton.selected = false
@@ -200,8 +209,9 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Scheduled time already passed, please schedule actual time", cancelButton: nil, okbutton: "OK")
         } else {
 
-        scheduleNotification()
-        
+        scheduleNotification(Remind_Before.truncateSecondsForDate(picker.date))
+            
+            
         // CoreData
         if selectedIndexPath2 != nil {
             
@@ -228,40 +238,35 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         nextNote.setValue(dateValue, forKey: "date")
         nextNote.setValue(myImage, forKey: "buttonName")
         nextNote.setValue(labelContent, forKey: "contentText")
+        nextNote.setValue(Remind_Before.truncateSecondsForDate(picker.date), forKey: "dateInDateFormat")
         
         let castAsNSNumber = NSNumber(integer: labelInteger!)
         
         nextNote.setValue(castAsNSNumber, forKey: "index")
-      
+            
+            let someTimeBefore: NSDate = NSCalendar.currentCalendar().dateByAddingComponents(Remind_Before.scheduleBefore(labelInteger!), toDate: Remind_Before.truncateSecondsForDate(picker.date), options: [])!
+            
+            scheduleNotification(someTimeBefore)
+            
+             nextNote.setValue(someTimeBefore, forKey: "someTimeBefore")
+            
         do {
             try nextNote.managedObjectContext!.save()
         } catch {
             print(error)
         }
         }
+            }
         }
-        }
+    
     }
     
-    func scheduleNotification () {
-
-    
-        let one_day_from_now = NSDate(timeIntervalSinceNow:6)
-        let currentDate = NSDate()
+    func scheduleNotification (date: NSDate) {
         
-        let notification = UILocalNotification()
-        notification.timeZone = NSTimeZone.defaultTimeZone()
-        notification.alertBody = notificationText as String
-        notification.alertAction = "open" // text that is displayed after "slide to..." on the lock screen - defaults to "slide to view"
-        notification.fireDate = one_day_from_now//theFireDate
-        notification.soundName = UILocalNotificationDefaultSoundName // play default sound
-        notification.userInfo = ["UUID": 1, ] // assign a unique identifier to the notification so that we can retrieve it later
-        notification.category = "TODO_CATEGORY"
-        notification.applicationIconBadgeNumber = 1
+        let userInfo = ["url" : "www.mobiwise.co"]
+        LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "view details", message: labelText!, date: date, userInfo: userInfo)
         
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        
-             self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
         
     }
     
@@ -298,9 +303,9 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             
             if labelText == "" {
                 labelText = "Place title here"
-                cell.settingsLabel.text = labelText as? String
+                cell.settingsLabel.text = labelText
             } else {
-            cell.settingsLabel.text = labelText as? String
+            cell.settingsLabel.text = labelText
             }
         }
         

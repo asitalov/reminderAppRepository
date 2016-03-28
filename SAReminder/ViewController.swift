@@ -22,6 +22,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
     @IBOutlet weak var todoSearchBar: UISearchBar!
     @IBOutlet weak var alarmTable: UITableView!
+    @IBOutlet weak var dateLabel: UILabel!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let selectNote = Selected_Note()
     let createANote = New_Note()
@@ -35,6 +36,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let request = NSFetchRequest(entityName: "Notes")
     @IBOutlet weak var myImage: UIImageView!
+    let currentDateFormatter = NSDateFormatter ()
 
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -64,7 +66,6 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
             let newNoteVC: New_Note = segue.destinationViewController as! New_Note
             newNoteVC.titleText = "Add a note"
             selectedIndexPath2 = nil
-            
         }
     }
     
@@ -72,9 +73,10 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         super.viewDidLoad()
         
         self.title = "Reminder"
-    
+        
         messageLabel = UILabel(frame: CGRectMake(0, 0, 200, 84))
         messageLabel.numberOfLines = 4
+        currentDateFormatter.dateFormat = "d MMM, YYYY"
         
         messageLabel.textAlignment = NSTextAlignment.Center
         messageLabel.text = "You don't have any notes. To add a new note click '+' button"
@@ -91,6 +93,9 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         
         formatter2.timeStyle = NSDateFormatterStyle.MediumStyle
         formatter2.dateFormat = "MMM dd,  hh:mm"
+        let theDate = NSDate()
+        let theDateString = currentDateFormatter.stringFromDate(theDate)
+        dateLabel.text = theDateString
         
         do {
             try fetchedResultsController.performFetch()
@@ -178,6 +183,16 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         self.alarmTable.setEditing(editing, animated: animated)
     }
     
+    func setDateFormat(){
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM.dd hh:mm"
+        
+        
+        
+    }
+  
+    
   func tableView(tableView: UITableView,
         commitEditingStyle editingStyle: UITableViewCellEditingStyle,
         forRowAtIndexPath indexPath: NSIndexPath) {
@@ -185,8 +200,13 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
             case .Delete:
                 
             let notes = fetchedResultsController.objectAtIndexPath(indexPath) as! Notes
+            
+            let userInfo = ["url" : "www.mobiwise.co"]
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.dateInDateFormat!, userInfo: userInfo)
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.someTimeBefore!, userInfo: userInfo)
+            
             managedObjectContext.deleteObject(notes)
-                        
+            
                 do {
                     try notes.managedObjectContext!.save()
                 } catch {
@@ -284,7 +304,7 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
             todoSearchBar.userInteractionEnabled = false
         } else {
             removeAnEmptyView()
-            
+             todoSearchBar.userInteractionEnabled = true
         }
         alarmTable.reloadData()
     }

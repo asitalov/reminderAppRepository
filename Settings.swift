@@ -70,11 +70,12 @@ let revealView = SWRevealViewController ()
         
         let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
         cell.textLabel?.text = settingsArray.objectAtIndex((indexPath?.row)!) as? String
-        cell.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 0.25)
+      // cell.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 0.25)
+        cell.backgroundColor = UIColor.clearColor()
         cell.selectionStyle = .None
 
         if indexPath!.row == 0 {
-            cell.accessoryType = .DisclosureIndicator
+            cell.accessoryView = UIImageView(image: UIImage(named: "discIndicator.png"))
         } else if indexPath!.row == 1 {
             
             mySwitch = UISwitch(frame:CGRectMake(150, 300, 0, 0));

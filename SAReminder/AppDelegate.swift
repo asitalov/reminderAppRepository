@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 
+let ACTION_ONE_IDENTIFIER : String = "ACTION_ONE_IDENTIFIER"
+let ACTION_TWO_IDENTIFIER : String = "ACTION_TWO_IDENTIFIER"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,15 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-//        let entityDescription = NSEntityDescription.entityForName("Notes", inManagedObjectContext: self.managedObjectContext)
-        
-//        let newTask = NSManagedObject(entity: entityDescription!, insertIntoManagedObjectContext: self.managedObjectContext)
-        
         myNewDictArray = userDefaults.mutableArrayValueForKey("alarmArr")
         
         // creating initial userdefaults uiswitch value
 
         UINavigationBar.appearance().setBackgroundImage(UIImage.init(named: "navigationbar@2x"), forBarMetrics: UIBarMetrics.Default)
+        
+        LocalNotificationHelper.sharedInstance().registerUserNotification()//registerUserNotificationWithActionButtons(actions: actions)
         
         application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: UIUserNotificationType.Alert, categories: nil))
         
@@ -147,6 +148,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        
+        if identifier == ACTION_ONE_IDENTIFIER {
+            print("action one - tapped")
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_ONE_IDENTIFIER, object: nil)
+            
+        }else if identifier == ACTION_TWO_IDENTIFIER {
+            print("action two - tapped")
+            
+            NSNotificationCenter.defaultCenter().postNotificationName(ACTION_TWO_IDENTIFIER, object: nil)
+        }
+        
+        completionHandler()
+    }
+
 }
 
 
