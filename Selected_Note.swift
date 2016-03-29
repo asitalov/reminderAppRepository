@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import Social
 
 var selectedIndex : Int?
 var selectedIndexPath : NSIndexPath?
@@ -17,12 +18,16 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let request = NSFetchRequest(entityName: "Notes")
     let alertVC = HHAlertView()
+   // var mySLComposerSheet = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+    var viewScreen = UIImage ()
 
-    @IBOutlet weak var textLabel: UILabel!
+    
+    @IBOutlet weak var contentText: UITextView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var myImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
+     @IBOutlet weak var reminderLabel: UILabel!
     @IBOutlet weak var settingsButton: UIButton!
   
     
@@ -66,10 +71,93 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
 
     }
     
+    func showAlertViewWithTitle(title: String, andMessage message: String) {
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        let alertAction: UIAlertAction = UIAlertAction(title: "OK", style: .Default, handler: {(action: UIAlertAction) -> Void in
+        })
+        alert.addAction(alertAction)
+        self.presentViewController(alert, animated: true, completion: { _ in })
+    }
+    
+    func captureScreenshot() -> UIImage {
+        self.reminderLabel.hidden = false
+        UIGraphicsBeginImageContext(self.view.bounds.size)
+        self.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        viewScreen = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        //  UIImageWriteToSavedPhotosAlbum(imageView, nil, nil, nil);
+        return viewScreen
+    }
+    
+    func shareOnPublic (serviceType:String, message:String){
+        
+        var mySLComposerSheet = SLComposeViewController(forServiceType: serviceType)
+        
+        if SLComposeViewController.isAvailableForServiceType(serviceType) {
+            mySLComposerSheet = SLComposeViewController()
+            mySLComposerSheet = SLComposeViewController(forServiceType: serviceType)
+            mySLComposerSheet.setInitialText("Paste any text or links(could be your app link) here")
+            self.captureScreenshot ()
+            mySLComposerSheet.addImage(self.viewScreen)
+            self.reminderLabel.hidden = true
+            self.presentViewController(mySLComposerSheet, animated: true, completion: { _ in })
+        }
+        else {
+            
+            let message: String = message //String = "You need to add your facebook profile in the phone settings"
+            self.showAlertViewWithTitle("Oops", andMessage: message)
+        }
+
+    }
+    
+    @IBAction func shareButtonTapped(sender: AnyObject) {
+        
+        let optionMenu = UIAlertController(title: nil, message: "Choose Option", preferredStyle: .ActionSheet)
+        
+        let FBAction = UIAlertAction(title: "Share on Facebook", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+
+            self.shareOnPublic (SLServiceTypeFacebook, message:"You need to add your facebook profile in the phone settings")
+            
+        })
+        
+        let TwitterAction = UIAlertAction(title: "Share on Twitter", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+
+            self.shareOnPublic (SLServiceTypeTwitter, message:"You need to add your twitter profile in the phone settings")
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+
+        optionMenu.addAction(FBAction)
+        optionMenu.addAction(TwitterAction)
+        optionMenu.addAction(cancelAction)
+
+        self.presentViewController(optionMenu, animated: true, completion: nil)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-         self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
+        titleLabel.layer.cornerRadius = 5
+        titleLabel.backgroundColor = UIColor(red: 255, green: 247, blue: 220, alpha: 0.5)
+        titleLabel.layer.masksToBounds = true
+        contentText.layer.cornerRadius = 5
+        contentText.backgroundColor = UIColor(red: 255, green: 247, blue: 220, alpha:1)
+        contentText.layer.masksToBounds = true
+        
+        self.reminderLabel.hidden = true
+        
+        dateLabel.backgroundColor = UIColor(red: 255, green: 247, blue: 220, alpha: 0.5)
+        dateLabel.layer.cornerRadius = 5
+        dateLabel.layer.masksToBounds = true
+        
 
     }
 
@@ -94,12 +182,12 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
         let title = notes.titleText
         let imageSelected = notes.buttonName
         let alarmText = notes.date
-        let contentText = notes.contentText
+        let contentText1 = notes.contentText
        
         titleLabel.text = title
         dateLabel.text = alarmText
         myImage.image = UIImage(named: imageSelected!)
-        textLabel.text = contentText
+        contentText.text = contentText1
         
     }
     

@@ -1,10 +1,13 @@
 PODS:
+  - JTCalendar (2.1.5)
   - MVYSideMenu (1.0.1)
 
 DEPENDENCIES:
+  - JTCalendar (~> 2.0)
   - MVYSideMenu
 
 SPEC CHECKSUMS:
+  JTCalendar: 57a4420f12d10c93c3b28da96803e7043d1c9281
   MVYSideMenu: 145f5782cf08efd102026c62e8e2aed600a99f34
 
 COCOAPODS: 0.39.0

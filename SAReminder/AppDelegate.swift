@@ -29,11 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage.init(named: "navigationbar@2x"), forBarMetrics: UIBarMetrics.Default)
         
         LocalNotificationHelper.sharedInstance().registerUserNotification()//registerUserNotificationWithActionButtons(actions: actions)
-        
-        application.registerUserNotificationSettings(UIUserNotificationSettings (forTypes: UIUserNotificationType.Alert, categories: nil))
-        
-        
-        
+
             return true
     }
     

@@ -13,6 +13,7 @@
 #import "YLSwipeLockNodeView.h"
 #import "YLCheckToUnlockViewController.h"
 #import "YLInitSwipePasswordController.h"
+#import "BasicViewController.h"
 
 
 

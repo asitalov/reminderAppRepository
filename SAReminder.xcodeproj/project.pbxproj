@@ -30,6 +30,7 @@
 		D663833F1CA542C300A656E3 /* iphone_5_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */; };
 		D66383401CA542C300A656E3 /* iphone_6+_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */; };
 		D66383411CA542C300A656E3 /* iphone_6_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */; };
+		D665D9211CAA9D6A009A573B /* BasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D665D9201CAA9D6A009A573B /* BasicViewController.m */; };
 		D668D91E1C99909B008011D2 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D668D91D1C99909B008011D2 /* SWRevealViewController.m */; };
 		D668D9221C999138008011D2 /* SideBarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D668D9211C999138008011D2 /* SideBarTableViewController.m */; };
 		D668D9241C99925B008011D2 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D668D9231C99925B008011D2 /* menu.png */; };
@@ -116,6 +117,8 @@
 		D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_5_image@2x.jpg"; sourceTree = "<group>"; };
 		D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_6+_image@2x.jpg"; sourceTree = "<group>"; };
 		D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_6_image@2x.jpg"; sourceTree = "<group>"; };
+		D665D91F1CAA9D6A009A573B /* BasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicViewController.h; sourceTree = "<group>"; };
+		D665D9201CAA9D6A009A573B /* BasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicViewController.m; sourceTree = "<group>"; };
 		D668D91C1C99909B008011D2 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		D668D91D1C99909B008011D2 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		D668D9201C999138008011D2 /* SideBarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideBarTableViewController.h; sourceTree = "<group>"; };
@@ -292,6 +295,15 @@
 			name = SwipeLock;
 			sourceTree = "<group>";
 		};
+		D665D9221CAA9DC2009A573B /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				D665D91F1CAA9D6A009A573B /* BasicViewController.h */,
+				D665D9201CAA9D6A009A573B /* BasicViewController.m */,
+			);
+			name = Calendar;
+			sourceTree = "<group>";
+		};
 		D668D91F1C9990AB008011D2 /* RevealController */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +318,7 @@
 		D69BB4701CA9403600848415 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D665D9221CAA9DC2009A573B /* Calendar */,
 				D69BB4711CA94D0400848415 /* Notes.swift */,
 				D69BB46E1CA9401600848415 /* Remind_Before.swift */,
 				84B510F21CA8657E0039F29D /* LocalNotificationHelper.swift */,
@@ -564,6 +577,7 @@
 				D6B216211C972001005D258B /* Notify_BeforeViewController.swift in Sources */,
 				D668D9221C999138008011D2 /* SideBarTableViewController.m in Sources */,
 				D6D1D2F41C9FFCC700306891 /* CoreDataModel.xcdatamodeld in Sources */,
+				D665D9211CAA9D6A009A573B /* BasicViewController.m in Sources */,
 				D643ECB11C9AB0A100512A2F /* YLInitSwipePasswordController.m in Sources */,
 				84EE4CF11C909D1600F7C6E3 /* ViewController.swift in Sources */,
 				D69FABDC1C930B820052E487 /* settingsCell.swift in Sources */,

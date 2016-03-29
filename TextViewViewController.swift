@@ -37,6 +37,7 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         numberToolbar.sizeToFit();
         contentTextView.inputAccessoryView = numberToolbar
         contentTextView.layer.cornerRadius = 5
+        contentTextView.backgroundColor = UIColor(red: 255, green: 247, blue: 220, alpha: 0.5)
         
     }
     

@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-MVYSideMenu.xcscheme</key>
+		<key>MVYSideMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -17,12 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>70577869A25E0E7555C645A6</key>
+		<key>1F26CD486460731FD54F775C78A5F2D6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BF07ED70C02130FDA943044A</key>
+		<key>80F8F3AE21524BE75F62E3F51BA3FEC3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
