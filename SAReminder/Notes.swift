@@ -20,5 +20,6 @@ class Notes: NSManagedObject {
     @NSManaged var index: NSNumber?
     @NSManaged var dateInDateFormat: NSDate?
     @NSManaged var someTimeBefore: NSDate?
+    @NSManaged var searchDate: NSDate?
 
 }

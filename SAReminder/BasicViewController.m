@@ -6,9 +6,11 @@
 //
 
 #import "BasicViewController.h"
+#import <CoreData/CoreData.h>
+#import "SAReminder-swift.h"
 
 
-@interface BasicViewController (){
+@interface BasicViewController() <NSFetchedResultsControllerDelegate> {
     
     NSMutableDictionary *_eventsByDate;
     
@@ -17,11 +19,36 @@
     NSDate *_maxDate;
     
     NSDate *_dateSelected;
+    NSDate *_newDate1;
 }
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
 @implementation BasicViewController
+
+- (void)initializeFetchedResultsController
+{
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Notes"];
+    
+    NSSortDescriptor *lastNameSort = [NSSortDescriptor sortDescriptorWithKey:@"dateInDateFormat" ascending:YES];
+    [request setPropertiesToFetch:@[@"dateInDateFormat"]];
+    
+    [request setSortDescriptors:@[lastNameSort]];
+    
+   // NSManagedObjectContext *moc = …; //Retrieve the main queue NSManagedObjectContext
+    
+    [self setFetchedResultsController:[[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.context sectionNameKeyPath:nil cacheName:nil]];
+    [[self fetchedResultsController] setDelegate:self];
+    
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Failed to initialize FetchedResultsController: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+}
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,24 +60,6 @@
     self.title = @"Basic";
     
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    _calendarManager = [JTCalendarManager new];
-    _calendarManager.delegate = self;
-    
-    // Generate random events sort by date using a dateformatter for the demonstration
-    [self createRandomEvents];
-    
-    // Create a min and max date for limit the calendar, optional
-    [self createMinAndMaxDate];
-    
-    [_calendarManager setMenuView:_calendarMenuView];
-    [_calendarManager setContentView:_calendarContentView];
-    [_calendarManager setDate:_todayDate];
 }
 
 #pragma mark - Buttons callback
@@ -80,6 +89,7 @@
 // Used to customize the appearance of dayView
 - (void)calendar:(JTCalendarManager *)calendar prepareDayView:(JTCalendarDayView *)dayView
 {
+    
     // Today
     if([_calendarManager.dateHelper date:[NSDate date] isTheSameDayThan:dayView.date]){
         dayView.circleView.hidden = NO;
@@ -98,7 +108,7 @@
     else if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:dayView.date]){
         dayView.circleView.hidden = YES;
         dayView.dotView.backgroundColor = [UIColor redColor];
-        dayView.textLabel.textColor = [UIColor lightGrayColor];
+        dayView.textLabel.textColor = [UIColor brownColor];
     }
     // Another day of the current month
     else{
@@ -118,6 +128,8 @@
 - (void)calendar:(JTCalendarManager *)calendar didTouchDayView:(JTCalendarDayView *)dayView
 {
     _dateSelected = dayView.date;
+   
+    _newDate1 = [_dateSelected dateByAddingTimeInterval:60*60*24];
     
     // Animation for the circleView
     dayView.circleView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.1, 0.1);
@@ -130,8 +142,10 @@
                     } completion:nil];
     
     
-    // Load the previous or next page if touch a day from another month
     
+    [self compareDates];
+    
+    // Load the previous or next page if touch a day from another month
     if(![_calendarManager.dateHelper date:_calendarContentView.date isTheSameMonthThan:dayView.date]){
         if([_calendarContentView.date compare:dayView.date] == NSOrderedAscending){
             [_calendarContentView loadNextPageWithAnimation];
@@ -167,10 +181,10 @@
     _todayDate = [NSDate date];
     
     // Min date will be 2 month before today
-    _minDate = [_calendarManager.dateHelper addToDate:_todayDate months:-2];
+    _minDate = [_calendarManager.dateHelper addToDate:_todayDate months:0];
     
     // Max date will be 2 month after today
-    _maxDate = [_calendarManager.dateHelper addToDate:_todayDate months:2];
+    _maxDate = [_calendarManager.dateHelper addToDate:_todayDate months:5];
 }
 
 // Used only to have a key for _eventsByDate
@@ -197,22 +211,106 @@
     
 }
 
+- (NSArray*)getEntityDescriptionArray {
+    
+    NSEntityDescription *entity = [NSEntityDescription  entityForName:@"Notes" inManagedObjectContext:_context];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entity];
+    [request setResultType:NSDictionaryResultType];
+    [request setReturnsDistinctResults:YES];
+    [request setPropertiesToFetch:@[@"dateInDateFormat"]];
+    
+    // Execute the fetch.
+    NSError *error;
+    NSArray *objects = [_context executeFetchRequest:request error:&error];
+    if (objects == nil) {
+        // Handle the error.
+    }
+
+    return objects;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[GetBackgroundImage getImage]];
+    self.tabBarController.tabBar.backgroundImage = [UIImage imageNamed:@"tabbar"];
+    
+    self.context = [(AppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    
+    _calendarManager = [JTCalendarManager new];
+    _calendarManager.delegate = self;
+    [self getEntityDescriptionArray];
+    // Generate random events sort by date using a dateformatter for the demonstration
+    [self createRandomEvents];
+    
+    // Create a min and max date for limit the calendar, optional
+    [self createMinAndMaxDate];
+    
+    [_calendarManager setMenuView:_calendarMenuView];
+    [_calendarManager setContentView:_calendarContentView];
+    [_calendarManager setDate:_todayDate];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    [self getEntityDescriptionArray];
+    [self createRandomEvents];
+ 
+}
+
+
+
+- (void) compareDates {
+    
+     for(int i = 0; i <  [self.getEntityDescriptionArray count]; ++i){
+         
+          NSDictionary *dict = [self.getEntityDescriptionArray objectAtIndex:i];
+          NSDate *dateToCompare = [dict[@"dateInDateFormat"] dateByAddingTimeInterval:60*60*24];
+         
+         NSCalendar* calendar = [NSCalendar currentCalendar];
+         unsigned unitFlags =  NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
+         
+         NSDateComponents *comp1 = [calendar components:unitFlags fromDate:_newDate1];
+         NSDateComponents *comp2 = [calendar components:unitFlags fromDate:dateToCompare];
+         
+         NSDate *dte1 = [calendar dateFromComponents:comp1];
+         NSDate *dte2 = [calendar dateFromComponents:comp2];
+         
+         if ([dte1 isEqualToDate:dte2]) {
+             NSLog(@"equal dates");
+             NSMutableDictionary *dict = [NSMutableDictionary new];
+             [dict setValue:dte1 forKey:@"searchDate"];
+             NSNotification *notification = [NSNotification notificationWithName:@"MyNotification" object:nil userInfo:dict];
+             [[NSNotificationCenter defaultCenter] postNotification:notification];
+             
+             [self.tabBarController setSelectedIndex:0];
+         }
+
+         
+     }
+}
+
 - (void)createRandomEvents
 {
+    
     _eventsByDate = [NSMutableDictionary new];
     
-    for(int i = 0; i < 30; ++i){
-        // Generate 30 random dates between now and 60 days later
-        NSDate *randomDate = [NSDate dateWithTimeInterval:(rand() % (3600 * 24 * 60)) sinceDate:[NSDate date]]; //CREATE RANDOM
+    for(int i = 0; i <  [self.getEntityDescriptionArray count]; ++i){
         
-        // Use the date as key for eventsByDate
-        NSString *key = [[self dateFormatter] stringFromDate:randomDate];  // randomDate IN STRING FORMAT
+        NSDictionary *dict = [self.getEntityDescriptionArray objectAtIndex:i];
+
+        NSString *key = [[self dateFormatter] stringFromDate:dict[@"dateInDateFormat"]];  // randomDate IN STRING FORMAT
         
         if(!_eventsByDate[key]){
             _eventsByDate[key] = [NSMutableArray new];
         }
         
-        [_eventsByDate[key] addObject:randomDate];
+        [_eventsByDate[key] addObject:dict];
     }
 }
 

@@ -23,10 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         myNewDictArray = userDefaults.mutableArrayValueForKey("alarmArr")
-        
-        // creating initial userdefaults uiswitch value
 
-        UINavigationBar.appearance().setBackgroundImage(UIImage.init(named: "navigationbar@2x"), forBarMetrics: UIBarMetrics.Default)
+        UINavigationBar.appearance().setBackgroundImage(UIImage.init(named: "navigationbar"), forBarMetrics: UIBarMetrics.Default)
         
         LocalNotificationHelper.sharedInstance().registerUserNotification()//registerUserNotificationWithActionButtons(actions: actions)
 
@@ -37,13 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if (userDefaults.objectForKey("gesturePassword") != nil && userDefaults.objectForKey("password")?.boolValue == true ) {
             let controller: YLCheckToUnlockViewController = YLCheckToUnlockViewController()
-           // self.presentViewController(controller, animated: true, completion: { _ in })
             self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
         }
-        //        else {
-        //            let alert: UIAlertView = UIAlertView(title: "Attention", message: "no gesture password set", delegate: nil, cancelButtonTitle: "Cancel", otherButtonTitles: "OK")
-        //            alert.show()
-        //        }
         
     }
 

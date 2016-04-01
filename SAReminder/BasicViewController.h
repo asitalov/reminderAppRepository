@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) JTCalendarManager *calendarManager;
 
+- (NSArray*)getEntityDescriptionArray;
+
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *calendarContentViewHeight;
 
 @end

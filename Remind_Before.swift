@@ -43,4 +43,14 @@ class Remind_Before {
         return calendar.dateFromComponents(fromDateComponents)!
         
     }
+    
+    static func truncateDaysForDate(fromDate: NSDate) -> NSDate {
+        
+        let calendar: NSCalendar = NSCalendar.currentCalendar()
+        let unitFlags : NSCalendarUnit = [.Year, .Month, .Day]
+        let fromDateComponents: NSDateComponents = calendar.components(unitFlags, fromDate: fromDate)
+        
+        return calendar.dateFromComponents(fromDateComponents)!
+        
+    }
 }

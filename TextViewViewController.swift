@@ -11,14 +11,9 @@ import UIKit
 class TextViewViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var contentTextView: UITextView!
-    var labelContent = NSString()
+    var labelContent = String()
     var delegate: newNote?
     let theNewNote = New_Note ()
-    
-//    
-//    func updateLabelContext(newLabel: String){
-//        
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +39,7 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         
-        contentTextView.text = labelContent as String
+        contentTextView.text = labelContent
         
     }
     
@@ -61,7 +56,6 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         }
         
         theNewNote.labelContent = contentTextView.text!
-        print("labelContent is:  \(theNewNote.labelContent)")
         
         if contentTextView.text == "" {
             theNewNote.labelContent = "Content text"
@@ -85,11 +79,6 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         }
         
         return true
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 

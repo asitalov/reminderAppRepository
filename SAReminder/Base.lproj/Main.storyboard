@@ -31,7 +31,7 @@
                                 <rect key="frame" x="0.0" y="134" width="320" height="385"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="57" id="q9U-f7-RW0" customClass="Cell" customModule="SAReminder" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell" rowHeight="57" id="q9U-f7-RW0" customClass="Cell" customModule="SAReminder" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q9U-f7-RW0" id="QfK-re-bh7">
@@ -58,6 +58,7 @@
                                                 </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="alarmLabel" destination="mBt-7f-z7W" id="JOL-ak-Vxp"/>
                                             <outlet property="myImage" destination="P2H-Go-Gl3" id="FdT-av-LGS"/>
@@ -81,7 +82,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="kXa-Cd-TEE"/>
+                    <tabBarItem key="tabBarItem" title="Reminder" image="note-32.png" id="kXa-Cd-TEE"/>
                     <navigationItem key="navigationItem" title="Title" id="u9W-4M-Fhb">
                         <barButtonItem key="leftBarButtonItem" image="menu.png" id="Axc-hi-uwz"/>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="IG6-H3-xgf">
@@ -125,7 +126,7 @@
                                     <constraint firstAttribute="height" constant="161" id="Ijy-da-YyD"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell1" id="s2E-FG-UsI" customClass="settingsCell" customModule="SAReminder" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="cell1" id="s2E-FG-UsI" customClass="settingsCell" customModule="SAReminder" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="328" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s2E-FG-UsI" id="lkW-RZ-JmC">
@@ -142,7 +143,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knC-Z3-jCC">
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="knC-Z3-jCC">
                                                     <rect key="frame" x="160" y="-9" width="40" height="52"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -157,6 +158,7 @@
                                                 <constraint firstItem="GDY-Ra-KKr" firstAttribute="firstBaseline" secondItem="knC-Z3-jCC" secondAttribute="firstBaseline" id="kn5-JT-Ec9"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="mainLabel" destination="GDY-Ra-KKr" id="mUO-5F-1Bv"/>
                                             <outlet property="settingsLabel" destination="knC-Z3-jCC" id="efY-TO-Thf"/>
@@ -266,7 +268,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="6HR-2E-Uvb">
             <objects>
-                <tabBarController id="NuR-3S-PkV" sceneMemberID="viewController">
+                <tabBarController id="NuR-3S-PkV" customClass="TabBarController" customModule="SAReminder" customModuleProvider="target" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Jem-cu-vsW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -280,9 +282,9 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dRY-sI-dZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-992" y="770"/>
+            <point key="canvasLocation" x="-982" y="771"/>
         </scene>
-        <!--Item-->
+        <!--Calendar-->
         <scene sceneID="BaO-aL-Vc9">
             <objects>
                 <viewController id="Ak4-m9-J4X" customClass="BasicViewController" sceneMemberID="viewController">
@@ -294,18 +296,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8bX-HM-jvj" customClass="JTCalendarMenuView">
-                                <rect key="frame" x="0.0" y="94" width="320" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WP5-gg-ImY" customClass="JTHorizontalCalendarView">
                                 <rect key="frame" x="0.0" y="159" width="320" height="214"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8bX-HM-jvj" customClass="JTCalendarMenuView">
+                                <rect key="frame" x="0.0" y="109" width="320" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Days marked with a dot contain event." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPx-Ru-qYc">
+                                <rect key="frame" x="9" y="381" width="302" height="45"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="nj9-Lh-ts2"/>
+                    <tabBarItem key="tabBarItem" title="Calendar" image="calendar-32.png" id="nj9-Lh-ts2"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="calendarContentView" destination="WP5-gg-ImY" id="vav-7h-OsT"/>
@@ -316,11 +324,11 @@
             </objects>
             <point key="canvasLocation" x="-267" y="1151"/>
         </scene>
-        <!--Item-->
+        <!--Reminder-->
         <scene sceneID="tVC-cr-Q0l">
             <objects>
                 <navigationController id="u0h-aX-thN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="YZx-Co-0yI"/>
+                    <tabBarItem key="tabBarItem" title="Reminder" image="note-32.png" id="YZx-Co-0yI"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gx5-Gw-snW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -740,7 +748,7 @@
             </objects>
             <point key="canvasLocation" x="-852" y="-267"/>
         </scene>
-        <!--Item-->
+        <!--Selected Note-->
         <scene sceneID="yBZ-Mu-b4N">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="XMi-Ex-gkf" customClass="Selected_Note" customModule="SAReminder" customModuleProvider="target" sceneMemberID="viewController">
@@ -821,6 +829,9 @@
                                 <items>
                                     <barButtonItem image="actions.png" id="G5d-gp-GdZ">
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <action selector="shareButtonTapped:" destination="XMi-Ex-gkf" id="ESd-Yf-Vvx"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
@@ -837,7 +848,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="VHd-Dx-TsE" secondAttribute="trailing" constant="-20" id="SbZ-Zl-7NE"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="nzq-kq-m5Z"/>
                     <navigationItem key="navigationItem" id="j0u-7f-gZD">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="bXU-RH-I3u">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="w1l-fB-4LQ">
@@ -868,8 +878,10 @@
     <resources>
         <image name="actions.png" width="39" height="45"/>
         <image name="alarm.png" width="300" height="300"/>
+        <image name="calendar-32.png" width="32" height="32"/>
         <image name="child" width="50" height="50"/>
         <image name="menu.png" width="28" height="20"/>
+        <image name="note-32.png" width="32" height="32"/>
         <image name="phone" width="50" height="50"/>
         <image name="settings.png" width="76" height="76"/>
         <image name="shopping-cart" width="50" height="50"/>
@@ -878,6 +890,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="R35-VW-r2R"/>
-        <segue reference="lfV-Qy-O8m"/>
+        <segue reference="j1T-li-MU8"/>
     </inferredMetricsTieBreakers>
 </document>

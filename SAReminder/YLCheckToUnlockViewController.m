@@ -115,11 +115,9 @@ int secondsLeft;
             self.counterLabel.hidden = NO;
             
             [self performSelector:@selector(addBlockView) withObject:nil afterDelay:0];
+            
             [self performSelector:@selector(dismissBlockView) withObject:nil afterDelay:300];
             [self countdownTimer];
-            //[self performSelector:@selector(dismiss) withObject:nil afterDelay:5];
-            
-        // [self performSelector:@selector(dismissViewController) withObject:self afterDelay:5]; // DISMISSING THE BLOCK SCREEN!!!!!
             
         }else {
             
@@ -133,9 +131,8 @@ int secondsLeft;
     
     blockView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 360)];
-   // messageLabel.frame = CGRectMake(0, 0, 160, 360);
-    messageLabel.numberOfLines = 3;//UILabel(frame: CGRectMake(0, 0, 200, 84))
-    // NSLog(@"black frame %@", NSStringFromCGRect(blackView.frame));
+   
+    messageLabel.numberOfLines = 3;
     
     messageLabel.text = @"Failed to access 5 times, try again in: 05:00";
     messageLabel.textColor = [UIColor whiteColor];
@@ -145,7 +142,7 @@ int secondsLeft;
 
         
          [self.view addSubview:blockView];
-    [blockView addSubview:messageLabel];
+      [blockView addSubview:messageLabel];
   
 
    

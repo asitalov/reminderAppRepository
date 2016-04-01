@@ -24,14 +24,11 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     @IBOutlet weak var picker: UIDatePicker!
     @IBOutlet weak var settingsTable: UITableView!
     let dateformatter = NSDateFormatter ()
-    var dateValue = NSString ()
-    var dict = NSMutableDictionary ()
-    var theAlarmDate = NSDate()
-    var notificationText = String()
+    var dateValue = String ()
     var settingsArray = NSArray()
     var remindArray = NSArray()
     var labelText:String?
-    var labelContent:NSString?
+    var labelContent:String?
     var labelInteger:Int?
     var imageNameText:NSString?
     var delegate: newNote?
@@ -48,7 +45,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     let alertVC = HHAlertView()
    
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    @IBOutlet weak var imageView: UIImageView!
+    
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let notesFetchRequest = NSFetchRequest(entityName: "Notes")
@@ -74,6 +71,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
+       self.tabBarController?.tabBar.hidden = true
+      
 
         do {
             try fetchedResultsController.performFetch()
@@ -88,7 +87,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             labelContent = notes.contentText
             let integerValue = Int(notes.index! as NSNumber)
             labelInteger = integerValue
-            
+            picker.setDate(notes.dateInDateFormat!, animated: false)
+           
             imageNameText = notes.buttonName
             
             self.checkButtonName()
@@ -106,8 +106,6 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
 
         settingsArray = ["Title", "Content", "Remind before", "Alarm"]
         remindArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
-        
-      //  HHAlertView.shared().delegate = self
 
         dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateformatter.dateFormat="MM.dd hh:mm"
@@ -170,11 +168,6 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         travelButton.setImage(UIImage(named: "travel-selected.png"), forState: .Selected)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
   func getImage() -> NSString {
         var image = ""
         
@@ -202,15 +195,12 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
       } else {
         
         let myImage = getImage()
-        
         let dateNow = NSDate ()
-        
         if dateNow .timeIntervalSinceDate(picker.date) > 0 {
             HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Scheduled time already passed, please schedule actual time", cancelButton: nil, okbutton: "OK")
         } else {
 
         scheduleNotification(Remind_Before.truncateSecondsForDate(picker.date))
-            
             
         // CoreData
         if selectedIndexPath2 != nil {
@@ -221,7 +211,14 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             notes.setValue(dateValue, forKey: "date")
             notes.setValue(myImage, forKey: "buttonName")
             notes.setValue(labelContent, forKey: "contentText")
+            notes.setValue("", forKey: "status")
+            notes.setValue(Remind_Before.truncateSecondsForDate(picker.date), forKey: "dateInDateFormat")
+          
+            let userInfo = ["url" : "www.mobiwise.co"]
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.dateInDateFormat!, userInfo: userInfo)
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.someTimeBefore!, userInfo: userInfo)
             
+             scheduleNotification(Remind_Before.truncateSecondsForDate(picker.date))
             do {
                 try notes.managedObjectContext!.save()
             } catch {
@@ -239,7 +236,9 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         nextNote.setValue(myImage, forKey: "buttonName")
         nextNote.setValue(labelContent, forKey: "contentText")
         nextNote.setValue(Remind_Before.truncateSecondsForDate(picker.date), forKey: "dateInDateFormat")
-        
+        nextNote.setValue(saveSearchValue(), forKey: "searchDate")
+            
+
         let castAsNSNumber = NSNumber(integer: labelInteger!)
         
         nextNote.setValue(castAsNSNumber, forKey: "index")
@@ -258,7 +257,17 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         }
             }
         }
+    }
     
+    func saveSearchValue() -> NSDate {
+        //creating a value to search by from calendar - very important ^^
+        let calendar: NSCalendar = NSCalendar.currentCalendar()
+        let unitFlags: NSCalendarUnit = [.Year, .Month, .Day]
+        let comp1: NSDateComponents = calendar.components(unitFlags, fromDate: Remind_Before.truncateSecondsForDate(picker.date))
+        let myDate = calendar.dateFromComponents(comp1)!.dateByAddingTimeInterval(60*60*24)
+      //  nextNote.setValue(myDate, forKey:"searchDate")
+        return myDate
+
     }
     
     func scheduleNotification (date: NSDate) {
@@ -291,12 +300,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         
     let cell = settingsTable.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath!) as! settingsCell
-      cell.selectionStyle = .None//UITableViewCellSelectionStyleGray
       cell.mainLabel.text = settingsArray.objectAtIndex((indexPath?.row)!) as? String
-        cell.backgroundColor = UIColor.clearColor()
-        cell.settingsLabel.alpha = 0.5
-   
-       
+        
         cell.accessoryView = UIImageView(image: UIImage(named: "discIndicator.png"))
 
         if indexPath!.row == 0 {
@@ -305,7 +310,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
                 labelText = "Place title here"
                 cell.settingsLabel.text = labelText
             } else {
-            cell.settingsLabel.text = labelText
+                cell.settingsLabel.text = labelText
             }
         }
         
@@ -313,21 +318,21 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             
             if labelContent == "" {
                 labelContent = "Content text"
-                cell.settingsLabel.text = labelContent as? String
+                cell.settingsLabel.text = labelContent
             } else {
-                cell.settingsLabel.text = labelContent as? String
+                cell.settingsLabel.text = labelContent
             }
-        }  else if indexPath!.row == 2{
+        }  else if indexPath!.row == 2 {
             if labelInteger != nil{
                 cell.settingsLabel.text = remindArray.objectAtIndex(labelInteger!) as? String
             }
             
         }
-            else if indexPath!.row == 3 {
-
-                cell.settingsLabel.text = dateValue as String
+        else if indexPath!.row == 3 {
+            
+            cell.settingsLabel.text = dateValue
             cell.accessoryView = .None
-            }
+        }
         
         return cell
     }

@@ -28,8 +28,6 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
     @IBOutlet weak var myImage: UIImageView!
     @IBOutlet weak var tableView: UITableView!
      @IBOutlet weak var reminderLabel: UILabel!
-    @IBOutlet weak var settingsButton: UIButton!
-  
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -55,21 +53,6 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
         print("animalFetch = \( notesFetchRequest)")
         return frc
     }()
-
-    @IBAction func settingsButtonPressed(sender: AnyObject) {
-        
-        view.backgroundColor = UIColor.grayColor()
-        
-        let button: UIButton = (sender as! UIButton)
-        PCStackMenu.showStackMenuWithTitles(["Setting", "Search", "Twitter", "Message", "Share", "More ..."], withImages: [UIImage(named: "gear@2x.png")!, UIImage(named: "magnifier@2x.png")!, UIImage(named: "twitter@2x.png")!, UIImage(named: "speech@2x.png")!, UIImage(named: "actions@2x")!], atStartPoint: CGPointMake(button.frame.origin.x + button.frame.size.width, button.frame.origin.y), inView: self.view!, itemHeight: 40, menuDirection: PCStackMenuDirectionClockWiseUp, onSelectMenu: {(selectedMenuIndex: Int) -> Void in
-           NSLog("menu index : %d", Int(selectedMenuIndex))
-            if selectedMenuIndex == 4 {
-                print ("index 1 pressed")
-               
-            }
-        })
-
-    }
     
     func showAlertViewWithTitle(title: String, andMessage message: String) {
         let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
@@ -158,6 +141,7 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
         dateLabel.layer.cornerRadius = 5
         dateLabel.layer.masksToBounds = true
         
+        self.tabBarController?.tabBar.hidden = true
 
     }
 
@@ -168,6 +152,8 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        
+        self.tableView.reloadData()
         
         do {
             try fetchedResultsController.performFetch()
@@ -227,9 +213,11 @@ class Selected_Note: UIViewController, NSFetchedResultsControllerDelegate, HHAle
         
         if indexPath.row == 0{
             
-    let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
+          let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
           notes.status = "completed_stamp.gif"
-            
+            let userInfo = ["url" : "www.mobiwise.co"]
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.dateInDateFormat!, userInfo: userInfo)
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.someTimeBefore!, userInfo: userInfo)
             do {
                 try notes.managedObjectContext!.save()
             } catch {

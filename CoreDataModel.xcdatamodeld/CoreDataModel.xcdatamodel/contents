@@ -6,11 +6,12 @@
         <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="dateInDateFormat" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="searchDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="someTimeBefore" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleText" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Notes" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Notes" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>

@@ -9,15 +9,8 @@
 import UIKit
 import CoreData
 
-protocol myProtocol {
-     func changeMyProtocol()
-}
-
 class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsControllerDelegate {
-    
-    func selectChildButton() {
-        
-    }
+  
     
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
     @IBOutlet weak var todoSearchBar: UISearchBar!
@@ -32,7 +25,6 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
     let revealView = SWRevealViewController ()
     let formatter1 = NSDateFormatter ()
     let formatter2 = NSDateFormatter ()
-    var token: dispatch_once_t = 0
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let request = NSFetchRequest(entityName: "Notes")
     @IBOutlet weak var myImage: UIImageView!
@@ -97,22 +89,22 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         let theDateString = currentDateFormatter.stringFromDate(theDate)
         dateLabel.text = theDateString
         
+        self.tabBarController?.tabBar.backgroundImage = UIImage(named: "tabbar")
+
         do {
             try fetchedResultsController.performFetch()
         } catch {
             print("An error occurred")
             
         }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleNotification:", name: "MyNotification", object: nil)
+
     }
 
     
     override func viewDidLayoutSubviews() {
         messageLabel.center = CGPointMake(view.frame.size.width / 2, view.frame.size.height / 2)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -140,8 +132,8 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         let cell = alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! Cell
         cell.accessoryView = UIImageView(image: UIImage(named: "discIndicator.png"))
         cell.backgroundColor = UIColor.clearColor()
-        cell.selectionStyle = .None
         let notes = fetchedResultsController.objectAtIndexPath(indexPath!) as! Notes
+        
         let imageSelected = notes.buttonName
         let alarmText = notes.date
         let statusImage = notes.status
@@ -153,10 +145,12 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         if imageSelected != "" {
         cell.myImage.image = UIImage(named: imageSelected!)
         }
-        cell.alarmLabel?.text = dateInStringFormat//notes.date
-        if statusImage != nil{
+        cell.alarmLabel?.text = dateInStringFormat
+        
+        if statusImage != "" && statusImage != nil{
         cell.statusImage.image = UIImage(named:statusImage!)
-            cell.backgroundColor = UIColor(red: (160.0 / 255.0), green: (160.0 / 255.0), blue: (160.0 / 255.0), alpha: 0.5)        }
+        cell.backgroundColor = UIColor(red: (160.0 / 255.0), green: (160.0 / 255.0), blue: (160.0 / 255.0), alpha: 0.5)
+        }
 
         
         return cell
@@ -187,8 +181,6 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MM.dd hh:mm"
-        
-        
         
     }
   
@@ -246,15 +238,17 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
         }
     }
     
+   
     func searchBar(searchBar: UISearchBar, textDidChange text: String) {
         
         self.filter(text)
           alarmTable.reloadData()
-        
         }
+    
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         todoSearchBar.setShowsCancelButton(true, animated: true)
     }
+    
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         todoSearchBar.resignFirstResponder()
         todoSearchBar.text = nil
@@ -265,12 +259,11 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
             try fetchedResultsController.performFetch()
         } catch {
             print("An error occurred")
-            
         }
         
         alarmTable.reloadData()
-        
     }
+    
     func searchBarSearchButtonClicked(searchBar: UISearchBar){
         todoSearchBar.resignFirstResponder()
         todoSearchBar.setShowsCancelButton(false, animated: true)
@@ -307,8 +300,9 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
              todoSearchBar.userInteractionEnabled = true
         }
         alarmTable.reloadData()
+        self.tabBarController?.tabBar.hidden = false
+        
     }
-    
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
@@ -316,5 +310,24 @@ class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsCon
          alarmTable.reloadData()
         }
     }
+    
+    func performSearch(date: NSDate) {
+        
+        let predicate: NSPredicate = NSPredicate(format:"searchDate == %@", date)
+        fetchedResultsController.fetchRequest.predicate = predicate
+                
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+            
+        }
+        
+    }
+    
+    func handleNotification(notification: NSNotification) {
+        performSearch(notification.userInfo?["searchDate"] as! NSDate)
+    }
+
 }
 
