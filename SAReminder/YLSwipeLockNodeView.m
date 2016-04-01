@@ -29,7 +29,7 @@
 -(void)pan:(UIPanGestureRecognizer *)rec
 {
  //   NSLog(@"what the fuck");
-    CGPoint point = [rec locationInView:self];
+ //   CGPoint point = [rec locationInView:self];
  //   NSLog(@"location in view:%f, %f", point.x, point.y);
     self.nodeViewStatus = YLSwipeLockNodeViewStatusSelected;
 }

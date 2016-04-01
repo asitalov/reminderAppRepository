@@ -4,17 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-PopMenu.xcscheme</key>
+		<key>JTCalendar.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-XHRealTimeBlur.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-pop.xcscheme</key>
+		<key>MVYSideMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>671A965601D81AFC4FF8AC42</key>
+		<key>1F26CD486460731FD54F775C78A5F2D6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>696DA1666548EF53EB66F277</key>
+		<key>C3AD7E342840A1BEA026D1D3A2D9C1A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>69B1DD3862FB4DA0812E506A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E30438D8826887A21CB5F9A0</key>
+		<key>E4D053DFD40B813AC4F88BCD151D9061</key>
 		<dict>
 			<key>primary</key>
 			<true/>

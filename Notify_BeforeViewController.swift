@@ -17,12 +17,13 @@ class Notify_BeforeViewController: UIViewController {
     var selectedIndex: Int?
     var delegate: newNote?
     let theNewNote = New_Note ()
+    let checkmark: UIImageView = UIImageView(image: UIImage(named: "todosMini.png"))
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())        
         notifyBeforeValues = ["dont remind", "5 minutes", "10 minutes", "15 minutes", "30 minutes", "1 hour", "2 hours", "1 day"]
         // Do any additional setup after loading the view.
     }
@@ -66,14 +67,14 @@ class Notify_BeforeViewController: UIViewController {
         let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
         
         cell.textLabel?.text = notifyBeforeValues.objectAtIndex((indexPath?.row)!) as? String
-        
+        cell.backgroundColor = UIColor.clearColor() 
         if indexPath!.row == selectedIndex
         {
-            cell.accessoryType = .Checkmark;
+            cell.accessoryView = checkmark
         }
         else
         {
-            cell.accessoryType = .None;
+            cell.accessoryView = .None
         }
         return cell
     }
@@ -84,12 +85,12 @@ class Notify_BeforeViewController: UIViewController {
         if (selectedIndex != nil){
             let newIndexPath = NSIndexPath(forRow:selectedIndex!, inSection: 0)
             let uncheckCell: UITableViewCell = tableView.cellForRowAtIndexPath(newIndexPath)!
-            uncheckCell.accessoryType = .None
+            uncheckCell.accessoryView = .None
         }
         
         if (checkedIndexPath != nil) {
             let uncheckCell: UITableViewCell = tableView.cellForRowAtIndexPath(self.checkedIndexPath!)!
-            uncheckCell.accessoryType = .None
+            uncheckCell.accessoryView = .None
             checkedIndexPath = nil
             tappedIndexPath2 = nil
         }
@@ -99,7 +100,7 @@ class Notify_BeforeViewController: UIViewController {
         }
         else {
             let cell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
-            cell.accessoryType = .Checkmark
+            cell.accessoryView = checkmark
             self.checkedIndexPath = indexPath
             tappedIndexPath2 = indexPath.row
         }

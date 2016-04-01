@@ -7,37 +7,75 @@
 //
 
 import UIKit
+import CoreData
 
-class ViewController: UIViewController, UITableViewDelegate {
+class ViewController: UIViewController, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+  
     
     @IBOutlet weak var leftBarButton: UIBarButtonItem!
     @IBOutlet weak var todoSearchBar: UISearchBar!
     @IBOutlet weak var alarmTable: UITableView!
+    @IBOutlet weak var dateLabel: UILabel!
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     let selectNote = Selected_Note()
+    let createANote = New_Note()
     var messageLabel = UILabel()
     var searchArray = NSMutableArray()
     var isFiltered: Bool?
     let revealView = SWRevealViewController ()
     let formatter1 = NSDateFormatter ()
     let formatter2 = NSDateFormatter ()
-   
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    let request = NSFetchRequest(entityName: "Notes")
+    @IBOutlet weak var myImage: UIImageView!
+    let currentDateFormatter = NSDateFormatter ()
+
     
-    @IBOutlet weak var calendarImage: UIImageView!
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let notesFetchRequest = NSFetchRequest(entityName: "Notes")
+        
+        let primarySortDescriptor = NSSortDescriptor(key: "titleText", ascending: true)
+        let secondarySortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        let thirdSortDescriptor = NSSortDescriptor(key: "buttonName", ascending: true)
+
+        
+        notesFetchRequest.sortDescriptors = [primarySortDescriptor, secondarySortDescriptor, thirdSortDescriptor]
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: notesFetchRequest,
+            managedObjectContext: self.managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        frc.delegate = self
+
+        return frc
+    }()
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "createNote") {
+            let newNoteVC: New_Note = segue.destinationViewController as! New_Note
+            newNoteVC.titleText = "Add a note"
+            selectedIndexPath2 = nil
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Reminder"
-    
+        
         messageLabel = UILabel(frame: CGRectMake(0, 0, 200, 84))
         messageLabel.numberOfLines = 4
+        currentDateFormatter.dateFormat = "d MMM, YYYY"
         
         messageLabel.textAlignment = NSTextAlignment.Center
         messageLabel.text = "You don't have any notes. To add a new note click '+' button"
 
-        view.backgroundColor = UIColor .groupTableViewBackgroundColor()
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
         view.addSubview(messageLabel)
-        alarmTable.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
+
         leftBarButton.target = revealView.revealViewController()
         leftBarButton.action = "revealToggle:"
         self.view!.addGestureRecognizer(revealView.panGestureRecognizer())
@@ -47,65 +85,73 @@ class ViewController: UIViewController, UITableViewDelegate {
         
         formatter2.timeStyle = NSDateFormatterStyle.MediumStyle
         formatter2.dateFormat = "MMM dd,  hh:mm"
+        let theDate = NSDate()
+        let theDateString = currentDateFormatter.stringFromDate(theDate)
+        dateLabel.text = theDateString
+        
+        self.tabBarController?.tabBar.backgroundImage = UIImage(named: "tabbar")
+
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+            
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleNotification:", name: "MyNotification", object: nil)
+
     }
+
     
     override func viewDidLayoutSubviews() {
         messageLabel.center = CGPointMake(view.frame.size.width / 2, view.frame.size.height / 2)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        //return 1
+        if let sections = fetchedResultsController.sections {
+            return sections.count
+        }
+        
+        return 0
     }
     
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
-        if isFiltered == true {
-            return searchArray.count;
+        if let sections = fetchedResultsController.sections {
+            let currentSection = sections[section]
+            return currentSection.numberOfObjects
         }
-        return appDelegate.myNewDictArray.count;
+        
+        return 0
     }
     
- 
-    
+   
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-//        let cell:UITableViewCell = self.alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell
-        
+
         let cell = alarmTable.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as! Cell
-        cell.accessoryType = .DisclosureIndicator
-        if appDelegate.myNewDictArray.count > 0 {
-           
-        let noteText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("text") as! String
-        var alarmText = appDelegate.myNewDictArray.objectAtIndex((indexPath?.row)!) .objectForKey("date") as! String
-           
-            let dateInDateFormat = formatter1.dateFromString(alarmText)
-            let dateInStringFormat = formatter2.stringFromDate(dateInDateFormat!)
+        cell.accessoryView = UIImageView(image: UIImage(named: "discIndicator.png"))
+        cell.backgroundColor = UIColor.clearColor()
+        let notes = fetchedResultsController.objectAtIndexPath(indexPath!) as! Notes
+        
+        let imageSelected = notes.buttonName
+        let alarmText = notes.date
+        let statusImage = notes.status
 
-            alarmText = dateInStringFormat
-          
-           if (isFiltered == nil) {
-            
-                // Configure the cell...
-                cell.titleLabel.text = noteText as String
-                cell.alarmLabel.text = alarmText
-            }
-            
-            else {
-            
-                //  Configue the cell with filtered results.
-                cell.titleLabel.text = searchArray.objectAtIndex((indexPath?.row)!).objectForKey("text") as? String
-                cell.alarmLabel.text = searchArray.objectAtIndex((indexPath?.row)!).objectForKey("date") as? String
-            }
-
-            cell.backgroundColor = UIColor(red: (232.0 / 255.0), green: (166.0 / 255.0), blue: (105.0 / 255.0), alpha: 1.0)
-
-        } else {
-            
+        let dateInDateFormat = formatter1.dateFromString(alarmText!)
+        let dateInStringFormat = formatter2.stringFromDate(dateInDateFormat!)
+      
+        cell.titleLabel?.text = notes.titleText
+        if imageSelected != "" {
+        cell.myImage.image = UIImage(named: imageSelected!)
         }
+        cell.alarmLabel?.text = dateInStringFormat
+        
+        if statusImage != "" && statusImage != nil{
+        cell.statusImage.image = UIImage(named:statusImage!)
+        cell.backgroundColor = UIColor(red: (160.0 / 255.0), green: (160.0 / 255.0), blue: (160.0 / 255.0), alpha: 0.5)
+        }
+
         
         return cell
     }
@@ -113,6 +159,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         selectedIndex = indexPath.row
+        selectedIndexPath = indexPath
         
     }
     
@@ -130,75 +177,103 @@ class ViewController: UIViewController, UITableViewDelegate {
         self.alarmTable.setEditing(editing, animated: animated)
     }
     
+    func setDateFormat(){
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MM.dd hh:mm"
+        
+    }
+  
+    
   func tableView(tableView: UITableView,
         commitEditingStyle editingStyle: UITableViewCellEditingStyle,
         forRowAtIndexPath indexPath: NSIndexPath) {
             switch editingStyle {
             case .Delete:
-                // remove the deleted item from the model
-                appDelegate.myNewDictArray.removeObjectAtIndex(indexPath.row)
-
                 
-                // remove the deleted item from the `UITableView`
-               self.alarmTable.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                if appDelegate.myNewDictArray.count == 0 {
-                    addAnEmptyView()
+            let notes = fetchedResultsController.objectAtIndexPath(indexPath) as! Notes
+            
+            let userInfo = ["url" : "www.mobiwise.co"]
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.dateInDateFormat!, userInfo: userInfo)
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.someTimeBefore!, userInfo: userInfo)
+            
+            managedObjectContext.deleteObject(notes)
+            
+                do {
+                    try notes.managedObjectContext!.save()
+                } catch {
+                    print(error)
                 }
+            
+               self.alarmTable.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            let notesFetchRequest = NSFetchRequest(entityName: "Notes")
+            
+            let count = managedObjectContext.countForFetchRequest(notesFetchRequest, error: nil)
+            
+            if count == 0
+            {
+                addAnEmptyView()
+                todoSearchBar.userInteractionEnabled = false
+                }
+                
             default:
                 return
             }
     }
     
+    func filter(text: String) {
+        if text != "" {
+            let predicate: NSPredicate = NSPredicate(format: "(titleText CONTAINS[c] %@) OR (date CONTAINS[c] %@)", text, text)
+            fetchedResultsController.fetchRequest.predicate = predicate
+        } else {
+            fetchedResultsController.fetchRequest.predicate = nil
+        }
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+            
+        }
+    }
+    
+   
     func searchBar(searchBar: UISearchBar, textDidChange text: String) {
         
-        if text == "" {
-        
-            isFiltered = nil
-        
-        }
-            
-        else {
-
-            self.isFiltered = true
-            
-            searchArray.removeAllObjects()
-            searchArray.addObjectsFromArray(appDelegate.myNewDictArray.filteredArrayUsingPredicate(NSPredicate(format: "(text CONTAINS[cd] %@) OR (date CONTAINS[cd] %@)", text, text)))
-
-        }
-        
-        if text.characters.count == 1 && searchArray.count == 0 {
-            searchBar.resignFirstResponder()
-        searchArray.addObjectsFromArray(appDelegate.myNewDictArray as [AnyObject])
-        }
-        
-        print ("count == \(searchArray.count)")
+        self.filter(text)
           alarmTable.reloadData()
-        
         }
     
-    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-//        var resultRange: NSRange = text.rangeOfCharacterFromSet(NSCharacterSet.newlineCharacterSet(), options: NSBackwardsSearch)
-//        if text.characters.count == 1 && searchArray.count == 0 {
-//            searchBar.resignFirstResponder()
-//            return false
-//        }
-        
-        return true
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        todoSearchBar.setShowsCancelButton(true, animated: true)
     }
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         todoSearchBar.resignFirstResponder()
+        todoSearchBar.text = nil
+        todoSearchBar.setShowsCancelButton(false, animated: true)
+       fetchedResultsController.fetchRequest.predicate = nil
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+        }
+        
+        alarmTable.reloadData()
     }
     
-    func dismissKeyBoard () {
-    todoSearchBar.resignFirstResponder()
+    func searchBarSearchButtonClicked(searchBar: UISearchBar){
+        todoSearchBar.resignFirstResponder()
+        todoSearchBar.setShowsCancelButton(false, animated: true)
     }
     
     func removeAnEmptyView(){
         
         alarmTable.hidden = false
         messageLabel.hidden = true
-        calendarImage.hidden = true
+   
     }
     
     
@@ -206,20 +281,53 @@ class ViewController: UIViewController, UITableViewDelegate {
         
         alarmTable.hidden = true
         messageLabel.hidden = false
-        calendarImage.hidden = false
+      
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
-        if appDelegate.myNewDictArray.count == 0 {
-        alarmTable.reloadData()
+        
+        let notesFetchRequest = NSFetchRequest(entityName: "Notes")
+        
+        let count = managedObjectContext.countForFetchRequest(notesFetchRequest, error: nil)
+        
+        if count == 0
+        {
             addAnEmptyView()
-             todoSearchBar.userInteractionEnabled = false
+            todoSearchBar.userInteractionEnabled = false
         } else {
             removeAnEmptyView()
-            alarmTable.reloadData()
              todoSearchBar.userInteractionEnabled = true
         }
+        alarmTable.reloadData()
+        self.tabBarController?.tabBar.hidden = false
+        
     }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        if type != .Delete {
+         alarmTable.reloadData()
+        }
+    }
+    
+    func performSearch(date: NSDate) {
+        
+        let predicate: NSPredicate = NSPredicate(format:"searchDate == %@", date)
+        fetchedResultsController.fetchRequest.predicate = predicate
+                
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+            
+        }
+        
+    }
+    
+    func handleNotification(notification: NSNotification) {
+        performSearch(notification.userInfo?["searchDate"] as! NSDate)
+    }
+
 }
 

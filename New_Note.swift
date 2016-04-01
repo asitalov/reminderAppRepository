@@ -7,151 +7,276 @@
 //
 
 import UIKit
+import CoreData
+
+var selectedIndexPath2 : NSIndexPath?
 
 protocol newNote {
+    
      func updateLabelText(newLabel: String)
      func updateLabelContent(newLabel: String)
      func updateLabelIndex(newIndex: Int)
-
+    
 }
 
-class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITableViewDelegate, newNote  {
-
+class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITableViewDelegate, newNote, NSFetchedResultsControllerDelegate {
+    
     @IBOutlet weak var picker: UIDatePicker!
     @IBOutlet weak var settingsTable: UITableView!
     let dateformatter = NSDateFormatter ()
-    var dateValue = NSString ()
-    var dict = NSMutableDictionary ()
-    var theAlarmDate = NSDate()
-    var notificationText = NSString()
+    var dateValue = String ()
     var settingsArray = NSArray()
     var remindArray = NSArray()
-    var labelText:NSString?
-    var labelContent:NSString?
+    var labelText:String?
+    var labelContent:String?
     var labelInteger:Int?
-    var green   = UIButton()
-     var orange   = UIButton()
-     var red   = UIButton()
- 
-    let alertVC = HHAlertView() //objective c class
+    var imageNameText:NSString?
+    var delegate: newNote?
+    var titleText:String?
+    var dateInDateFormat:NSDate?
 
-     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
+    @IBOutlet weak var childButton: UIButton!
+    @IBOutlet weak var phoneButton: UIButton!
+    @IBOutlet weak var shoppingCartButton: UIButton!
+    @IBOutlet weak var travelButton: UIButton!
+
+    let alertVC = HHAlertView()
+   
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let notesFetchRequest = NSFetchRequest(entityName: "Notes")
+        
+        let primarySortDescriptor = NSSortDescriptor(key: "titleText", ascending: true)
+        let secondarySortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        let thirdSortDescriptor = NSSortDescriptor(key: "buttonName", ascending: true)
+        
+        
+        notesFetchRequest.sortDescriptors = [primarySortDescriptor, secondarySortDescriptor, thirdSortDescriptor]
+        
+        let frc = NSFetchedResultsController(
+            fetchRequest: notesFetchRequest,
+            managedObjectContext: self.managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        frc.delegate = self
+        print("animalFetch = \( notesFetchRequest)")
+        return frc
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "Add notification"
-        self.view.backgroundColor = UIColor.groupTableViewBackgroundColor()
-        self.picker.backgroundColor = UIColor.whiteColor()
-        settingsArray = ["Title", "Content", "Remind before", "Priority", "Alarm"]
+       self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
+       self.tabBarController?.tabBar.hidden = true
+      
+
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("An error occurred")
+            
+        }
+        if selectedIndexPath2 != nil {
+            
+        let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath2!) as! Notes
+            labelText = notes.titleText
+            labelContent = notes.contentText
+            let integerValue = Int(notes.index! as NSNumber)
+            labelInteger = integerValue
+            picker.setDate(notes.dateInDateFormat!, animated: false)
+           
+            imageNameText = notes.buttonName
+            
+            self.checkButtonName()
+            
+        } else {
+            childButton.selected = true
+            childButton.setImage(UIImage(named: "child-selected.png"), forState: .Selected)
+            
+            labelText = "Place title here"
+            labelContent = "Content text"
+            labelInteger = 0
+        }
+     
+        self.title = titleText
+
+        settingsArray = ["Title", "Content", "Remind before", "Alarm"]
         remindArray = ["dont remind", "5 mins", "10 mins", "15 mins", "30 mins", "1 hour", "2 hours", "1 day"]
-        
-        HHAlertView.shared().delegate = self
-        
-        
+
         dateformatter.timeStyle = NSDateFormatterStyle.ShortStyle
         dateformatter.dateFormat="MM.dd hh:mm"
         
         dateValue = dateformatter.stringFromDate(picker.date)
 
         picker.addTarget(self, action: Selector("dataPickerChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+
+    }
+
+    
+    func checkButtonName() {
         
-        labelText = "Place title here"
-        labelContent = "Content text"
-       labelInteger = 0
-
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func didClickButtonAnIndex(button: HHAlertButton) {
-        if button == HHAlertButton.Ok{
-            print("OK TOUCHED")
+        if imageNameText == "child-selected.png" {
+            childButton.selected = true
+            childButton.setImage(UIImage(named: "child-selected.png"), forState: .Selected)
+        } else if imageNameText == "phone-selected.png" {
+            phoneButton.selected = true
+            phoneButton.setImage(UIImage(named: "phone-selected.png"), forState: .Selected)
+        } else if imageNameText == "shopping-cart-selected.png" {
+            shoppingCartButton.selected = true
+            shoppingCartButton.setImage(UIImage(named: "shopping-cart-selected.png"), forState: .Selected)
+        } else if imageNameText == "travel-selected.png" {
+            travelButton.selected = true
+            travelButton.setImage(UIImage(named: "travel-selected.png"), forState: .Selected)
         }
+
     }
     
-
+    func resetButtons() {
+        childButton.selected = false
+        phoneButton.selected = false
+        shoppingCartButton.selected = false
+        travelButton.selected = false
+    }
     
-    @IBAction func Save(sender: UIBarButtonItem) {
+    @IBAction func childTapped(sender: AnyObject) {
+        resetButtons()
+       
+        childButton.selected = true
+        childButton.setImage(UIImage(named: "child-selected.png"), forState: .Selected)
+    }
+    
+    @IBAction func phoneTapped(sender: AnyObject) {
+        resetButtons()
+        phoneButton.selected = true
+        phoneButton.setImage(UIImage(named: "phone-selected.png"), forState: .Selected)
+
+    }
+    
+    @IBAction func shoppingCartTapped(sender: AnyObject) {
+        resetButtons()
+        shoppingCartButton.selected = true
+        shoppingCartButton.setImage(UIImage(named: "shopping-cart-selected.png"), forState: .Selected)
+    }
+    
+    @IBAction func travelTapped(sender: AnyObject) {
+        resetButtons()
+        travelButton.selected = true
+        travelButton.setImage(UIImage(named: "travel-selected.png"), forState: .Selected)
+    }
+
+  func getImage() -> NSString {
+        var image = ""
+        
+        if childButton.selected {
+            image = "child-selected.png"
+        }
+        else if phoneButton.selected {
+            image = "phone-selected.png"
+        }
+        else if shoppingCartButton.selected {
+            image = "shopping-cart-selected.png"
+        }
+        else if travelButton.selected {
+            image = "travel-selected.png"
+        }
+        return image
+    }
+    
+    
+    @IBAction func saveChanges(sender: UIBarButtonItem) {
         
       if labelText == "Place title here"{
         HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Please add a message for notification", cancelButton: nil, okbutton: "OK")
         
       } else {
- 
-        if labelContent != nil && labelContent != "Content here"{
-          dict.setObject(labelContent!, forKey: "content")
-        }
         
-        dict .setObject(labelText!, forKey: "text")
-        dict .setObject(dateValue, forKey: "date")
-        print(dict.objectForKey("text"))
-        
-        appDelegate.myNewDictArray .addObject(dict)
-        
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        userDefaults.setObject(appDelegate.myNewDictArray as Array, forKey: "alarmArr")
-        
-        scheduleNotification()
-        
-        HHAlertView .showAlertWithStyle(HHAlertStyle.Ok, inView: self.view, title: "Success", detail: "Notification created", cancelButton: nil, okbutton: nil)
+        let myImage = getImage()
+        let dateNow = NSDate ()
+        if dateNow .timeIntervalSinceDate(picker.date) > 0 {
+            HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Scheduled time already passed, please schedule actual time", cancelButton: nil, okbutton: "OK")
+        } else {
 
-        delay(1.5) {
-            self.navigationController?.popViewControllerAnimated(true)
+        scheduleNotification(Remind_Before.truncateSecondsForDate(picker.date))
+            
+        // CoreData
+        if selectedIndexPath2 != nil {
+            
+            let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath2!) as! Notes
+            
+            notes.setValue(labelText, forKey: "titleText")
+            notes.setValue(dateValue, forKey: "date")
+            notes.setValue(myImage, forKey: "buttonName")
+            notes.setValue(labelContent, forKey: "contentText")
+            notes.setValue("", forKey: "status")
+            notes.setValue(Remind_Before.truncateSecondsForDate(picker.date), forKey: "dateInDateFormat")
+          
+            let userInfo = ["url" : "www.mobiwise.co"]
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.dateInDateFormat!, userInfo: userInfo)
+            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.someTimeBefore!, userInfo: userInfo)
+            
+             scheduleNotification(Remind_Before.truncateSecondsForDate(picker.date))
+            do {
+                try notes.managedObjectContext!.save()
+            } catch {
+                print(error)
+            }
+
+        } else {
+            
+        let notes =  NSEntityDescription.entityForName("Notes",
+            inManagedObjectContext:managedObjectContext)
+        let nextNote = NSManagedObject(entity: notes!, insertIntoManagedObjectContext: self.managedObjectContext)
+       
+        nextNote.setValue(labelText, forKey: "titleText")
+        nextNote.setValue(dateValue, forKey: "date")
+        nextNote.setValue(myImage, forKey: "buttonName")
+        nextNote.setValue(labelContent, forKey: "contentText")
+        nextNote.setValue(Remind_Before.truncateSecondsForDate(picker.date), forKey: "dateInDateFormat")
+        nextNote.setValue(saveSearchValue(), forKey: "searchDate")
+            
+
+        let castAsNSNumber = NSNumber(integer: labelInteger!)
+        
+        nextNote.setValue(castAsNSNumber, forKey: "index")
+            
+            let someTimeBefore: NSDate = NSCalendar.currentCalendar().dateByAddingComponents(Remind_Before.scheduleBefore(labelInteger!), toDate: Remind_Before.truncateSecondsForDate(picker.date), options: [])!
+            
+            scheduleNotification(someTimeBefore)
+            
+             nextNote.setValue(someTimeBefore, forKey: "someTimeBefore")
+            
+        do {
+            try nextNote.managedObjectContext!.save()
+        } catch {
+            print(error)
         }
+        }
+            }
         }
     }
     
-    func scheduleNotification () {
-        
-        let currentDate = NSDate ()
-        
-        let dateFormatter = NSDateFormatter()
-        let dateFormatter2 = NSDateFormatter()
-        
-        dateFormatter.dateFormat = "YYYY.MM.dd hh:mm"
-        dateFormatter.timeZone = NSTimeZone(abbreviation: "GMT +2:00")
-        
-        dateFormatter2.dateFormat = "YYYY"
-        //Got the current year = 2016 in string
-        let currentDateString = dateFormatter2.stringFromDate(currentDate)
-        
-        //Got current date in string: 2016-03-11 07:48:53 +0000
-        let connectedDate = "\(currentDateString), \(dateValue)"
-        
-        //connectedDate (YYYY + MM.dd hh:mm) = 2016, 03.11 09:48
-        print ("connectedDate = \(connectedDate)")
-        
-        //Optional(2016-03-11 07:48:00 +0000) - shows 2 hours earlier, but works fine ^)
-        let dateInDateFormat = dateFormatter.dateFromString(connectedDate)
-        print("dateInDateFormat \(dateInDateFormat)")
+    func saveSearchValue() -> NSDate {
+        //creating a value to search by from calendar - very important ^^
+        let calendar: NSCalendar = NSCalendar.currentCalendar()
+        let unitFlags: NSCalendarUnit = [.Year, .Month, .Day]
+        let comp1: NSDateComponents = calendar.components(unitFlags, fromDate: Remind_Before.truncateSecondsForDate(picker.date))
+        let myDate = calendar.dateFromComponents(comp1)!.dateByAddingTimeInterval(60*60*24)
+      //  nextNote.setValue(myDate, forKey:"searchDate")
+        return myDate
 
-        
-        let notification = UILocalNotification()
-        notification.fireDate = dateInDateFormat
-        notification.alertBody = notificationText as String
-        notification.alertAction = "open"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.category = "TODO_CATEGORY"
-        
-         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
- 
     
-    func delay(delay: Double, closure: ()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(),
-            closure
-        )
+    func scheduleNotification (date: NSDate) {
+        
+        let userInfo = ["url" : "www.mobiwise.co"]
+        LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "view details", message: labelText!, date: date, userInfo: userInfo)
+        
+        self.navigationController?.popViewControllerAnimated(true)
+        
     }
     
     func dataPickerChanged (picker: UIDatePicker) {
@@ -161,12 +286,10 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         settingsTable.reloadData()
         print("dateValue is: \(dateValue)")
     }
-    
 
-    // Table view methods @@@
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-     
+        
         return 1
     }
     
@@ -177,16 +300,17 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         
     let cell = settingsTable.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath!) as! settingsCell
-      
       cell.mainLabel.text = settingsArray.objectAtIndex((indexPath?.row)!) as? String
-        cell.settingsLabel.alpha = 0.5
+        
+        cell.accessoryView = UIImageView(image: UIImage(named: "discIndicator.png"))
+
         if indexPath!.row == 0 {
             
             if labelText == "" {
                 labelText = "Place title here"
-                cell.settingsLabel.text = labelText as? String
+                cell.settingsLabel.text = labelText
             } else {
-            cell.settingsLabel.text = labelText as? String
+                cell.settingsLabel.text = labelText
             }
         }
         
@@ -194,64 +318,23 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             
             if labelContent == "" {
                 labelContent = "Content text"
-                cell.settingsLabel.text = labelContent as? String
+                cell.settingsLabel.text = labelContent
             } else {
-                cell.settingsLabel.text = labelContent as? String
+                cell.settingsLabel.text = labelContent
             }
-        }  else if indexPath!.row == 2{
+        }  else if indexPath!.row == 2 {
             if labelInteger != nil{
-                cell.settingsLabel.text = remindArray.objectAtIndex(labelInteger!) as! String
+                cell.settingsLabel.text = remindArray.objectAtIndex(labelInteger!) as? String
             }
             
-        } else if indexPath!.row == 3 {
+        }
+        else if indexPath!.row == 3 {
             
-            cell.accessoryType = .None
-            cell.settingsLabel.hidden = true
-            
-            red = UIButton(frame: CGRectMake(240, 0, 40, 40))
-            orange = UIButton(frame: CGRectMake(195, 0, 40, 40))
-            green = UIButton(frame: CGRectMake(150, 0, 40, 40))
-            
-            red.setBackgroundImage(UIImage(named: "red.png"), forState: .Normal)
-            orange.setBackgroundImage(UIImage(named: "orange.png"), forState: .Normal)
-            green.setBackgroundImage(UIImage(named: "green.png"), forState: .Normal)
-            
-            red.showsTouchWhenHighlighted = true
-            orange.showsTouchWhenHighlighted = true
-            green.showsTouchWhenHighlighted = true
-
-            cell.contentView.addSubview(red)
-            cell.contentView.addSubview(orange)
-            cell.contentView.addSubview(green)
-            
-            red.addTarget(self, action: "redTouched:", forControlEvents: .TouchUpInside)
-            orange.addTarget(self, action: "orangeTouched:", forControlEvents: .TouchUpInside)
-            green.addTarget(self, action: "greenTouched:", forControlEvents: .TouchUpInside)
-
-
-
+            cell.settingsLabel.text = dateValue
+            cell.accessoryView = .None
         }
         
-            else if indexPath!.row == 4 {
-
-                cell.settingsLabel.text = dateValue as? String
-            }
-        
         return cell
-    }
-    
-    func greenTouched(sender: UIButton) {
-        
-    }
-    
-    
-    func orangeTouched(sender: UIButton){
-        
-    }
-    
-    
-    func redTouched(sender: UIButton){
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -289,6 +372,9 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        
+//        self.picker.locale = NSLocale.currentLocale()
+        self.picker.timeZone = NSTimeZone.defaultTimeZone()
     
     }
     
@@ -308,6 +394,7 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         settingsTable.reloadData()
         print("updateLabelIndex CALLEd")
     }
+
     /*
     // MARK: - Navigation
 
