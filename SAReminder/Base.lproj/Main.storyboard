@@ -88,7 +88,7 @@
                                             <outlet property="myImage" destination="P2H-Go-Gl3" id="FdT-av-LGS"/>
                                             <outlet property="statusImage" destination="4ii-PN-Zpg" id="wOW-Cn-tEC"/>
                                             <outlet property="titleLabel" destination="XJx-NF-cRB" id="fpU-bv-r3v"/>
-                                            <segue destination="XMi-Ex-gkf" kind="show" id="9Ru-uS-vED"/>
+                                            <segue destination="XMi-Ex-gkf" kind="show" identifier="identifier" id="9Ru-uS-vED"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -209,15 +209,15 @@
                                     <outlet property="delegate" destination="uR7-mx-HWN" id="kps-TH-hKb"/>
                                 </connections>
                             </tableView>
-                            <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="vDk-da-O1V">
-                                <rect key="frame" x="0.0" y="342" width="320" height="196"/>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="vDk-da-O1V">
+                                <rect key="frame" x="-4" y="303" width="328" height="216"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <date key="date" timeIntervalSinceReferenceDate="479242404.73151898">
                                     <!--2016-03-09 18:53:24 +0000-->
                                 </date>
                             </datePicker>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp1-Mb-No3">
-                                <rect key="frame" x="240" y="86" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp1-Mb-No3">
+                                <rect key="frame" x="244" y="86" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="GmA-fG-sGF"/>
@@ -227,8 +227,8 @@
                                     <action selector="travelTapped:" destination="uR7-mx-HWN" eventType="touchUpInside" id="Qeh-QW-cw2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VML-Le-VSH">
-                                <rect key="frame" x="30" y="86" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VML-Le-VSH">
+                                <rect key="frame" x="26" y="86" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="lcB-6J-aiT"/>
@@ -238,8 +238,8 @@
                                     <action selector="childTapped:" destination="uR7-mx-HWN" eventType="touchUpInside" id="kx0-47-3fe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="254" horizontalCompressionResistancePriority="751" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZa-5t-alP">
-                                <rect key="frame" x="100" y="86" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="254" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZa-5t-alP">
+                                <rect key="frame" x="96" y="86" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="1Ip-uG-xbc"/>
@@ -249,8 +249,8 @@
                                     <action selector="phoneTapped:" destination="uR7-mx-HWN" eventType="touchUpInside" id="fT1-RA-sKr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" horizontalCompressionResistancePriority="753" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ex-no-AvM">
-                                <rect key="frame" x="170" y="86" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" horizontalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ex-no-AvM">
+                                <rect key="frame" x="174" y="86" width="50" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="0fs-If-rug"/>
@@ -741,15 +741,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eEg-5U-Cyo">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eEg-5U-Cyo">
+                                <rect key="frame" x="-4" y="64" width="328" height="504"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="aRt-wl-F6f">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="328" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aRt-wl-F6f" id="hKi-Rz-EMi">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="328" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -986,7 +986,7 @@
         <image name="travel" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lfV-Qy-O8m"/>
         <segue reference="UPk-YP-eeI"/>
+        <segue reference="lfV-Qy-O8m"/>
     </inferredMetricsTieBreakers>
 </document>
