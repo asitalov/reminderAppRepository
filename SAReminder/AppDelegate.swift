@@ -16,17 +16,17 @@ let ACTION_TWO_IDENTIFIER : String = "ACTION_TWO_IDENTIFIER"
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var myNewDictArray = NSMutableArray ()
+   // var myNewDictArray = NSMutableArray ()
     var indexInteger: Int?
     let userDefaults = NSUserDefaults.standardUserDefaults()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        myNewDictArray = userDefaults.mutableArrayValueForKey("alarmArr")
+
 
         UINavigationBar.appearance().setBackgroundImage(UIImage.init(named: "navigationbar"), forBarMetrics: UIBarMetrics.Default)
-        
-        LocalNotificationHelper.sharedInstance().registerUserNotification()//registerUserNotificationWithActionButtons(actions: actions)
+   
+        LocalNotificationHelper.sharedInstance().registerUserNotification()
+
 
             return true
     }
@@ -34,12 +34,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func callGesturePassword () {
         
         if (userDefaults.objectForKey("gesturePassword") != nil && userDefaults.objectForKey("password")?.boolValue == true ) {
+            
             let controller: YLCheckToUnlockViewController = YLCheckToUnlockViewController()
             self.window?.rootViewController?.presentViewController(controller, animated: true, completion: nil)
+            
         }
+    }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+       
         
     }
-
+    
     func applicationWillResignActive(application: UIApplication) {
         
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -64,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if userDefaults.objectForKey("switch") == nil {
             userDefaults.setBool(false, forKey: "switch")
         }
+        print("remaining time == \(userDefaults.objectForKey("remaining_time"))")
         
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         

@@ -62,6 +62,14 @@ class Notify_BeforeViewController: UIViewController {
         return notifyBeforeValues.count
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            return 33.0
+        } else {
+            return 38.0
+        }
+    }
     
     func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath!) as UITableViewCell

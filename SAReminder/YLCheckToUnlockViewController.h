@@ -10,6 +10,4 @@
 
 @interface YLCheckToUnlockViewController : UIViewController
 
--(void)countdownTimer;
-
 @end
