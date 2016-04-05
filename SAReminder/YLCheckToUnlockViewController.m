@@ -8,61 +8,23 @@
 
 #import "YLCheckToUnlockViewController.h"
 #import "YLSwipeLockView.h"
+#import "UIKit/UIKit.h"
 
 
 @interface YLCheckToUnlockViewController ()<YLSwipeLockViewDelegate>
-{
-    UIView *blockView;
-    UILabel *messageLabel;
-    NSTimer *timer;
- 
-}
 
 @property (nonatomic, weak) YLSwipeLockView *lockView;
 @property (nonatomic, weak) UILabel *titleLabel;
 @property (nonatomic) NSUInteger unmatchCounter;
 @property (nonatomic, weak) UILabel *counterLabel;
 
-//@property (nonatomic, weak) UIView *blockView;
+
 @end
 
 @implementation YLCheckToUnlockViewController
 
-int hours, minutes, seconds;
-int secondsLeft;
-
-- (void)updateCounter:(NSTimer *)theTimer {
-    
-    if(secondsLeft > 0 ) {
-        secondsLeft -- ;
-        hours = secondsLeft / 3600;
-        minutes = (secondsLeft % 3600) / 60;
-        seconds = (secondsLeft %3600) % 60;
-        messageLabel.text = [NSString stringWithFormat:@"Failed to access 5 times, try again in: %02d:%02d", minutes, seconds];
-    } else {
-        secondsLeft = 300;
-    }
-}
-
--(void)countdownTimer {
-    
-   
-    
-    if (timer == nil) {
-         secondsLeft = 300;
-        secondsLeft = hours = minutes = seconds = 0;
-      //  [timer invalidate];
-        timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
-    } else {
-        
-    }
-    
-
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-  //@@@@@ should be somewhere else
     
     self.view.backgroundColor = [UIColor colorWithRed:35/255.0 green:39/255.0 blue:54/255.0 alpha:1];
     
@@ -111,53 +73,20 @@ int secondsLeft;
         self.unmatchCounter--;
         if (self.unmatchCounter == 0) {
             
-            self.counterLabel.text = @"5 times unmatched";
+
             self.counterLabel.hidden = NO;
-            
-            [self performSelector:@selector(addBlockView) withObject:nil afterDelay:0];
-            
-            [self performSelector:@selector(dismissBlockView) withObject:nil afterDelay:300];
-            [self countdownTimer];
-            
+            self.unmatchCounter = 5;
+
         }else {
             
-            self.counterLabel.text = [NSString stringWithFormat:@"unmatched, %lu times left", (unsigned long)self.unmatchCounter];
+            self.counterLabel.text = [NSString stringWithFormat:@"Wrong password"];
             self.counterLabel.hidden = NO;
         }
         return YLSwipeLockViewStateWarning;
     }
 }
-- (void) addBlockView {
-    
-    blockView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    messageLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 360)];
-   
-    messageLabel.numberOfLines = 3;
-    
-    messageLabel.text = @"Failed to access 5 times, try again in: 05:00";
-    messageLabel.textColor = [UIColor whiteColor];
-    messageLabel.textAlignment = NSTextAlignmentCenter;
-    blockView.backgroundColor = [UIColor colorWithRed:35/255.0 green:39/255.0 blue:54/255.0 alpha:0.5];
-    self.unmatchCounter = 5;
 
-        
-         [self.view addSubview:blockView];
-      [blockView addSubview:messageLabel];
-  
 
-   
-}
-
-- (void) viewDidLayoutSubviews
-{
-    messageLabel.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2 + 200);
-    //CGPointMake(view.frame.size.width / 2, view.frame.size.height / 2)
-}
-
-- (void) dismissBlockView {
-    
-    [blockView removeFromSuperview];
-}
 
 - (void)dismissViewController   // DISMISSING THE BLOCK SCREEN!!!!!
 {

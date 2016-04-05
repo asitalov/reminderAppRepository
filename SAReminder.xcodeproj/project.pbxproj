@@ -27,6 +27,7 @@
 		84EE4D041C909D1600F7C6E3 /* SAReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4D031C909D1600F7C6E3 /* SAReminderTests.swift */; };
 		84EE4D0F1C909D1600F7C6E3 /* SAReminderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4D0E1C909D1600F7C6E3 /* SAReminderUITests.swift */; };
 		84EE4D1F1C90A4F100F7C6E3 /* New_Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE4D1E1C90A4F100F7C6E3 /* New_Note.swift */; };
+		D63210D91CB27AF400EA6D99 /* iphone_6+_image@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D63210D81CB27AF400EA6D99 /* iphone_6+_image@3x.jpg */; };
 		D643ECAE1C9AB0A100512A2F /* YLSwipeLockView.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECA71C9AB0A100512A2F /* YLSwipeLockView.m */; };
 		D643ECAF1C9AB0A100512A2F /* YLSwipeLockNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECA91C9AB0A100512A2F /* YLSwipeLockNodeView.m */; };
 		D643ECB01C9AB0A100512A2F /* YLCheckToUnlockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D643ECAB1C9AB0A100512A2F /* YLCheckToUnlockViewController.m */; };
@@ -34,7 +35,6 @@
 		D66383311CA5369C00A656E3 /* GetBackgroundImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66383301CA5369C00A656E3 /* GetBackgroundImage.swift */; };
 		D663833E1CA542C300A656E3 /* iphone_4_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833A1CA542C300A656E3 /* iphone_4_image@2x.jpg */; };
 		D663833F1CA542C300A656E3 /* iphone_5_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */; };
-		D66383401CA542C300A656E3 /* iphone_6+_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */; };
 		D66383411CA542C300A656E3 /* iphone_6_image@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */; };
 		D665D9211CAA9D6A009A573B /* BasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D665D9201CAA9D6A009A573B /* BasicViewController.m */; };
 		D668D91E1C99909B008011D2 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D668D91D1C99909B008011D2 /* SWRevealViewController.m */; };
@@ -114,6 +114,7 @@
 		84EE4D101C909D1600F7C6E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84EE4D1E1C90A4F100F7C6E3 /* New_Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = New_Note.swift; path = ../New_Note.swift; sourceTree = "<group>"; };
 		BB921FDD22B71FAB7657CBDC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D63210D81CB27AF400EA6D99 /* iphone_6+_image@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_6+_image@3x.jpg"; sourceTree = "<group>"; };
 		D643ECA61C9AB0A100512A2F /* YLSwipeLockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSwipeLockView.h; sourceTree = "<group>"; };
 		D643ECA71C9AB0A100512A2F /* YLSwipeLockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLSwipeLockView.m; sourceTree = "<group>"; };
 		D643ECA81C9AB0A100512A2F /* YLSwipeLockNodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSwipeLockNodeView.h; sourceTree = "<group>"; };
@@ -125,7 +126,6 @@
 		D66383301CA5369C00A656E3 /* GetBackgroundImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GetBackgroundImage.swift; path = ../GetBackgroundImage.swift; sourceTree = "<group>"; };
 		D663833A1CA542C300A656E3 /* iphone_4_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_4_image@2x.jpg"; sourceTree = "<group>"; };
 		D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_5_image@2x.jpg"; sourceTree = "<group>"; };
-		D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_6+_image@2x.jpg"; sourceTree = "<group>"; };
 		D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "iphone_6_image@2x.jpg"; sourceTree = "<group>"; };
 		D665D91F1CAA9D6A009A573B /* BasicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicViewController.h; sourceTree = "<group>"; };
 		D665D9201CAA9D6A009A573B /* BasicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicViewController.m; sourceTree = "<group>"; };
@@ -285,6 +285,13 @@
 			path = SAReminderUITests;
 			sourceTree = "<group>";
 		};
+		D63210E71CB2B56200EA6D99 /* TimerManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = TimerManager;
+			sourceTree = "<group>";
+		};
 		D643ECB21C9AB0A600512A2F /* SwipeLock */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +330,7 @@
 		D69BB4701CA9403600848415 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D63210E71CB2B56200EA6D99 /* TimerManager */,
 				D665D9221CAA9DC2009A573B /* Calendar */,
 				D69BB4711CA94D0400848415 /* Notes.swift */,
 				84805EE81CAC618E00A89529 /* TabBarController.swift */,
@@ -345,8 +353,8 @@
 				D663833A1CA542C300A656E3 /* iphone_4_image@2x.jpg */,
 				8400A5F01CA6F7A800905335 /* todosMini.png */,
 				D663833B1CA542C300A656E3 /* iphone_5_image@2x.jpg */,
-				D663833C1CA542C300A656E3 /* iphone_6+_image@2x.jpg */,
 				D663833D1CA542C300A656E3 /* iphone_6_image@2x.jpg */,
+				D63210D81CB27AF400EA6D99 /* iphone_6+_image@3x.jpg */,
 				D67F9E6A1CA429270030A401 /* discIndicator.png */,
 				D67F9E721CA44C5F0030A401 /* navigationbar@2x.png */,
 				D67F9E681CA423E30030A401 /* i5backgroundImage.jpg */,
@@ -488,7 +496,6 @@
 				D663833E1CA542C300A656E3 /* iphone_4_image@2x.jpg in Resources */,
 				8400A5F31CA7174200905335 /* i6+launchscreen@2x.jpg in Resources */,
 				D663833F1CA542C300A656E3 /* iphone_5_image@2x.jpg in Resources */,
-				D66383401CA542C300A656E3 /* iphone_6+_image@2x.jpg in Resources */,
 				84805EE41CAC52C400A89529 /* note_filled-32.png in Resources */,
 				D6C4D7831C96B31700AD454F /* magnifier@2x.png in Resources */,
 				84805EE21CAC52C400A89529 /* calendar_filled-32.png in Resources */,
@@ -498,6 +505,7 @@
 				D6C4D7D91C96C24400AD454F /* settings2.png in Resources */,
 				84805EE71CAC5D6C00A89529 /* tabbar@2x.png in Resources */,
 				D67F9E6B1CA429270030A401 /* discIndicator.png in Resources */,
+				D63210D91CB27AF400EA6D99 /* iphone_6+_image@3x.jpg in Resources */,
 				84805EE31CAC52C400A89529 /* calendar-32.png in Resources */,
 				D6C4D7851C96B31700AD454F /* twitter@2x.png in Resources */,
 				D6C4D7811C96B31700AD454F /* actions@2x.png in Resources */,
@@ -753,6 +761,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SAReminder/SAReminder-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -771,6 +780,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SAReminder/SAReminder-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

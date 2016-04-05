@@ -9,7 +9,11 @@
 import UIKit
 import CoreData
 
+
+
 var selectedIndexPath2 : NSIndexPath?
+
+
 
 protocol newNote {
     
@@ -43,8 +47,6 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     @IBOutlet weak var travelButton: UIButton!
 
     let alertVC = HHAlertView()
-   
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
@@ -72,7 +74,6 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         super.viewDidLoad()
        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
        self.tabBarController?.tabBar.hidden = true
-      
 
         do {
             try fetchedResultsController.performFetch()
@@ -193,14 +194,15 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Please add a message for notification", cancelButton: nil, okbutton: "OK")
         
       } else {
-        
-        let myImage = getImage()
+
         let dateNow = NSDate ()
         if dateNow .timeIntervalSinceDate(picker.date) > 0 {
             HHAlertView .showAlertWithStyle(HHAlertStyle.Wraing, inView: self.view, title: "Reminder", detail: "Scheduled time already passed, please schedule actual time", cancelButton: nil, okbutton: "OK")
         } else {
 
-        scheduleNotification(Remind_Before.truncateSecondsForDate(picker.date))
+        scheduleNotification(labelText!, date:Remind_Before.truncateSecondsForDate(picker.date))
+            
+        let myImage = getImage()
             
         // CoreData
         if selectedIndexPath2 != nil {
@@ -213,12 +215,16 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             notes.setValue(labelContent, forKey: "contentText")
             notes.setValue("", forKey: "status")
             notes.setValue(Remind_Before.truncateSecondsForDate(picker.date), forKey: "dateInDateFormat")
-          
-            let userInfo = ["url" : "www.mobiwise.co"]
-            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.dateInDateFormat!, userInfo: userInfo)
-            LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: notes.titleText!, date: notes.someTimeBefore!, userInfo: userInfo)
+
+            cancelNotification(notes.titleText!, date: notes.dateInDateFormat!)
+            cancelNotification(notes.titleText!, date: notes.someTimeBefore!)
             
-             scheduleNotification(Remind_Before.truncateSecondsForDate(picker.date))
+            scheduleNotification(notes.titleText! ,date:Remind_Before.truncateSecondsForDate(picker.date)) //picker.date
+            
+            let someTimeBefore: NSDate = NSCalendar.currentCalendar().dateByAddingComponents(Remind_Before.scheduleBefore(labelInteger!), toDate: Remind_Before.truncateSecondsForDate(picker.date), options: [])!
+            
+            scheduleNotification(notes.titleText!, date:someTimeBefore)
+            
             do {
                 try notes.managedObjectContext!.save()
             } catch {
@@ -245,16 +251,17 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
             
             let someTimeBefore: NSDate = NSCalendar.currentCalendar().dateByAddingComponents(Remind_Before.scheduleBefore(labelInteger!), toDate: Remind_Before.truncateSecondsForDate(picker.date), options: [])!
             
-            scheduleNotification(someTimeBefore)
+            scheduleNotification(labelText!, date:someTimeBefore) // before "n" minutes
             
              nextNote.setValue(someTimeBefore, forKey: "someTimeBefore")
             
-        do {
-            try nextNote.managedObjectContext!.save()
-        } catch {
-            print(error)
+            do {
+                try nextNote.managedObjectContext!.save()
+            } catch {
+                print(error)
+            }
         }
-        }
+            
             }
         }
     }
@@ -270,10 +277,16 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
 
     }
     
-    func scheduleNotification (date: NSDate) {
+    func cancelNotification (message: String, date: NSDate) {
         
         let userInfo = ["url" : "www.mobiwise.co"]
-        LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "view details", message: labelText!, date: date, userInfo: userInfo)
+        LocalNotificationHelper.sharedInstance().cancelNotificationWithKey("mobiwise", title: "view details", message: message, date: date, userInfo: userInfo)
+    }
+    
+    func scheduleNotification (message: String, date: NSDate) {
+        
+        let userInfo = ["url" : "www.mobiwise.co"]
+        LocalNotificationHelper.sharedInstance().scheduleNotificationWithKey("mobiwise", title: "view details", message: message, date: date, userInfo: userInfo)
         
         self.navigationController?.popViewControllerAnimated(true)
         
@@ -337,6 +350,15 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         return cell
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if DeviceType.IS_IPHONE_4_OR_LESS {
+            return 33.0
+        } else {
+            return 44.0
+        }  
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             let sb : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -374,6 +396,8 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
         super.viewWillAppear(animated);
         
 //        self.picker.locale = NSLocale.currentLocale()
+        HHAlertView.shared().delegate = self
+        
         self.picker.timeZone = NSTimeZone.defaultTimeZone()
     
     }
@@ -392,7 +416,23 @@ class New_Note: UIViewController, UITextViewDelegate, HHAlertViewDelegate, UITab
     func updateLabelIndex(newIndex: Int){
         labelInteger = newIndex
         settingsTable.reloadData()
-        print("updateLabelIndex CALLEd")
+    }
+    
+    func didClickButtonAnIndex(button: HHAlertButton) {
+        
+        if button == HHAlertButton.Cancel {
+            
+            let notes = fetchedResultsController.objectAtIndexPath(selectedIndexPath!) as! Notes
+            managedObjectContext.deleteObject(notes)
+            
+            do {
+                try notes.managedObjectContext!.save()
+            } catch {
+                print(error)
+            }
+            self.navigationController?.popViewControllerAnimated(true)
+            
+        }
     }
 
     /*

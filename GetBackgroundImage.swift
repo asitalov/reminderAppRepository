@@ -37,13 +37,13 @@ class GetBackgroundImage: NSObject, NSFetchedResultsControllerDelegate {
         
 
         if DeviceType.IS_IPHONE_4_OR_LESS {
-            imageName = "iphone_4_image@2x.jpg"
+            imageName = "iphone_4_image.jpg"
         } else if DeviceType.IS_IPHONE_5 {
-            imageName = "iphone_5_image@2x.jpg"
+            imageName = "iphone_5_image.jpg"
         } else if DeviceType.IS_IPHONE_6 {
-            imageName = "iphone_6_image@2x.jpg"
+            imageName = "iphone_6_image.jpg"
         } else if DeviceType.IS_IPHONE_6P {
-            imageName = "iphone_6+_image@2x.jpg"
+            imageName = "iphone_6+_image.jpg"
         }
         
         return UIImage(named: imageName as String)!
