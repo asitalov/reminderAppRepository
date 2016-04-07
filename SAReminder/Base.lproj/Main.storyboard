@@ -60,9 +60,9 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P2H-Go-Gl3">
-                                                    <rect key="frame" x="22" y="6" width="50" height="50"/>
+                                                    <rect key="frame" x="22" y="6" width="45" height="45"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="ohi-Gt-GUU"/>
+                                                        <constraint firstAttribute="width" constant="45" id="ohi-Gt-GUU"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -72,13 +72,13 @@
                                                 <constraint firstAttribute="trailing" secondItem="4ii-PN-Zpg" secondAttribute="trailing" constant="8" id="JCc-lt-2D8"/>
                                                 <constraint firstItem="mBt-7f-z7W" firstAttribute="top" secondItem="XJx-NF-cRB" secondAttribute="bottom" id="LM0-sv-GL3"/>
                                                 <constraint firstItem="P2H-Go-Gl3" firstAttribute="top" secondItem="QfK-re-bh7" secondAttribute="topMargin" constant="-2" id="LpR-fQ-VLy"/>
-                                                <constraint firstItem="P2H-Go-Gl3" firstAttribute="bottom" secondItem="4ii-PN-Zpg" secondAttribute="bottom" id="VCQ-Pg-e9B"/>
+                                                <constraint firstItem="P2H-Go-Gl3" firstAttribute="bottom" secondItem="4ii-PN-Zpg" secondAttribute="bottom" constant="-5" id="VCQ-Pg-e9B"/>
                                                 <constraint firstItem="4ii-PN-Zpg" firstAttribute="top" secondItem="XJx-NF-cRB" secondAttribute="top" id="W0z-ag-Ips"/>
                                                 <constraint firstItem="XJx-NF-cRB" firstAttribute="top" secondItem="QfK-re-bh7" secondAttribute="topMargin" constant="-15" id="Zn5-uB-WVS"/>
-                                                <constraint firstItem="XJx-NF-cRB" firstAttribute="leading" secondItem="P2H-Go-Gl3" secondAttribute="trailing" constant="18" id="dwx-SU-Akv"/>
+                                                <constraint firstItem="XJx-NF-cRB" firstAttribute="leading" secondItem="P2H-Go-Gl3" secondAttribute="trailing" constant="23" id="dwx-SU-Akv"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="mBt-7f-z7W" secondAttribute="trailing" constant="55" id="tFg-6t-zRl"/>
                                                 <constraint firstItem="mBt-7f-z7W" firstAttribute="leading" secondItem="XJx-NF-cRB" secondAttribute="leading" id="ulM-r5-zSy"/>
-                                                <constraint firstAttribute="bottom" secondItem="P2H-Go-Gl3" secondAttribute="bottom" id="yEz-b0-M7U"/>
+                                                <constraint firstAttribute="bottom" secondItem="P2H-Go-Gl3" secondAttribute="bottom" constant="5" id="yEz-b0-M7U"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="XJx-NF-cRB" secondAttribute="trailing" constant="-43" id="zWY-Sk-5zD"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -335,15 +335,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WP5-gg-ImY" customClass="JTHorizontalCalendarView">
-                                <rect key="frame" x="-4" y="159" width="328" height="214"/>
+                                <rect key="frame" x="-8" y="70" width="336" height="214"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bX-HM-jvj" customClass="JTCalendarMenuView">
-                                <rect key="frame" x="-4" y="109" width="328" height="50"/>
+                                <rect key="frame" x="-8" y="20" width="336" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days marked with a dot contain event." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPx-Ru-qYc">
-                                <rect key="frame" x="34" y="381" width="252" height="17"/>
+                                <rect key="frame" x="34" y="292" width="252" height="17"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -352,14 +352,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="WP5-gg-ImY" firstAttribute="leading" secondItem="8bX-HM-jvj" secondAttribute="leading" id="1xm-nL-jcU"/>
-                            <constraint firstItem="8bX-HM-jvj" firstAttribute="top" secondItem="FN7-6i-Nri" secondAttribute="bottom" constant="89" id="5RF-8e-IT6"/>
+                            <constraint firstItem="8bX-HM-jvj" firstAttribute="top" secondItem="FN7-6i-Nri" secondAttribute="bottom" id="5RF-8e-IT6"/>
                             <constraint firstItem="OPx-Ru-qYc" firstAttribute="top" secondItem="WP5-gg-ImY" secondAttribute="bottom" constant="8" symbolic="YES" id="8MO-ez-WOC"/>
                             <constraint firstItem="WP5-gg-ImY" firstAttribute="centerX" secondItem="OPx-Ru-qYc" secondAttribute="centerX" id="GcN-UX-bmi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8bX-HM-jvj" secondAttribute="trailing" constant="-20" id="HrQ-4G-Hfs"/>
-                            <constraint firstAttribute="bottom" secondItem="WP5-gg-ImY" secondAttribute="bottom" constant="195" id="YcP-9j-dLz"/>
-                            <constraint firstItem="WP5-gg-ImY" firstAttribute="top" secondItem="NOi-al-UAK" secondAttribute="top" constant="159" id="b8f-oh-Rty"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8bX-HM-jvj" secondAttribute="trailing" constant="-24" id="HrQ-4G-Hfs"/>
+                            <constraint firstAttribute="bottom" secondItem="WP5-gg-ImY" secondAttribute="bottom" constant="284" id="YcP-9j-dLz"/>
+                            <constraint firstItem="WP5-gg-ImY" firstAttribute="top" secondItem="NOi-al-UAK" secondAttribute="top" constant="70" id="b8f-oh-Rty"/>
                             <constraint firstItem="WP5-gg-ImY" firstAttribute="trailing" secondItem="8bX-HM-jvj" secondAttribute="trailing" id="blf-fg-tvw"/>
-                            <constraint firstItem="8bX-HM-jvj" firstAttribute="leading" secondItem="NOi-al-UAK" secondAttribute="leadingMargin" constant="-20" id="hPP-s4-qYT"/>
+                            <constraint firstItem="8bX-HM-jvj" firstAttribute="leading" secondItem="NOi-al-UAK" secondAttribute="leadingMargin" constant="-24" id="hPP-s4-qYT"/>
                             <constraint firstItem="WP5-gg-ImY" firstAttribute="top" secondItem="8bX-HM-jvj" secondAttribute="bottom" id="z0V-d2-400"/>
                         </constraints>
                     </view>
@@ -986,7 +986,7 @@
         <image name="travel" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="j1T-li-MU8"/>
         <segue reference="UPk-YP-eeI"/>
-        <segue reference="lfV-Qy-O8m"/>
     </inferredMetricsTieBreakers>
 </document>
