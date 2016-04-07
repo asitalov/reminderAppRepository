@@ -285,13 +285,6 @@
 			path = SAReminderUITests;
 			sourceTree = "<group>";
 		};
-		D63210E71CB2B56200EA6D99 /* TimerManager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = TimerManager;
-			sourceTree = "<group>";
-		};
 		D643ECB21C9AB0A600512A2F /* SwipeLock */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,7 +323,6 @@
 		D69BB4701CA9403600848415 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				D63210E71CB2B56200EA6D99 /* TimerManager */,
 				D665D9221CAA9DC2009A573B /* Calendar */,
 				D69BB4711CA94D0400848415 /* Notes.swift */,
 				84805EE81CAC618E00A89529 /* TabBarController.swift */,

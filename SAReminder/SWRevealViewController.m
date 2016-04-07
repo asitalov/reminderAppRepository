@@ -1273,7 +1273,7 @@ const int FrontViewPositionNone = 0xff;
     NSTimeInterval duration = _toggleAnimationDuration;
 
     // Velocity driven change:
-    if (fabsf(velocity) > _quickFlickVelocity)
+    if (fabs(velocity) > _quickFlickVelocity)
     {
         // we may need to set the drag position and to adjust the animation duration
         CGFloat journey = xLocation;
@@ -1291,7 +1291,7 @@ const int FrontViewPositionNone = 0xff;
             }
         }
         
-        duration = fabsf(journey/velocity);
+        duration = fabs(journey/velocity);
     }
     
     // Position driven change:
@@ -1348,7 +1348,7 @@ const int FrontViewPositionNone = 0xff;
     
     NSTimeInterval duration = animated?_toggleAnimationDuration:0.0;
     NSTimeInterval firstDuration = duration;
-    int initialPosDif = abs( _frontViewPosition - preReplacementPosition );
+    int initialPosDif = labs( _frontViewPosition - preReplacementPosition );
     if ( initialPosDif == 1 ) firstDuration *= 0.8;
     else if ( initialPosDif == 0 ) firstDuration = 0;
     

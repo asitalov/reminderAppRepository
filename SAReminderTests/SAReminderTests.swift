@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SAReminder
+
 
 class SAReminderTests: XCTestCase {
     
