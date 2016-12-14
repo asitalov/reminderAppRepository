@@ -11,24 +11,19 @@ import UIKit
 class TextViewViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var contentTextView: UITextView!
-    var labelContent = NSString()
+    var labelContent = String()
     var delegate: newNote?
     let theNewNote = New_Note ()
-    
-//    
-//    func updateLabelContext(newLabel: String){
-//        
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
          self.title = "Content"
-        view.backgroundColor = UIColor .groupTableViewBackgroundColor()
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
         contentTextView.becomeFirstResponder()
         
         let numberToolbar = UIToolbar(frame: CGRectMake(0, 0, self.view.frame.size.width, 50)); numberToolbar.barStyle = UIBarStyle.Default
-        
+        numberToolbar.backgroundColor = UIColor.brownColor()
         numberToolbar.items = [
             
             UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil),
@@ -36,24 +31,24 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         
         numberToolbar.sizeToFit();
         contentTextView.inputAccessoryView = numberToolbar
+        contentTextView.layer.cornerRadius = 5
+        contentTextView.backgroundColor = UIColor(red: 255, green: 247, blue: 220, alpha: 0.5)
         
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
         
-        contentTextView.text = labelContent as? String
+        contentTextView.text = labelContent
         
     }
     
     
     @IBAction func returnToPreviousView(sender: AnyObject) {
-        presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+        self.saveChangesAndQuit()
         
     }
-    
-    func doneButtonTouched (){
-        
+    func saveChangesAndQuit () {
         contentTextView.resignFirstResponder()
         
         if delegate != nil {
@@ -61,7 +56,6 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         }
         
         theNewNote.labelContent = contentTextView.text!
-        print("labelContent is:  \(theNewNote.labelContent)")
         
         if contentTextView.text == "" {
             theNewNote.labelContent = "Content text"
@@ -70,8 +64,14 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         }
         
         presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func doneButtonTouched (){
+        
+     self.saveChangesAndQuit()
         
     }
+    
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
 
         if contentTextView.text == "Content text" {
@@ -79,11 +79,6 @@ class TextViewViewController: UIViewController, UITextViewDelegate {
         }
         
         return true
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 

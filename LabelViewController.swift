@@ -26,7 +26,7 @@ class LabelViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         self.title = "Label"
-        view.backgroundColor = UIColor .groupTableViewBackgroundColor()
+        self.view.backgroundColor = UIColor(patternImage: GetBackgroundImage.getImage())
         
         nameTextField.backgroundColor = UIColor .whiteColor()
         nameTextField.layer.borderColor = UIColor .whiteColor().CGColor
@@ -41,7 +41,7 @@ class LabelViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func returnToPreviousView(sender: AnyObject) {
-               presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+              self.saveChangesAndQuit()
 
     }
 
@@ -53,9 +53,7 @@ class LabelViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    
-    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
-    
+    func saveChangesAndQuit () {
         nameTextField.resignFirstResponder()
         let theNewNote = New_Note ()
         
@@ -64,7 +62,7 @@ class LabelViewController: UIViewController, UITextFieldDelegate {
         }
         
         if nameTextField.text == "" {
-          
+            
             theNewNote.labelText = "Place title here"
             
         } else {
@@ -74,6 +72,12 @@ class LabelViewController: UIViewController, UITextFieldDelegate {
         }
         
         presentingViewController!.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {   //delegate method
+    
+       self.saveChangesAndQuit()
+        
         return true
     }
     

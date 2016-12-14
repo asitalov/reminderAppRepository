@@ -540,21 +540,21 @@ static CGFloat scaledValue( CGFloat v1, CGFloat min2, CGFloat max2, CGFloat min1
 }
 
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [super touchesMoved:touches withEvent:event];
-    
-    if ( _dragging || self.state == UIGestureRecognizerStateFailed)
-        return;
-    
-    const int kDirectionPanThreshold = 5;
-    
-    UITouch *touch = [touches anyObject];
-    CGPoint nowPoint = [touch locationInView:self.view];
-    
-    if (abs(nowPoint.x - _beginPoint.x) > kDirectionPanThreshold) _dragging = YES;
-    else if (abs(nowPoint.y - _beginPoint.y) > kDirectionPanThreshold) self.state = UIGestureRecognizerStateFailed;
-}
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    [super touchesMoved:touches withEvent:event];
+//    
+//    if ( _dragging || self.state == UIGestureRecognizerStateFailed)
+//        return;
+//    
+//    const int kDirectionPanThreshold = 5;
+//    
+//    UITouch *touch = [touches anyObject];
+//    CGPoint nowPoint = [touch locationInView:self.view];
+
+//    if (abs(nowPoint.x - _beginPoint.x) > kDirectionPanThreshold) _dragging = YES;
+//    else if (abs(nowPoint.y - _beginPoint.y) > kDirectionPanThreshold) self.state = UIGestureRecognizerStateFailed;
+//}
 
 @end
 
@@ -741,12 +741,12 @@ const int FrontViewPositionNone = 0xff;
 }
 
 
-- (NSUInteger)supportedInterfaceOrientations
-{
-    // we could have simply not implemented this, but we choose to call super to make explicit that we
-    // want the default behavior.
-    return [super supportedInterfaceOrientations];
-}
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//    // we could have simply not implemented this, but we choose to call super to make explicit that we
+//    // want the default behavior.
+//    return [super supportedInterfaceOrientations];
+//}
 
 
 #pragma mark - Public methods and property accessors
@@ -1273,7 +1273,7 @@ const int FrontViewPositionNone = 0xff;
     NSTimeInterval duration = _toggleAnimationDuration;
 
     // Velocity driven change:
-    if (fabsf(velocity) > _quickFlickVelocity)
+    if (fabs(velocity) > _quickFlickVelocity)
     {
         // we may need to set the drag position and to adjust the animation duration
         CGFloat journey = xLocation;
@@ -1291,7 +1291,7 @@ const int FrontViewPositionNone = 0xff;
             }
         }
         
-        duration = fabsf(journey/velocity);
+        duration = fabs(journey/velocity);
     }
     
     // Position driven change:
@@ -1348,7 +1348,7 @@ const int FrontViewPositionNone = 0xff;
     
     NSTimeInterval duration = animated?_toggleAnimationDuration:0.0;
     NSTimeInterval firstDuration = duration;
-    int initialPosDif = abs( _frontViewPosition - preReplacementPosition );
+    int initialPosDif = labs( _frontViewPosition - preReplacementPosition );
     if ( initialPosDif == 1 ) firstDuration *= 0.8;
     else if ( initialPosDif == 0 ) firstDuration = 0;
     

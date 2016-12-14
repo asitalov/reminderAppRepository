@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Notes+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
+      location = "group:Notes.swift">
+   </FileRef>
+   <FileRef
       location = "group:SAReminder.xcodeproj">
    </FileRef>
    <FileRef
