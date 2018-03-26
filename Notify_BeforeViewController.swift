@@ -60,6 +60,7 @@ class Notify_BeforeViewController: UIViewController {
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
         
         return notifyBeforeValues.count
+        //kek
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
